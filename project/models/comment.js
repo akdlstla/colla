@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
 
-const chatlist = (seq) =>{
-    return seq.define('chatlist', {
+const comment = (seq) =>{
+    return seq.define('comment', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false, 
@@ -10,19 +10,20 @@ const chatlist = (seq) =>{
         },
         username: {
             type: DataTypes.STRING(31),
+            allowNull: false, 
+        },
+        msgid: {
+            type: DataTypes.INTEGER,
             references: {
-                model: 'users',
-                key: 'username',
+                model: 'msgs',
+                key: 'id',
             },onDelete: 'CASCADE'
         },
-        chat: {
+        comment: {
             type: DataTypes.STRING,
-            references:{
-                model: 'chats',
-                key:'chat'
-            },onDelete: 'CASCADE'
+            allowNull: false, 
         }
     });
 }
 
-module.exports = chatlist
+module.exports = comment

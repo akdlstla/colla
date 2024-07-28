@@ -4,7 +4,7 @@ const msg = (seq) =>{
     return seq.define('msg',{
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false, //not null
+            allowNull: false, 
             primaryKey: true,
             autoIncrement: true,
         },
