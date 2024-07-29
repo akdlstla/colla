@@ -1,28 +1,28 @@
 const {DataTypes} = require('sequelize');
 
-const chatlist = (seq) =>{
-    return seq.define('chatlist', {
+const userchat = (seq) =>{
+    return seq.define('userchat', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false, 
             primaryKey: true,
             autoIncrement: true,
         },
-        username: {
-            type: DataTypes.STRING(31),
+        userId: {
+            type: DataTypes.INTEGER,
             references: {
                 model: 'users',
-                key: 'username',
+                key: 'id',
             },onDelete: 'CASCADE'
         },
-        chat: {
-            type: DataTypes.STRING,
+        chatId: {
+            type: DataTypes.INTEGER,
             references:{
                 model: 'chats',
-                key:'chat'
+                key:'id'
             },onDelete: 'CASCADE'
         }
     });
 }
 
-module.exports = chatlist
+module.exports = userchat

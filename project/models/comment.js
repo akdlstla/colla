@@ -12,7 +12,7 @@ const comment = (seq) =>{
             type: DataTypes.STRING(31),
             allowNull: false, 
         },
-        msgid: {
+        msgId: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'msgs',

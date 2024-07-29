@@ -8,15 +8,18 @@ const msg = (seq) =>{
             primaryKey: true,
             autoIncrement: true,
         },
-        username: {
-            type: DataTypes.STRING(31),
-            allowNull: false,
+        userId: {
+            type: DataTypes.INTEGER,
+            references:{
+                model: 'users',
+                key:'id'
+            },onDelete:'CASCADE'
         },
-        chatname: {
-            type: DataTypes.STRING,
+        chatId: {
+            type: DataTypes.INTEGER,
             references: {
                 model: 'chats',
-                key: 'chat',
+                key: 'id',
             },onDelete: 'CASCADE'
         },
         talk: {
@@ -25,7 +28,11 @@ const msg = (seq) =>{
         },
         flag: {
             type: DataTypes.BOOLEAN
+        },
+        talkname: {
+            type: DataTypes.STRING(31),
         }
+
     });
 }
 
