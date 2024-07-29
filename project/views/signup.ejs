@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>colla</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        *{margin: 0px;
+        padding: 0px;}
+        #title{
+            display: flex;
+            justify-content: center;
+        }
+        #form{
+            display: flex;
+            justify-content: center;
+        }
+        #form div{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #checkbox{
+            display: flex;
+            justify-content: center;
+        }
+        #checkbox span{
+            display: flex;
+            justify-content: right;
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="title"><h3>회원가입</h3></div>
+    <div id="form">
+    <form>
+        <div>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" ></div>
+        <div>
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email"></div>
+        <div>
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호 입력"></div>
+        <div>
+        <label for="confirm">비밀번호 확인</label>
+        <input type="password" id="confirm" name="confirm" placeholder="비밀번호 확인"></div>
+        <div>
+        <label for="group">그룹이름</label>
+        <input type="text" id="group" name="group"></div>
+        <div>
+        <label for="department">부서</label>
+        <input type="text" id="department" name="department"></div>
+        </div>
+        </form>
+        <form id="checkbox">
+            <div>
+        <div><input type="checkbox" id="terms" name="terms" ><label for="terms">[필수] 이용약관</label><span>보기</span></div>
+        <div><input type="checkbox" id="personal" name="personal"><label for="personal">[필수] 개인정보 수집 및 이용에 관한 동의</label><span>보기</span></div>
+        <button id="next" type="button" onclick="signup()">다음</button>
+            </div>
+         </form> 
+    </div>
+    <script>
+        function signup(){
+           const terms = document.getElementById('terms')
+           const personal = document.getElementById('personal')
+           const checked1 = terms.checked
+           const checked2 = personal.checked
+           console.log(checked1,checked2)
+           if(checked1 === true && checked2 === true){
+            const data = {
+                username : document.querySelector('#name').value,
+                email: document.querySelector('#email').value,
+                password: document.querySelector('#password').value,
+                group: document.querySelector('#group').value,
+                department: document.querySelector('#department').value
+            };
+            axios({
+                method: 'post',
+                url: '/api/colla/signup',
+                data,
+            }).then((res)=>{
+                if(res.data.result){document.location.href = '/login'}else{
+                    alert('이메일을 확인해주세용!')
+                }
+            })
+            
+           }else{
+            alert('아직 체크되지 않은 항목이 있어요 다.시. 확인해볼까용?^^')
+           }
+
+        }
+    </script>
+</body>
+</html>

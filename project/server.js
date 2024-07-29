@@ -9,7 +9,7 @@ app.use(express.json());
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 const backRouter = require('./routes/back')
-app.unsubscribe('/', backRouter)
+app.unsubscribe('/api/colla', backRouter)
 // 404
 
 app.use("*", (req, res) => {
