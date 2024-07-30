@@ -3,7 +3,7 @@ const { main,signup } = require("../controller/page");
 const router = express.Router();
 
 
-router.get("/", main);
+router.get("/main", main);
 router.get('/signup',signup)
 
 
