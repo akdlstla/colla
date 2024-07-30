@@ -65,6 +65,7 @@
             color: red;
             cursor: pointer;
         }
+
         #box input {
             width: 300px;
             height: 50px;
@@ -132,15 +133,15 @@
             const personal = document.getElementById('personal')
             const checked1 = terms.checked
             const checked2 = personal.checked
-            console.log(checked1, checked2)
+            //console.log(checked1, checked2)
             const data = {
-                    username: document.querySelector('#name').value,
-                    email: document.querySelector('#email').value,
-                    password: document.querySelector('#password').value,
-                    group: document.querySelector('#group').value,
-                    department: document.querySelector('#department').value
-                };
-                const confirm = document.querySelector('#confirm').value
+                username: document.querySelector('#name').value,
+                email: document.querySelector('#email').value,
+                password: document.querySelector('#password').value,
+                group: document.querySelector('#group').value,
+                department: document.querySelector('#department').value
+            };
+            const confirm = document.querySelector('#confirm').value
             if (data.username === '') {
                 alert('이름은 필수사항이에용! 이름을 적어주세용!')
             } else if (data.email === '') {
@@ -149,13 +150,13 @@
             else if (data.password === '') {
                 alert('비밀번호는 필수사항이에용! 비밀번호를 적어주세용!')
             }
-            else if (confirm === ''){
+            else if (confirm === '') {
                 alert('비밀번호를 다시 입력해주세요')
             }
             else if (data.group === '') {
                 alert('그룹은 필수사항이에용! 그룹을 적어주세용!')
-
-            } else if (checked1 === false || checked2 === false) {
+            }
+            else if (checked1 === false || checked2 === false) {
                 alert('아직 체크되지 않은 항목이 있어요 다.시. 확인해볼까용?^^')
             } else {
                 if (data.password === confirm) {
