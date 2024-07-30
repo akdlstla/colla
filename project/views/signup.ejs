@@ -1,100 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>colla</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        *{margin: 0px;
-        padding: 0px;}
-        #title{
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #title {
             display: flex;
             justify-content: center;
         }
-        #form{
+
+        #select {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #select label {
+            width: 95%;
+        }
+
+        #redstar {
+            color: red;
+            width: 5%;
+        }
+
+        #form {
             display: flex;
             justify-content: center;
         }
-        #form div{
+
+        #form #box {
             display: flex;
             justify-content: center;
             flex-direction: column;
         }
-        #checkbox{
+
+        #formcheck {
             display: flex;
             justify-content: center;
-        }
-        #checkbox span{
-            display: flex;
-            justify-content: right;
-            color: red;
+            flex-direction: column;
         }
 
+        #checkbox {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #checkbox div {
+            display: flex;
+            align-items: center;
+
+        }
+
+        #checkbox span {
+            margin-left: 8px;
+            color: red;
+            cursor: pointer;
+        }
+
+        #box input {
+            width: 300px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #ffa7a7;
+            color: white;
+            border-style: dashed;
+            border-color: #e74747;
+            font-size: 18px;
+        }
     </style>
 </head>
+
 <body>
-    <div id="title"><h3>회원가입</h3></div>
+    <div id="title">
+        <h3>회원가입</h3>
+    </div>
     <div id="form">
-    <form>
-        <div>
-        <label for="name">이름</label>
-        <input type="text" id="name" name="name" ></div>
-        <div>
-        <label for="email">이메일</label>
-        <input type="email" id="email" name="email"></div>
-        <div>
-        <label for="password">비밀번호</label>
-        <input type="password" id="password" name="password" placeholder="비밀번호 입력"></div>
-        <div>
-        <label for="confirm">비밀번호 확인</label>
-        <input type="password" id="confirm" name="confirm" placeholder="비밀번호 확인"></div>
-        <div>
-        <label for="group">그룹이름</label>
-        <input type="text" id="group" name="group"></div>
-        <div>
-        <label for="department">부서</label>
-        <input type="text" id="department" name="department"></div>
-        </div>
-        </form>
-        <form id="checkbox">
-            <div>
-        <div><input type="checkbox" id="terms" name="terms" ><label for="terms">[필수] 이용약관</label><span>보기</span></div>
-        <div><input type="checkbox" id="personal" name="personal"><label for="personal">[필수] 개인정보 수집 및 이용에 관한 동의</label><span>보기</span></div>
-        <button id="next" type="button" onclick="signup()">다음</button>
+        <form>
+            <div id="box">
+                <div id="select"><label for="name">이름</label><span id="redstar">*</span></div>
+                <input type="text" id="name" name="name">
             </div>
-         </form> 
+            <div id="box">
+                <div id="select"><label for="email">이메일</label><span id="redstar">*</span></div>
+                <input type="email" id="email" name="email">
+            </div>
+            <div id="box">
+                <div id="select"><label for="password">비밀번호</label><span id="redstar">*</span></div>
+                <input type="password" id="password" name="password" placeholder="비밀번호 입력">
+            </div>
+            <div id="box">
+                <div id="select"><label for="confirm">비밀번호 확인</label><span id="redstar">*</span></div>
+                <input type="password" id="confirm" name="confirm" placeholder="비밀번호 확인">
+            </div>
+            <div id="box">
+                <div id="select"><label for="group">그룹이름</label><span id="redstar">*</span></div>
+                <input type="text" id="group" name="group">
+            </div>
+            <div id="box">
+                <label for="department">부서</label>
+                <input type="text" id="department" name="department">
+            </div>
+    </div>
+    </form>
+    <form id="checkbox">
+        <div id="formcheck">
+            <div>
+                <input type="checkbox" id="terms" name="terms">
+                <label for="terms">[필수] 이용약관</label>
+                <span onclick="terms()">보기</span>
+            </div>
+            <div>
+                <input type="checkbox" id="personal" name="personal">
+                <label for="personal">[필수] 개인정보 수집 및 이용에 관한 동의</label>
+                <span onclick="personal()">보기</span>
+            </div>
+            <button id="next" type="button" onclick="signup()">다음</button>
+        </div>
+    </form>
     </div>
     <script>
-        function signup(){
-           const terms = document.getElementById('terms')
-           const personal = document.getElementById('personal')
-           const checked1 = terms.checked
-           const checked2 = personal.checked
-           console.log(checked1,checked2)
-           if(checked1 === true && checked2 === true){
+        function signup() {
+            const terms = document.getElementById('terms')
+            const personal = document.getElementById('personal')
+            const checked1 = terms.checked
+            const checked2 = personal.checked
+            //console.log(checked1, checked2)
             const data = {
-                username : document.querySelector('#name').value,
+                username: document.querySelector('#name').value,
                 email: document.querySelector('#email').value,
                 password: document.querySelector('#password').value,
                 group: document.querySelector('#group').value,
                 department: document.querySelector('#department').value
             };
-            axios({
-                method: 'post',
-                url: '/api/colla/signup',
-                data,
-            }).then((res)=>{
-                if(res.data.result){document.location.href = '/login'}else{
-                    alert('이메일을 확인해주세용!')
+            const confirm = document.querySelector('#confirm').value
+            if (data.username === '') {
+                alert('이름은 필수사항이에용! 이름을 적어주세용!')
+            } else if (data.email === '') {
+                alert('이메일은 필수사항이에양! 이메일을 입력해주세양!')
+            }
+            else if (data.password === '') {
+                alert('비밀번호는 필수사항이에용! 비밀번호를 적어주세용!')
+            }
+            else if (confirm === '') {
+                alert('비밀번호를 다시 입력해주세요')
+            }
+            else if (data.group === '') {
+                alert('그룹은 필수사항이에용! 그룹을 적어주세용!')
+            }
+            else if (checked1 === false || checked2 === false) {
+                alert('아직 체크되지 않은 항목이 있어요 다.시. 확인해볼까용?^^')
+            } else {
+                if (data.password === confirm) {
+                    axios({
+                        method: 'post',
+                        url: '/api/colla/signup',
+                        data,
+                    }).then((res) => {
+                        if (res.data.result) { document.location.href = '/login' } else {
+                            alert('이메일을 확인해주세용!')
+                        }
+                    })
+                } else {
+                    alert('비밀번호가 서로 달라요 다시 확인해주세요구르트')
                 }
-            })
-            
-           }else{
-            alert('아직 체크되지 않은 항목이 있어요 다.시. 확인해볼까용?^^')
-           }
 
+            }
+
+            // if (checked1 === true && checked2 === true) {
+            //     const data = {
+            //         username: document.querySelector('#name').value,
+            //         email: document.querySelector('#email').value,
+            //         password: document.querySelector('#password').value,
+            //         group: document.querySelector('#group').value,
+            //         department: document.querySelector('#department').value
+            //     };
+            //     const confirm = document.querySelector('#confirm').value
+            //     console.log(confirm)
+            //     if (data.username === '') {
+            //         alert('이름은 필수사항이에용! 이름을 적어주세용!')
+            //     } else if (data.email === '') {
+
+            //         alert('이메일은 필수사항이에양! 이메일을 입력해주세양!')
+            //     }
+            //     else if (data.password === '') {
+            //         alert('비밀번호는 필수사항이에용! 비밀번호를 적어주세용!')
+            //     }
+            //     else if (confirm === ''){
+            //         alert('비밀번호를 다시 입력해주세요')
+            //     }
+            //     else if (data.group === '') {
+            //         alert('그룹은 필수사항이에용! 그룹을 적어주세용!')
+            //     } else {
+            //         if (data.password === confirm) {
+            //             axios({
+            //                 method: 'post',
+            //                 url: '/api/colla/signup',
+            //                 data,
+            //             }).then((res) => {
+            //                 if (res.data.result) { document.location.href = '/login' } else {
+            //                     alert('이메일을 확인해주세용!')
+            //                 }
+            //             })
+
+            //         } else {
+            //             alert('비밀번호가 서로 달라요 다시 확인해주세요구르트')
+            //         }
+            //     }
+            // }
+            // else {
+            //     alert('아직 체크되지 않은 항목이 있어요 다.시. 확인해볼까용?^^')
+            // }
+
+        }
+        function terms() {
+            document.location.href = './terms'
+        }
+        function personal() {
+            document.location.href = './personal'
         }
     </script>
 </body>
+
 </html>
