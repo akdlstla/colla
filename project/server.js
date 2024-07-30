@@ -10,6 +10,9 @@ const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 const backRouter = require('./routes/back')
 app.unsubscribe('/api/colla', backRouter)
+const userRouter = require('./routes/user');
+app.use('/api/user', userRouter);
+
 // 404
 
 app.use("*", (req, res) => {
@@ -18,7 +21,7 @@ app.use("*", (req, res) => {
 
 
 
-db.sequelize.sync({ force: false}).then(() => {
+db.sequelize.sync({ force: true}).then(() => {
     app.listen(PORT,() => {
         console.log(`http://localhost:${PORT}`);
     })

@@ -2,7 +2,7 @@ const {DataTypes} = require('sequelize');
 const { department } = require('.');
 
 const user = (seq) =>{
-    return seq.define('user',{
+    return seq.define('user',{ 
         id:{
            type: DataTypes.INTEGER,
            allowNull: false,
@@ -18,7 +18,7 @@ const user = (seq) =>{
             allowNull: false
         },
         password: {
-            type: DataTypes.STRING(31),
+            type: DataTypes.STRING,
             allowNull: false
         },
         department:{
