@@ -162,7 +162,6 @@
                 if (data.password === confirm) {
                     axios({
                         method: 'post',
-                        url: '/api/colla/signup',
                         data,
                     }).then((res) => {
                         if (res.data.result) { document.location.href = '/login' } else {
