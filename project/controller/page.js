@@ -5,5 +5,10 @@ const main = (req, res) => {
 const signup = (req,res) =>{
     res.render("signup")
 }
-
-  module.exports = { main,signup };
+const terms = (req,res) =>{
+    res.render('terms')
+}
+const personal = (req,res) =>{
+    res.render('personal')
+}
+  module.exports = { main,signup,terms, personal };
