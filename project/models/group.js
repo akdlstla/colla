@@ -15,7 +15,6 @@ const group = (seq) =>{
         },
         department:{
             type: DataTypes.STRING(31),
-            allowNull:false
         },
     });
 }

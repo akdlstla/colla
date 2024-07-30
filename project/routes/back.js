@@ -1,7 +1,11 @@
 const express = require("express");
-const {} = require("../controller/back");
+const {signup, login} = require("../controller/back");
 const router = express.Router();
 
-
+router.post('/signup', signup);
+router.post('/login', login);
+// router.get('/info', auth, find);
+// router.patch('/update', auth, update);
+// router.delete('/delete', auth, deleteFunc);
 
 module.exports = router;
