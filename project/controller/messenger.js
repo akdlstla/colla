@@ -1,5 +1,15 @@
 const {user, chat, msg, comment} = require('../models');
 
+//채팅방 전체 검색
+const allChat = async (req, res) => {
+    // console.log(req.params.id);
+    // //select * from post where id = 'req.params.id' and title = '안녕하세요'
+    // //const result = await Post.findOne({ where: { id: req.params.id, title: '안녕하세요' } });
+    // const result = await Post.findOne({ where: { id: req.params.id } });
+    // console.log('one', result);
+    // res.json({ result: true, data: result });
+};
+
 //채팅방 하나 검색. 채팅방 클릭
 const oneChat = async (req, res) => {
     // console.log(req.params.id);
@@ -98,4 +108,4 @@ const deleteCFunc = async (req, res) => {
     // res.json({ result: true });
 };
 
-module.exports = { oneChat, findFromUser, findFromChats, msgAll, writeMsg, writeComment, updateMsgFunc, deleteMsgFunc, updateCFunc, deleteCFunc };
+module.exports = { allChat, oneChat, findFromUser, findFromChats, msgAll, writeMsg, writeComment, updateMsgFunc, deleteMsgFunc, updateCFunc, deleteCFunc };

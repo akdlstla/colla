@@ -16,11 +16,11 @@ app.use("*", (req, res) => {
   res.status(404).send("페이지를 찾을 수 없습니다.");
 });
 
-//라우터
+//메신저 라우터
 const messengerRouter = require('./routes/messenger');
 app.use('/api/messenger', messengerRouter);
 
-db.sequelize.sync({ force: false}).then(() => {
+db.sequelize.sync({ force: true}).then(() => {
     app.listen(PORT,() => {
         console.log(`http://localhost:${PORT}`);
     })

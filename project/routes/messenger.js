@@ -1,8 +1,10 @@
 const express = require('express');
-const { oneChat, findFromUser, findFromChats, msgAll, writeMsg, 
+const { allChat, oneChat, findFromUser, findFromChats, msgAll, writeMsg, 
     writeComment, updateMsgFunc, deleteMsgFunc, updateCFunc, deleteCFunc } = require('../controller/messenger');
 const router = express.Router();
 
+//채팅방 전체 검색.
+router.get('/allchat', allChat);
 //채팅방 하나 검색.
 router.get('/onechat', oneChat);
 //user 에서 검색. username:? or department:?
