@@ -3,7 +3,7 @@ const { main, signup, chat, searchResult, noSearchResult, terms, personal } = re
 const router = express.Router();
 
 
-router.get("/", main);
+router.get("/main", main);
 router.get('/signup',signup)
 router.get('/terms',terms)
 router.get('/personal',personal)
