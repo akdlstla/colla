@@ -12,8 +12,6 @@ const terms = (req,res) =>{
 const personal = (req,res) =>{
     res.render('personal')
 }
-  module.exports = { main,signup,terms, personal };
-
 
 const chat = (req,res) =>{
   res.render("chat")
