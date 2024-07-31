@@ -339,6 +339,16 @@
           optionsMenu.style.display = 'block';
         }
       });
+
+      const input = document.querySelector("#input")
+      input.length
+      input.addEventListener('keydown', () => {
+        if( input.length >= 2) {
+          axios({
+            meh: post
+          })
+        }
+      })
     </script>
   </body>
 </html>
