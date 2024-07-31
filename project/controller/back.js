@@ -70,7 +70,7 @@ const search = async(req,res) =>{
                     model: user,
                     attributes: ['username','department'],
                 },
-            ],where: { username: { [Op.like]: `%${search}%` } }
+            ],where: { talk: { [Op.like]: `%${search}%` } }
         });
         console.log('데이터',data, '메세지',msgResult);
 
