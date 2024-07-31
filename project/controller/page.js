@@ -25,5 +25,9 @@ const noSearchResult = (req,res) =>{
   res.render("noSearchResult")
 }
 
-module.exports = { main, signup, chat, searchResult, noSearchResult, terms, personal };
+const search = (req,res) =>{
+  res.render('search')
+}
+
+module.exports = { main, signup, chat, searchResult, noSearchResult, terms, personal, search };
 

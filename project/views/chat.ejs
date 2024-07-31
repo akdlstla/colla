@@ -497,6 +497,18 @@
       function toggleSubCategory(element) {
         element.classList.toggle("expanded");
       }
+      
+      // Toggle options menu on fa-gear click
+      document.getElementById('gearIcon').addEventListener('click', function() {
+        const optionsMenu = document.getElementById('optionsMenu');
+        if (optionsMenu.style.display === 'block') {
+          optionsMenu.style.display = 'none';
+        } else {
+          optionsMenu.style.display = 'block';
+        }
+      });
+
+
       function toggleOptionMenu(element) {
         element.classList.toggle("expanded");
       }
@@ -518,6 +530,7 @@
           const sideBar = document.getElementById("sideBar");
           sideBar.classList.toggle("show");
         });
+
     </script>
   </body>
 </html>

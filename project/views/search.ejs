@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <input type="text" id="mainSearch" placeholder="검색">
+    <button>검색</button>
+    <div id="searchBox"></div>
+    <script>
+        const search = document.querySelector('#mainSearch')
+        search.addEventListener('keyup', () => {
+            const searchBox = document.querySelector('#searchBox');
+            if (search.value.length >= 2) {
+                const data = { search: search.value }
+                console.log('데이터는 뭐지?', data);
+                console.log('데이터 전송', search.value.length)
+                axios({
+                    method: 'get',
+                    url: `/api/colla/search/${data.search}`,
+                }).then((res) => {
+                    if (res.data.result) {
+                        searchBox.innerHTML = ''
+                        console.log(res.data.data);
+                        //searchBox.innerHTML = res.data.data;
+
+                        res.data.userData.forEach(value => {
+                            searchBox.innerHTML +=
+                                `<div>
+                                <p>이름: ${value.username}</p>
+                                <p>이메일: ${value.email}</p>
+                                <p>부서: ${value.department}</p>
+                            </div>`
+                        })
+                        res.data.msgData.forEach(value => {
+                            searchBox.innerHTML +=
+                                `<div>
+                                <p>이름: ${value.username}</p>
+                                <p>이메일: ${value.email}</p>
+                                <p>부서: ${value.department}</p>
+                            </div>`
+                        })
+
+                    } else { searchBox.innerText = '검색결과가 없습니다.' }
+                })
+            } else { searchBox.innerText = '검색어는 두글자 이상 적어주세요' }
+        })
+    </script>
+</body>
+
+</html>

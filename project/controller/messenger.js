@@ -23,19 +23,20 @@ const oneChat = async (req, res) => {
 //전체 검색
 //user 에서 검색. username:? or department:?
 const findFromUser = async (req, res) => {
-    // const result = await Post.findAll({
-    //     //attributes: 원하는 컬럼 조회
-    //     attributes: ['id', 'title', 'content', 'createdAt'],
-    //     //Op.lte(이하), Op.gte(이상), Op.gt(초과), Op.lt(미만)
-    //     //Op.or(또는), Op.ne(같지않음), Op.in(배열요소중 하나), Op.notIn(배열요소와 모두다름)
-    //     //where: { id: { [Op.gte]: 3 } },
-    //     //where: { [Op.or]: [{ id: 5 }, { title: '안녕하세요' }] },
-    //     order: [['id', 'desc']],
-    //     // limit: 2,
-    //     // offset: 1,
-    // }); 
-    // console.log('all', result);
-    // res.json({ result: true, data: result });
+    const result = await Post.findAll({
+        //attributes: 원하는 컬럼 조회
+        attributes: ['id', 'title', 'content', 'createdAt'],
+        //Op.lte(이하), Op.gte(이상), Op.gt(초과), Op.lt(미만)
+        //Op.or(또는), Op.ne(같지않음), Op.in(배열요소중 하나), Op.notIn(배열요소와 모두다름)
+        //where: { id: { [Op.gte]: 3 } },
+        //where: { [Op.or]: [{ id: 5 }, { title: '안녕하세요' }] },
+        order: [['id', 'desc']],
+        // limit: 2,
+        // offset: 1,
+    }); 
+    
+    console.log('all', result);
+    res.json({ result: true, data: result });
 };
 //chats, msgs 에서 검색. 조인
 const findFromChats = async (req, res) => {

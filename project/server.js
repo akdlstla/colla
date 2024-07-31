@@ -33,9 +33,9 @@ const server = http.createServer(app);
 const io = socketIo( server );
 // const wss = new ws.Server({ port: 8080 });
 
-
-//속닥속닥 할때 사용한 코드
-//사용자 정보를 갱신해주는 함수
+때 사용한 코드
+//사용자 정보를 갱신해주
+//속닥속닥 할는 함수
 function getUserList(room) {
   //room에 접속한 모든 사용자
   const users = [];
