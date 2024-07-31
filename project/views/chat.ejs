@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
     <script
       src="https://kit.fontawesome.com/d44f71ab07.js"
       crossorigin="anonymous"
@@ -491,6 +492,8 @@
 
 
     <script>
+      const socket = io();
+      
       function toggleSubCategory(element) {
         element.classList.toggle("expanded");
       }
