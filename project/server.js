@@ -1,10 +1,20 @@
 const express = require('express');
 const db = require('./models');
 const app = express();
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 const PORT = 8000;
 
 app.set("view engine", "ejs");
 app.use(express.json());
+app.set('views', path.join(__dirname, 'views'));
+
+// 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
@@ -23,7 +33,7 @@ app.use("*", (req, res) => {
 const messengerRouter = require('./routes/messenger');
 app.use('/api/messenger', messengerRouter);
 
-db.sequelize.sync({ force: true}).then(() => {
+db.sequelize.sync({ force: false}).then(() => {
     app.listen(PORT,() => {
         console.log(`http://localhost:${PORT}`);
     })
