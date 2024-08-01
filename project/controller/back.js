@@ -1,6 +1,7 @@
-const { user } = require('../models');
+const { user, msg } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {Op,where} = require('sequelize');
 
 const salt = Number(process.env.SECRET);
 
@@ -81,5 +82,27 @@ const login = async (req, res) => {
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
+const search = async(req,res) =>{
+    try {
+        console.log(req.params);
+        const {search} = req.params
+        console.log('서치워드',search);
+        const data = await user.findAll({where: { username: { [Op.like]: `%${search}%` } }})
+        const msgResult = await msg.findAll({
+            include: [
+                {
+                    model: user,
+                    attributes: ['username','department'],
+                },
+            ],where: { talk: { [Op.like]: `%${search}%` } }
+        });
+        console.log('데이터',data, '메세지',msgResult);
 
-module.exports = {signup,login}
+        res.json({result:true, userData: data, msgData: msgResult})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+}
+
+module.exports = {signup,login, search}
