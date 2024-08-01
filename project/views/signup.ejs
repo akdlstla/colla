@@ -123,7 +123,7 @@
                 <label for="personal">[필수] 개인정보 수집 및 이용에 관한 동의</label>
                 <span onclick="personal()">보기</span>
             </div>
-            <button id="next" type="button" onclick="signup()">다음</button>
+            <button id="next" type="button" onclick="signup()">회원가입</button>
         </div>
     </form>
     </div>
@@ -142,7 +142,7 @@
                 department: document.querySelector('#department').value
             };
             const confirm = document.querySelector('#confirm').value
-            if (data.username === '') {
+            if (data.username === '') { 
                 alert('이름은 필수사항이에용! 이름을 적어주세용!')
             } else if (data.email === '') {
                 alert('이메일은 필수사항이에양! 이메일을 입력해주세양!')
@@ -162,7 +162,9 @@
                 if (data.password === confirm) {
                     axios({
                         method: 'post',
+
                         url:'/api/colla/signup',
+
                         data,
                     }).then((res) => {
                         if (res.data.result) { document.location.href = '/login' } else {

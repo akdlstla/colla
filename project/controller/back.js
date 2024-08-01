@@ -19,8 +19,8 @@ const signup = async (req, res) => {
             
             const bcryppass = await bcrypt.hash(password, salt);
             const result = await user.create({ username, email, password:bcryppass, department });
-            console.log('signup', result);
-           
+            console.log('signup 결과값:', result);
+            res.json({ result: true, message: '가입 완료' });
         }
     } catch (error) {
         console.log(error);
@@ -28,12 +28,23 @@ const signup = async (req, res) => {
     }
 };
 const login = async (req, res) => {
+    // if (!email || !password) {
+    //     return res.status(400).json({ message: '이메일과 비밀번호를 입력하세요.' });
+    // };
+
     try {
-        const { email, password } = req.body;
+        const { email, password, rememberMe } = req.body;
+        console.log( 'login 값 :', email, password , rememberMe);
+
+        // 사용자 확인
+        // const findAll = await user.findAll()
+        // console.log(findAll)
+
         const find = await user.findOne({ where: { email } });
+        console.log('find 값 :', find);
         if (find) {
             const bcryppass = await bcrypt.compare(password, find.password);
-            console.log(bcryppass);
+            console.log('bcryppass 값 : ', bcryppass);
             if (bcryppass) {
                 //jwt토큰 발생
                 /**
@@ -42,17 +53,30 @@ const login = async (req, res) => {
                  * issuer: 토큰발급자 지정
                  */
                 const token = jwt.sign({ id: find.id, email: find.email }, process.env.LOGSECRET, { expiresIn: '24h' });
-                console.log(process.env.LOGSECRET);
+                console.log('토큰값 :', token);
+                console.log('환경변수LOGSECRET값:', process.env.LOGSECRET);
                 const response = {
                     token,
                 };
-                res.json({ result: true, code: 100, response, message: '로그인 완료' });
+                res.json({ result: true, response, message: '로그인 완료' });
+
+                // 쿠키
+            
+                // const expiryDate = new Date();
+                // expiryDate.setDate(expiryDate.getDate() + 7);
+                // res.cookie('email', response , { expires: expiryDate, httpOnly: true});
+                // console.log('쿠키생성까지 읽은건데');
+                
+                // const email = req.cookies.response;
+                // res.render('login', { email: response });
+                
+                
             } else {
-                res.json({ result: false, code: 1000, response: null, message: '비밀번호 틀렸네?.' });
+                res.json({ result: false, message: '비밀번호 틀렸네?.' });
             }
         } else {
-            res.json({ result: false, code: 1001, response: null, message: '회원이 아닌데?.' });
-        }
+            res.json({ result: false, message: '회원이 아닌데?.' });
+        };
     } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });

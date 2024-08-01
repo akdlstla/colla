@@ -1,13 +1,24 @@
 const express = require('express');
 const db = require('./models');
 const app = express();
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 // const socketIo = require('socket.io');
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
+
 const PORT = 8000;
 
 app.set("view engine", "ejs");
 app.use(express.json());
+app.set('views', path.join(__dirname, 'views'));
+
+// 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
