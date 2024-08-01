@@ -12,10 +12,15 @@
     <input type="text" id="mainSearch" placeholder="검색">
     <button>검색</button>
     <div id="searchBox"></div>
+    <div id="userBox"></div>
+    <div id="msgBox" style="display: flex; flex-direction: column;"></div>
     <script>
         const search = document.querySelector('#mainSearch')
         search.addEventListener('keyup', () => {
             const searchBox = document.querySelector('#searchBox');
+            const userBox = document.querySelector('#userBox');
+            const msgBox = document.querySelector('#msgBox');
+            
             if (search.value.length >= 2) {
                 const data = { search: search.value }
                 console.log('데이터는 뭐지?', data);
@@ -25,30 +30,33 @@
                     url: `/api/colla/search/${data.search}`,
                 }).then((res) => {
                     if (res.data.result) {
-                        searchBox.innerHTML = ''
+                        userBox.innerHTML = ''
+                        msgBox.innerHTML = ''
                         console.log(res.data.data);
                         //searchBox.innerHTML = res.data.data;
 
                         res.data.userData.forEach(value => {
-                            searchBox.innerHTML +=
-                                `<div>
+                            userBox.innerHTML +=
+                                `
                                 <p>이름: ${value.username}</p>
                                 <p>이메일: ${value.email}</p>
                                 <p>부서: ${value.department}</p>
-                            </div>`
+                                <br>
+                            `
                         })
                         res.data.msgData.forEach(value => {
-                            searchBox.innerHTML +=
-                                `<div>
-                                <p>이름: ${value.username}</p>
-                                <p>이메일: ${value.email}</p>
-                                <p>부서: ${value.department}</p>
-                            </div>`
+                            msgBox.innerHTML +=
+                                `<div style="display: flex; flex-direction: row;">
+                                <p> ${value.user.username}</p>
+                                <p>(${value.user.department})</p>
+                                <p>: ${value.talk}</p>
+                                </div>
+                                `
                         })
 
-                    } else { searchBox.innerText = '검색결과가 없습니다.' }
+                    } else { userBox.innerText = '검색결과가 없습니다.' }
                 })
-            } else { searchBox.innerText = '검색어는 두글자 이상 적어주세요' }
+            } else { userBox.innerText = '검색어는 두글자 이상 적어주세요' }
         })
     </script>
 </body>
