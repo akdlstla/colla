@@ -30,7 +30,8 @@ db.chat.hasMany(db.msg, {foreignKey:'chatId', onDelete: 'CASCADE'})
 db.msg.belongsTo(db.chat, {foreignKey:'chatId',onDelete: 'CASCADE'})
 db.msg.hasMany(db.comment, {foreignKey:'msgId', onDelete: 'CASCADE'})
 db.comment.belongsTo(db.msg, {foreignKey:'msgId', onDelete: 'CASCADE'})
-
+db.user.hasMany(db.msg,{foreignKey:'userId', onDelete: 'CASCADE'})
+db.msg.belongsTo(db.user, {foreignKey:'userId', onDelete: 'CASCADE'})
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
