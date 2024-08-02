@@ -4,18 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script
-      src="https://kit.fontawesome.com/d44f71ab07.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
+    <script src="https://kit.fontawesome.com/d44f71ab07.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <style>
       * {
         margin: 0;
@@ -147,6 +140,7 @@
         flex: 1;
         background-color: aliceblue;
       }
+
       @media (max-width: 768px) {
         /* 반응형 헤더 */
         header {
@@ -236,17 +230,42 @@
           border-radius: 10px;
           margin: 2px 0;
         }
+
       }
+      #mainSearchBox {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+    }
+
+    #main_page {
+      border: 1px solid black;
+    }
     </style>
   </head>
+
+
+
   <body>
     <header>
       <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
-      <a href="#" id="logoLink">colla</a>
+      <a href="" id="logoLink" onclick="clickLogo()">colla</a>
+
+
+
+
       <div id="search1">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchBox1" placeholder="전체에서 검색" />
+        <div id="mainSearchBox">
+          <input type="text" id="mainSearch" placeholder="검색" onkeyup="enterkey()">
+          <div id="searchBox"></div>
+          <div id="userBox"></div>
+          <div id="msgBox" style="display: flex; flex-direction: column;"></div>
+        </div>
       </div>
+
+
+
       <i class="fa-solid fa-gear" id="gearIcon1"></i>
       <div class="options" id="optionsMenu">
         <div><a href="#">마이페이지</a></div>
@@ -255,68 +274,317 @@
         <div><a href="#">로그아웃</a></div>
       </div>
     </header>
+
+
     <div id="search2" style="display: none">
       <i class="fa-solid fa-magnifying-glass"></i>
       <input type="text" id="searchBox2" placeholder="전체에서 검색" />
     </div>
-    <main>
-      <div id="sideBar">
-        <div id="myProfile">
-          <div class="profileBox">
-            <i class="fa-solid fa-user"></i>
-            <a href="#" style="margin-left: 10px">임수정</a>
 
-            <i class="fa-solid fa-gear" id="gearIcon2"></i>
+
+
+
+
+
+
+    <main>
+        <div id="sideBar">
+          <div id="myProfile">
+            <div class="profileBox">
+              <i class="fa-solid fa-user"></i>
+              <a href="#" style="margin-left: 10px">임수정</a>
+              <i class="fa-solid fa-gear" id="gearIcon2"></i>
+            </div>
+            <ul>
+              <li>프로필 설정</li>
+              <li>계정 설정</li>
+              <li>로그아웃</li>
+            </ul>
           </div>
-          <ul>
-            <li>프로필 설정</li>
-            <li>계정 설정</li>
-            <li>로그아웃</li>
-          </ul>
+          <div class="sideCategory" onclick="toggleSubCategory(this)">
+            <span>채널 <i class="fa-solid fa-angles-down"></i></span>
+            <ul>
+              <li>공지사항</li>
+              <li>경영팀</li>
+              <li>생산팀</li>
+              <li><a href="#">+</a>추가하기</li>
+            </ul>
+          </div>
+          <div class="sideCategory" onclick="toggleSubCategory(this)">
+            <span>채팅방 <i class="fa-solid fa-angles-down"></i></span>
+            <ul>
+              <li>임수정</li>
+              <li>채수빈</li>
+            </ul>
+          </div>
         </div>
-        <div class="sideCategory" onclick="toggleSubCategory(this)">
-          <span>채널 <i class="fa-solid fa-angles-down"></i></span>
-          <ul>
-            <li>공지사항</li>
-            <li>경영팀</li>
-            <li>생산팀</li>
-            <li><a href="#">+</a>추가하기</li>
-          </ul>
+
+
+
+
+
+
+
+        <div id="main_page">
+          <div id="image"><img src="./images/main.png" alt="bear"></div>
+          <div id="description">
+            <p>프로젝트별 특정 주제의 그룹 대화는 "토픽"</p>
+            <p>1:1 또는 그룹 대화는 "검색"을 이용해 보세요.</p>
+          </div>
         </div>
-        <div class="sideCategory" onclick="toggleSubCategory(this)">
-          <span>채팅방 <i class="fa-solid fa-angles-down"></i></span>
-          <ul>
-            <li>임수정</li>
-            <li>채수빈</li>
-          </ul>
+
+        <div id="userSearchBox">
+
         </div>
+        <div id="msgSearchBox">
+
+        </div>
+        
+        <div id="main_chat" hidden>
+            <!-- 여기부터 해야됨. -->
+          <div id="user-container"><p id="nickname">임꺽정 (인사팀)</div>
+            <div id="wrapper">
+              
+                <div id="display-container">
+
+                    <div class="msg-container">
+                        <div class="talk">
+                            <div type="text" class="nickname">임꺽정 (인사팀)</div>
+                            <ul class="chatting-list">
+                                <li>안녕하세요</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>  
+            </div>
+          
+          <div id="send">
+              <input type="text" id="chatting-input" />
+              <button id="send-button">전송</button>
+          </div>
       </div>
-    </main>
-    <script>
-      function toggleSubCategory(element) {
-        element.classList.toggle("expanded");
+
+
+
+
+
+    </div>
+  </main>
+
+
+
+
+
+
+
+  <script>
+/*************여기 부터 검색(sim)********************/
+/*=============================================*/
+  // detailSearch.ejs 지형님 파일에서
+  const test = window.location.pathname
+  console.log(test,'패스네임');
+  console.log('아아아');
+  const test2 = test.split('/')
+  console.log(test2, '스플릿');
+  const searchWord1 = test2[2]
+  const searchWord = decodeURI(searchWord1) 
+  console.log(searchWord);
+
+  const search = document.querySelector('#mainSearch');
+  const main_page = document.querySelector('#main_page');
+
+  function detailSearch() {
+    //검색 버튼 눌렀을때 onclick
+    const searchValue = search.value;
+    console.log('서치밸류', searchValue);
+    // document.location.href = `/main/${encodeURI(searchValue)}`;
+    enterkey(searchValue);
+  }
+
+  //엔터키 누르면
+  function enterkey(searchValue) {
+    if (window.event.keyCode == 13) {
+      const searchValue = search.value;
+      console.log('서치밸류 엔터', searchValue);
+      //엔터 치면 이동하는 화면
+      //hidden처리 할 곳
+      main_page.hidden = true;
+      // document.location.href = `/main/${encodeURI(searchValue)}`;
+
+
+
+      //****detailSearch.ejs script시작부분 const, console 바로 아랫부분
+      axios({
+          method: 'get',
+          url: `/api/colla/search/${searchWord}`,
+      }).then((res) => {
+          if (res.data.result) {
+            userBox.innerHTML = ''
+            msgBox.innerHTML = ''
+            console.log(res.data, '확인');
+            //searchBox.innerHTML = res.data.data;
+
+            res.data.userData.forEach(value => {
+              userSearchBox.innerHTML +=
+                `
+                <div id="findByUsername">
+                    <p>이름: ${value.username}</p>
+                    <p>이메일: ${value.email}</p>
+                    <p>부서: ${value.department}</p>
+                    <br>
+                </div>
+                `
+            })
+            res.data.msgData.forEach(value => {
+              msgSearchBox.innerHTML +=
+                `<div id ="findByTalk" style="display: flex; flex-direction: row;">
+                    <p> ${value.user.username}</p>
+                    <p>(${value.user.department})</p>
+                    <p>: ${value.talk}</p>
+                </div>
+                `
+            })
+          } else { userBox.innerText = '검색결과가 없습니다.' }
+        })
+      
+
+
+    }
+  }
+//헤더 검색할때 자동완성 부분
+  search.addEventListener('keyup', () => {
+  const searchBox = document.querySelector('#searchBox');
+    const userBox = document.querySelector('#userBox');
+    const msgBox = document.querySelector('#msgBox');
+
+    if (search.value.length >= 2) {
+      const data = { search: search.value }
+      console.log('데이터는 뭐지?', data);
+      console.log('데이터 전송', search.value.length)
+      axios({
+        method: 'get',
+        url: `/api/colla/search/${data.search}`,
+      }).then((res) => {
+        if (res.data.result) {
+          userBox.innerHTML = ''
+          msgBox.innerHTML = ''
+          console.log(res.data, '확인');
+          //searchBox.innerHTML = res.data.data;
+
+          res.data.userData.forEach(value => {
+            userBox.innerHTML +=
+              `<div id="findByUsername">
+                    <p>이름: ${value.username}</p>
+                    <p>이메일: ${value.email}</p>
+                    <p>부서: ${value.department}</p>
+                    <br>
+                </div>
+              `
+          })
+          res.data.msgData.forEach(value => {
+            msgBox.innerHTML +=
+              `<div id ="findByTalk" style="display: flex; flex-direction: row;">
+                  <p> ${value.user.username}</p>
+                  <p>(${value.user.department})</p>
+                  <p>: ${value.talk}</p>
+              </div>
+              `
+          })
+
+        } else { userBox.innerText = '검색결과가 없습니다.' }
+      })
+
+    } else { userBox.innerText = '검색어는 두글자 이상 적어주세요' }
+  })
+
+  function detailSearch() {
+    const searchValue = search.value;
+    console.log('서치밸류', searchValue);
+    // document.location.href = `/main/${encodeURI(searchValue)}`;
+
+  }
+/*=============================================*/
+/*************여기까지 검색********************/
+
+
+
+/*************검색 결과 눌렀을 때, 방으로 이동하는 
+ * 페이지 이동(hidden)처리 함수* *********/
+const main_chat = document.querySelector('#main_chat');
+function clickFindByUsername() {
+      /**클릭한 div의 값도 보내기.*/
+      main_chat.hidden = false;
+      userSearchBox.hidden = true;
+      msgSearchBox.hidden = true;
+      
+}
+function clickFindByTalk() {
+      /**클릭한 div의 값도 보내기.*/
+      main_chat.hidden = false;
+      userSearchBox.hidden = true;
+      msgSearchBox.hidden = true;
+}
+//로고 클릭하면
+function clickLogo() {
+      main_page.hidden = false;
+      main_chat.hidden = true;
+}
+/*************페이지 이동(hidden)처리 함수 끝**********/
+
+
+
+
+
+
+/**헤더 부분**/
+    function toggleSubCategory(element) {
+      element.classList.toggle("expanded");
+    }
+    function toggleOptionMenu(element) {
+      element.classList.toggle("expanded");
+    }
+/*detailSearch에서 추가로 들어가있던 코드. 헤더에서 사용하는 도중에 수정된듯.
+    function toggleSubCategory(element) {
+      const subCategories = element.querySelector("ul");
+      if (subCategories.classList.contains("expanded")) {
+        subCategories.classList.remove("expanded");
+      } else {
+        subCategories.classList.add("expanded");
       }
-      function toggleOptionMenu(element) {
-        element.classList.toggle("expanded");
+    }
+
+    // Toggle options menu on fa-gear click
+    document.getElementById('gearIcon').addEventListener('click', function() {
+      const optionsMenu = document.getElementById('optionsMenu');
+      if (optionsMenu.style.display === 'block') {
+        optionsMenu.style.display = 'none';
+      } else {
+        optionsMenu.style.display = 'block';
       }
-      document
-        .getElementById("gearIcon1")
-        .addEventListener("click", function () {
-          const optionsMenu = document.getElementById("optionsMenu");
-          optionsMenu.classList.toggle("show");
-        });
-      document
-        .getElementById("gearIcon2")
-        .addEventListener("click", function () {
-          const myProfile = document.getElementById("myProfile");
-          myProfile.classList.toggle("expanded");
-        });
-      document
-        .getElementById("barsIcon")
-        .addEventListener("click", function () {
-          const sideBar = document.getElementById("sideBar");
-          sideBar.classList.toggle("show");
-        });
-    </script>
+    });
+    const search = document.querySelector('#mainSearch')
+*/
+
+
+    document
+      .getElementById("gearIcon1")
+      .addEventListener("click", function () {
+        const optionsMenu = document.getElementById("optionsMenu");
+        optionsMenu.classList.toggle("show");
+      });
+    document
+      .getElementById("gearIcon2")
+      .addEventListener("click", function () {
+        const myProfile = document.getElementById("myProfile");
+        myProfile.classList.toggle("expanded");
+      });
+    document
+      .getElementById("barsIcon")
+      .addEventListener("click", function () {
+        const sideBar = document.getElementById("sideBar");
+        sideBar.classList.toggle("show");
+      });
+  </script>
   </body>
 </html>
