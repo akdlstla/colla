@@ -208,6 +208,7 @@
     </div>
 
     <!-- ----------------검색 페이지 -->
+     
     <div id="userSearchBox"></div>
     <div id="msgSearchBox"></div>
   </main>
@@ -249,7 +250,7 @@
                                 `
             })
 
-          } else { userBox.innerText = '검색결과가 없습니다.' }
+          } else { userSearchBox.innerHTML = '<p>검색결과가 없습니다.</p>' }
         })
 
     function toggleSubCategory(element) {
@@ -323,10 +324,10 @@ search.addEventListener('keyup', () => {
                             `
         })
 
-      } else { userBox.innerText = '검색결과가 없습니다.' }
+      } else { userBox.innerText = '검색어는 두글자 이상 적어주세요' }
     })
 
-  } else { userBox.innerText = '검색어는 두글자 이상 적어주세요' }
+  } else { userBox.innerText = '검색결과가 없습니다.' }
 })
 
   </script>
