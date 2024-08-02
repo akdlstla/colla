@@ -27,10 +27,11 @@ const noSearchResult = (req,res) =>{
 const login = (req,res) =>{
   res.render("login")
 }
-const search = (req,res) =>{
-  res.render('search')
+
+const detailSearch = (req,res) =>{
+  res.render('detailSearch')
 }
 
-module.exports = { main, signup, chat, searchResult, noSearchResult, terms, personal, login, search };
+module.exports = { main, signup, chat, searchResult, noSearchResult, terms, personal, login, detailSearch };
 
 
