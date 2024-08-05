@@ -153,6 +153,25 @@
   </div>
 
   <script>
+    (async function () {
+              const res = await axios({
+                  method: 'get',
+                  url: '/api/colla/connect',
+                  headers: {
+                      Authorization: `Bearer ${localStorage.getItem('token')}`,
+                  },
+              });
+              const { email } = res.data.response;
+              console.log('로그인된 이메일', email);
+              
+              // const { username, age, email } = profile;
+              document.querySelector('#email').value = email;
+              // document.querySelector('#pw').value = password;
+              // document.querySelector('#name').value = username;
+              // document.querySelector('#age').value = age;
+              // document.querySelector('#email').value = email;
+          })();
+
       async function loginFunc() {
           const res = await axios({
               method: 'post',
