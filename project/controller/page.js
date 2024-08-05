@@ -12,8 +12,14 @@ const terms = (req,res) =>{
 const personal = (req,res) =>{
     res.render('personal')
 }
+
 const notice = (req,res) =>{
     res.render('notice')
 }
-module.exports = { main, signup, terms, personal, notice };
+
+const login = (req,res) =>{
+    res.render('login')
+  }
+module.exports = { main, signup, terms, personal, login, notice };
+
 
