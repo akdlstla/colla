@@ -2,15 +2,44 @@ const express = require('express');
 const db = require('./models');
 const app = express();
 const PORT = 8000;
+const aws = require('aws-sdk')
+const multer = require('multer')
+const multerS3 = require('multer-s3')
 
-app.set("view engine", "ejs");
-app.use(express.json());
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
+//aws 설정
+aws.config.update({
+    accessKeyId: process.env.ACCESSKEY,
+    secretAccessKey: process.env.SECRETKEY,
+    region : 'ap-northeast-2'
+})
+//aws s3인스턴스 생성
+
+const s3 = new aws.S3()
+
+//multer 설정
+const upload = multer({
+    storage: multerS3({
+        s3, //s3:s3
+        bucket: process.env.BUCKET,
+        acl : 'public-read', //파일 접근권한 (public-read로 해야 업로드 된 파일이 공개)
+        metadata: function(req,file,cb){
+            cb(null,{fieldName: file.fieldname})
+        },
+        key: function(req,file,cb){
+            cb(null,Date.now().toString()+'-'+file.originalname)
+        }
+    })
+})
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 //api 라우터
 const backRouter = require('./routes/back')
 app.use('/api/colla', backRouter)
+
+
 
 // 404
 app.use("*", (req, res) => {

@@ -8,11 +8,11 @@ const groupuser = (seq) =>{
             primaryKey: true,
             autoIncrement: true,
         },
-        groupId: {
-            type: DataTypes.INTEGER,
+        companyName: {
+            type: DataTypes.STRING(31),
             references: {
                 model: 'groups',
-                key: 'id'
+                key: 'companyName'
             }, onDelete: 'CASCADE'
         },
         userId: {

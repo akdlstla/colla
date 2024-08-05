@@ -1,5 +1,6 @@
 const express = require("express");
-const { main, signup, terms, personal, login } = require("../controller/page");
+const { main, signup, terms, personal, login, notice } = require("../controller/page");
+
 const router = express.Router();
 
 /*** 로그인 페이지 루트페이지로 추가하기 */
@@ -10,6 +11,6 @@ router.get("/main", main);
 //약관동의, 개인정보처리방침
 router.get('/terms',terms)
 router.get('/personal',personal)
-
+router.get('/notice',notice)
 
 module.exports = router;
