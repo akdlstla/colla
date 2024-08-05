@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/d44f71ab07.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+      }
+      header {
+        position: relative;
+        background-color: #e0f0ff;
+        display: flex; /* flexbox 사용 */
+        align-items: center;
+        font-family: "Kaushan Script";
+        border: 1px solid black;
+        width: 100%;
+        height: 7vh;
+      }
+      header #logo {
+        width: fit-content;
+        margin-left: 10px;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+      }
+      header #logo #logoLink {
+        color: black;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+      }
+      header #search {
+        position: absolute;
+        right: 5vh;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+      }
+      header #searchBox {
+        margin-right: 3%;
+        width: 25vw;
+        height: 3vh;
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 10px;
+      }
+      .fa-gear {
+        position: absolute;
+        right: 1vw;
+        width: fit-content;
+        cursor: pointer; /* 클릭 가능 표시 */
+      }
+      .options {
+        display: none; /* 기본적으로 숨김 */
+        position: absolute;
+        right: 1vw;
+        top: 100%; /* fa-gear 바로 아래에 위치 */
+        background-color: #e0f0ff;
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 10vw;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .options div {
+        padding: 10px;
+        cursor: pointer;
+      }
+      .options div:hover {
+        background-color: #c1e2ff;
+      }
+      main {
+        display: flex; /* Flexbox를 사용하여 자식 요소들을 수평으로 배치 */
+        height: 93vh;
+      }
+      main #sideBar {
+        background-color: #e0f0ff;
+        border: 1px solid black;
+        width: 15%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+      main #sideBar #myProfile {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 1px solid black;
+        height: 7%;
+        border-radius: 10px;
+      }
+      main #sideBar #myProfile #profileIcon {
+        border: 1px solid black;
+        width: max-content;
+        aspect-ratio: 1 / 1;
+        padding: 3px;
+        border-radius: 50%;
+      }
+      main #sideBar #myProfile #profileIcon .fa-user {
+        font-size: 24px;
+      }
+      main #sideBar #sideBar_menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        border: 1px solid black;
+        height: 5%;
+        border-radius: 10px;
+        background-color: #c1e2ff;
+      }
+      main #sideBar #sideBar_menu #organization,
+      #calander {
+        font-weight: 700;
+        height: 70%;
+      }
+      .sideCategory {
+        border: 1px solid black;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 10px;
+      }
+      .sideCategory ul {
+        max-height: 0;
+        overflow: hidden;
+        list-style-type: none;
+        border-radius: 10px;
+        transition: max-height 0.7s ease-in-out;
+      }
+      .sideCategory ul li {
+        border: 1px solid black;
+        border-radius: 10px;
+        margin: 2px;
+        padding: 5px;
+        background-color: #c1e2ff;
+      }
+      .sideCategory ul.expanded {
+        max-height: 700px; /* 충분히 큰 값으로 설정 */
+      }
+      #content {
+        width: 100%;
+        height: 100%;
+        background-color: aliceblue;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="logo">
+        <a href="#" id="logoLink">colla</a>
+      </div>
+      <div id="search">
+        <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px"></i>
+        <input type="text" id="searchBox" placeholder="전체에서 검색" />
+      </div>
+      <i class="fa-solid fa-gear" id="gearIcon"></i>
+      <div class="options" id="optionsMenu">
+        <div><a href="#">마이페이지</a></div>
+        <div><a href="#">사이트 정보</a></div>
+        <div><a href="#">관리자 기능</a></div>
+        <div><a href="#">로그아웃</a></div>
+      </div>
+     
+    </header>
+    <main>
+      <div id="sideBar">
+        <div id="myProfile">
+          <div id="profileIcon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div id="profileName" style="font-weight: 600"><a href="#">임수정</a></div>
+        </div>
+        <div id="sideBar_menu">
+          <div id="organization"><a href="#">조직도</a></div>
+          <div id="calander"><a href="#">캘린더</a></div>
+        </div>
+        <div class="sideCategory" onclick="toggleSubCategory(this)">
+          <a href="#">채널</a>
+          <ul>
+            <li>공지사항</li>
+            <li>경영팀</li>
+            <li>생산팀</li>
+            <li><a href="#">+</a>추가하기</li>
+          </ul>
+        </div>
+        <div class="sideCategory" onclick="toggleSubCategory(this)">
+          <a href="#">채팅방</a>
+          <ul>
+            <li>임수정</li>
+            <li>채수빈</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ----------------검색 페이지 -->
+    </main>
+    <script>
+      function toggleSubCategory(element) {
+        const subCategories = element.querySelector("ul");
+        if (subCategories.classList.contains("expanded")) {
+          subCategories.classList.remove("expanded");
+        } else {
+          subCategories.classList.add("expanded");
+        }
+      }
+
+      // Toggle options menu on fa-gear click
+      document.getElementById('gearIcon').addEventListener('click', function() {
+        const optionsMenu = document.getElementById('optionsMenu');
+        if (optionsMenu.style.display === 'block') {
+          optionsMenu.style.display = 'none';
+        } else {
+          optionsMenu.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>
+
