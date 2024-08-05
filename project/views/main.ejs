@@ -151,6 +151,72 @@
         background-color: aliceblue;
       }
 
+      #userBox {
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: flex-start; 
+        gap: 20px; 
+        padding: 15px;
+        max-width: 100%;
+        margin: 30px auto;
+        background-color: white;
+        border-radius: 10px;
+        height: 100px ;
+      }
+
+      #userBox > div {
+        flex: 0 0 200px;
+        height: 100px; 
+        padding: 10px;
+        border-radius: 10px;
+        background-color: whitesmoke;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        text-align: left; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 10px; 
+      }
+
+      #userBox p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: black;
+      }
+
+      #msgBox {
+        display: flex;
+        flex-direction: column; 
+        padding: 15px;
+        max-width: 100%;
+        margin: 10px auto;
+        background-color: white;
+        border-radius: 10px;
+      }
+
+      #msgBox > div {
+        width: 90%; 
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: whitesmoke;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      #msgBox p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: black;
+      }
+
+
+
+    .highlight {
+      background-color: #c1e2ff;
+      font-weight: bold; 
+    }
+
+
       @media (max-width: 768px) {
         /* 반응형 헤더 */
         header {
@@ -240,6 +306,18 @@
           border-radius: 10px;
           margin: 2px 0;
         }
+
+        #userBox {
+    justify-content: center; /* 모바일에서는 중앙 정렬 */
+  }
+
+  #userBox > div {
+    flex: 0 0 100%; /* 모바일에서 가로로 한 줄에 하나씩 배치 */
+    height: auto; /* 높이를 자동으로 조정 */
+    margin-bottom: 10px;
+  }
+
+  
 
       }
       #mainSearchBox {
@@ -352,7 +430,7 @@
 
 
         <div id="main_page">
-          <div id="image"><img src="./images/main.png" alt="bear"></div>
+          <!-- <div id="image"><img src="./images/main.png" alt="bear"></div> -->
           <div id="description">
             <p>프로젝트별 특정 주제의 그룹 대화는 "토픽"</p>
             <p>1:1 또는 그룹 대화는 "검색"을 이용해 보세요.</p>
@@ -374,25 +452,24 @@
         <!-- 채팅방 -->
         <div id="main_chat" hidden>
           <div id="user-container"><p id="nickname"></div>
-            <div id="wrapper">
-              <div id="display-container">
+            <!-- <div id="wrapper">
+              <div id="display-container"> -->
 
 
 
                     <div class="msg-container">
                         <div class="talk">
                             <div type="text" class="nickname"></div>
-                            <ul class="chatting-list">
-                                <li>안녕하세요</li>
-                            </ul>
+                            <p class="chatting-list">
+                            </p>
                         </div>
                     </div>
 
 
 
 
-              </div>  
-            </div>
+              <!-- </div>  
+            </div> -->
           <div id="send">
               <input type="text" id="chatting-input" />
               <button id="send-button">전송</button>
@@ -429,7 +506,7 @@
 
           })();
     /*********1. socket 열기. 내 소켓 아이디 저장*/
-    // const socket = io();
+    const socket = io();
     // socket.emit('login', {username, email});
     
     /*************검색 start(sim)********************/
@@ -529,45 +606,56 @@
               // currentIndex--; //currentIndex = event.state.index;과 중복되므로 삭제.
           }
       };
-    
-      // 검색 입력 이벤트 핸들러
+
+
+     // 하이라이트 함수(검색 시 동일 내용 하이라이트)
+      function highlightText(searchTerm, content) {
+        if (!searchTerm) return content; // 검색어가 없을 때는 원본
+        const regex = new RegExp(`(${searchTerm})`, 'gi'); // 검색어 찾기
+        return content.replace(regex, '<span class="highlight">$1</span>'); // 일치하는 부분 <span>
+      }
+
+      // 검색 입력 이벤트 핸들러 수정
       search.addEventListener('keyup', () => {
-          if (search.value.length >= 2) {
-              const data = { search: search.value };
-              axios({
-                  method: 'get',
-                  url: `/api/colla/search/${data.search}`,
-              }).then((res) => {
-                  if (res.data.result) {
-                      userBox.innerHTML = '';
-                      msgBox.innerHTML = '';
-                      res.data.userData.forEach(value => {
-                          userBox.innerHTML +=
-                              `<div id="findByUsername" onclick="clickFindByUsername()">
-                                  <p>이름: ${value.username}</p>
-                                  <p>이메일: ${value.email}</p>
-                                  <p>부서: ${value.department}</p>
-                                  <br>
-                              </div>`;
-                      });
-                      res.data.msgData.forEach(value => {
-                          msgBox.innerHTML +=
-                              `<div id="findByTalk" style="display: flex; flex-direction: row;" onclick="clickFindByTalk()">
-                                  <p>${value.user.username}</p>
-                                  <p>(${value.user.department})</p>
-                                  <p>: ${value.talk}</p>
-                              </div>`;
-                      });
-                  } else {
-                      userBox.innerText = '검색결과가 없습니다.';
-                  }
+        if (search.value.length >= 2) {
+          const searchTerm = search.value;
+          axios({
+            method: 'get',
+            url: `/api/colla/search/${searchTerm}`,
+          }).then((res) => {
+            if (res.data.result) {
+              userBox.innerHTML = '';
+              msgBox.innerHTML = '';
+
+              res.data.userData.forEach(value => {
+                userBox.innerHTML +=
+                  `<div id="findByUsername" onclick="clickFindByUsername()">
+                      <p>이름: ${highlightText(searchTerm, value.username)}</p>
+                      <p>이메일: ${highlightText(searchTerm, value.email)}</p>
+                      <p>부서: ${highlightText(searchTerm, value.department)}</p>
+                      <br>
+                  </div>`;
+
               });
-          } else {
-              userBox.innerText = '검색어는 두글자 이상 적어주세요';
-          }
-          main_page.hidden = true;
-          userBox.hidden = false;
-          msgBox.hidden = false;
+
+              res.data.msgData.forEach(value => {
+                msgBox.innerHTML +=
+                  `<div id="findByTalk" style="display: flex; flex-direction: row;" onclick="clickFindByTalk()">
+                      <p>${highlightText(searchTerm, value.user.username)}</p>
+                      <p>(${highlightText(searchTerm, value.user.department)})</p>
+                      <p>: ${highlightText(searchTerm, value.talk)}</p>
+                  </div>`;
+              });
+            } else {
+              userBox.innerText = '검색결과가 없습니다.';
+            }
+          });
+        } else {
+          userBox.innerText = '검색어는 두 글자 이상 입력해주세요';
+        }
+        main_page.hidden = true;
+        userBox.hidden = false;
+        msgBox.hidden 
           // saveState(); // 상태를 저장합니다.
       });
     
@@ -587,17 +675,21 @@
           saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
     
           const div = event.currentTarget;
+
     
           //상대방 정보
           const ptags = div.querySelectorAll('p');
           const username = ptags[0].textContent;
           const email = ptags[1].textContent;
+          const department = ptags[2].textContent;
+          console.log(email);
+          
+          // const user = 
           //이 위까지
     
           //내 정보는 뭐지..?
           //const myname;
     
-          const department = ptags[2].textContent;
           const userContainer = document.querySelector('#user-container');
           const input = document.querySelector('#chatting-input');
           const button = document.querySelector('#send-button');
@@ -611,7 +703,9 @@
           
           //****************소켓
           // 방 이름 생성
-          // const chat = generateRandomString(255);
+          const chat = generateRandomString(255);
+          console.log(chat);
+          
           // axios({
           //       method: 'post',
           //       url: '/api/colla/createchat',
@@ -623,40 +717,48 @@
           //       url: '/api/colla/createuc',
           //       // data : {userId : , chatId : },
           // });
-          // socket.emit('join chat', {chat});
+          socket.emit('join chat', chat);
           
           
     
     
     
           // /* 3. 룸 내 메세지 브로드캐스트 */
-          // //const myname : 내 사용자 이름, 부서
-          // button.addEventListener('click', function() {
-          //   socket.emit('chat message', {myname, value : input.value});
-          //   input.value="";
-          // });
+          //const myname : 내 사용자 이름, 부서
+          button.addEventListener('click', (function() {
+            console.log("client chat message: ", username, input.value);
+            
+            socket.emit('chat message', {username, value : input.value});
+            input.value="";
+          }));
     
     
-          // socket.on('chat message', function(myname, value) {
-          //   const talk = document.createElement('div');
-          //   talk.className = 'talk';
+          socket.on('chat message', (arg) => {
+            const {username, value} = arg;
+            const talk = document.createElement('div');
+            talk.classList.add('talk');
     
-          //   const nickname = document.createElement('div');
-          //   nickname.className = 'nickname';
-          //   nickname.textContent = myname;
+            const msgContainer =document.querySelector('.msg-container')
+            const p = document.createElement('p')
+            p.classList.add('eachMsg')
+            p.textContent=`${username}: ${value}`;
+            talk.appendChild(p);
+            msgContainer.appendChild(talk);
+            // const nickname = document.createElement('p');
+            // nickname.classList.add('nickname');
+            // nickname.textContent = username;
     
-          //   const message = document.createElement('p');
-          //   message.className = 'm';
-          //   message.textContent = value;
-          //   message.className = 'chatting-list';
+            // const message = document.createElement('p');
+            // message.textContent = value;
+            // message.classList.add('chatting-list');
     
-          //   talk.appendChild(nickname);
-          //   talk.appendChild(message);
+            // talk.appendChild(nickname);
+            // talk.appendChild(message);
     
-          //   document.querySelector('.msg-containter').appendChild(talk);
-          // });
+            // document.querySelector('.msg-container').appendChild(talk);
+          });
     
-          // /* 4. 클릭한 상대 chat에 초대 */
+          /* 4. 클릭한 상대 chat에 초대 */
           // socket.emit('invite chat', {username, chat});
           // socket.on('invited', function(chat) {
           //   alert(`You were invited to room: ${room}`);
@@ -665,11 +767,12 @@
           // axios({
           //       method: 'post',
           //       url: '/api/colla/createuc',
-          //       data : {userId : , chatId : },
+          //       // data : {userId : , chatId : },
           // });
     
       }
     
+
       // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
       function clickFindByTalk() {
           saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
