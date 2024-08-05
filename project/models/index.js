@@ -17,8 +17,8 @@ db.comment = require('./comment')(sequelize)
 
 db.user.hasMany(db.groupuser,{foreignKey:'userId', onDelete:'CASCADE'})
 db.groupuser.belongsTo(db.user,{foreignKey:'userId', onDelete:'CASCADE'})
-db.group.hasMany(db.groupuser,{foreignKey:'groupId', onDelete:'CASCADE'})
-db.groupuser.belongsTo(db.group,{foreignKey:'groupId', onDelete:'CASCADE'})
+db.group.hasMany(db.groupuser,{foreignKey:'companyName', onDelete:'CASCADE'})
+db.groupuser.belongsTo(db.group,{foreignKey:'companyName', onDelete:'CASCADE'})
 
 
 
