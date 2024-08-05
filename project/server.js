@@ -12,6 +12,9 @@ const server = http.createServer(app);
 const io = socketIo(server);
 app.set('view engine', 'ejs');
 app.set('views', './views');
+app.use(express.json());
+
+
 
 //aws 설정
 // aws.config.update({
