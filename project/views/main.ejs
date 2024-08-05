@@ -318,7 +318,7 @@
           <div id="myProfile">
             <div class="profileBox">
               <i class="fa-solid fa-user"></i>
-              <a href="#" style="margin-left: 10px">임수정</a>
+              <div id="connectUser"></div>
               <i class="fa-solid fa-gear" id="gearIcon2"></i>
             </div>
             <ul>
@@ -413,6 +413,21 @@
 
 
   <script>
+    (async function () {
+              const res = await axios({
+                  method: 'get',
+                  url: '/api/colla/connect',
+                  headers: {
+                      Authorization: `Bearer ${localStorage.getItem('token')}`,
+                  },
+              });
+              const { username } = res.data.response;
+              console.log('로그인 유지되는 유저 이름', username);
+              
+
+              document.querySelector('#connectUser').innerHTML = username;
+
+          })();
     /*********1. socket 열기. 내 소켓 아이디 저장*/
     // const socket = io();
     // socket.emit('login', {username, email});
@@ -727,6 +742,9 @@
             const sideBar = document.getElementById("sideBar");
             sideBar.classList.toggle("show");
           });
+
+
+        
       </script>
   </body>
 </html>

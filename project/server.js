@@ -8,6 +8,7 @@ const PORT = 8000;
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
+app.use(express.json());
 // const socketIo = require('socket.io');
 // const http = require('http');
 // const server = http.createServer(app);
