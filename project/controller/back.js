@@ -1,4 +1,4 @@
-const { user, msg } = require('../models');
+const { user, msg, chat, userchat } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {Op,where} = require('sequelize');
@@ -81,4 +81,66 @@ const search = async(req,res) =>{
     }
 }
 
-module.exports = {signup,login, search}
+//사용자 한명 찾기 : 사용자 이메일로. get
+const searchUser = async(req, res) => {
+    try{
+        const {email} = req.params;
+        const result = await user.findOne({where: {email}});
+        res.json({result : true, result});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+} 
+//chat 한개 찾기 : chat으로. get
+const searchChat = async(req, res) => {
+    try{
+        console.log(req.params);  
+        const {chatName} = req.params;
+        const result = await chat.findOne({where: {chat:chatName}});
+        res.json({result : true, result});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+} 
+
+//채팅방 목록 생성 : post
+const createChat = async(req, res) => {
+    try{
+        const {chatName} = req.body;
+        const result = await chat.create({chat:chatName});
+        console.log('chat created: ', result);
+        // res.json({result : true, result});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+}
+
+//사용자_채팅방목록 생성 : post
+const createUserChat = async(req, res) => {
+    try {
+        const {userId, chatId} = req.body;
+        const result = await userchat.create({userId, chatId});
+        console.log('result: ', result);
+        // res.json({result : true, result});
+    }catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+}
+
+//채팅내용 생성 : post
+const createMsg = async(req, res) => {
+    try{
+        const {userId, chatId, talk} = req.body;
+        const result = await msg.create({userId, chatId, talk});
+        console.log('result: ', result);
+        
+    }catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+}
+module.exports = {signup,login, search, searchUser, searchChat, createChat, createUserChat, createMsg}

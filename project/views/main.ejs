@@ -8,6 +8,7 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 
     <style>
       * {
@@ -241,6 +242,7 @@
     #main_page {
       border: 1px solid black;
     }
+
     </style>
   </head>
 
@@ -249,7 +251,7 @@
   <body>
     <header>
       <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
-      <a href="" id="logoLink" onclick="clickLogo()">colla</a>
+      <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
 
 
 
@@ -257,10 +259,11 @@
       <div id="search1">
         <i class="fa-solid fa-magnifying-glass"></i>
         <div id="mainSearchBox">
-          <input type="text" id="mainSearch" placeholder="검색" onkeyup="enterkey()">
+          <input type="text" id="mainSearch" placeholder="검색">
           <div id="searchBox"></div>
-          <div id="userBox"></div>
-          <div id="msgBox" style="display: flex; flex-direction: column;"></div>
+          <!-- 아래 수정. 위치 이동 -->
+          <!-- <div id="userBox"></div> -->
+          <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
         </div>
       </div>
 
@@ -331,34 +334,42 @@
             <p>프로젝트별 특정 주제의 그룹 대화는 "토픽"</p>
             <p>1:1 또는 그룹 대화는 "검색"을 이용해 보세요.</p>
           </div>
+          </div>
         </div>
 
-        <div id="userSearchBox">
-
+        <!-- 헤더로부터 위치 이동 -->
+        <div id="userBox" hidden></div>
+        <!-- <div id="userSearchBox"> -->
+          <p></p>
         </div>
-        <div id="msgSearchBox">
-
+        <!-- 헤더로부터 위치 이동 -->
+        <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
+        <!-- <div id="msgSearchBox"> -->
+          <p></p>
         </div>
         
+        <!-- 채팅방 -->
         <div id="main_chat" hidden>
-            <!-- 여기부터 해야됨. -->
-          <div id="user-container"><p id="nickname">임꺽정 (인사팀)</div>
+          <div id="user-container"><p id="nickname"></div>
             <div id="wrapper">
-              
-                <div id="display-container">
+              <div id="display-container">
+
+
 
                     <div class="msg-container">
                         <div class="talk">
-                            <div type="text" class="nickname">임꺽정 (인사팀)</div>
+                            <div type="text" class="nickname"></div>
                             <ul class="chatting-list">
                                 <li>안녕하세요</li>
                             </ul>
                         </div>
                     </div>
 
-                </div>  
+
+
+
+              </div>  
             </div>
-          
           <div id="send">
               <input type="text" id="chatting-input" />
               <button id="send-button">전송</button>
@@ -379,9 +390,12 @@
 
 
   <script>
-/*************여기 부터 검색(sim)********************/
-/*=============================================*/
-  // detailSearch.ejs 지형님 파일에서
+/*********1. socket 열기. 내 소켓 아이디 저장*/
+// const socket = io();
+// socket.emit('login', {username, email});
+
+/*************검색 start(sim)********************/
+  // detailSearch.ejs 파일에서
   const test = window.location.pathname
   console.log(test,'패스네임');
   console.log('아아아');
@@ -391,152 +405,257 @@
   const searchWord = decodeURI(searchWord1) 
   console.log(searchWord);
 
+  
+
   const search = document.querySelector('#mainSearch');
-  const main_page = document.querySelector('#main_page');
-
-  function detailSearch() {
-    //검색 버튼 눌렀을때 onclick
-    const searchValue = search.value;
-    console.log('서치밸류', searchValue);
-    // document.location.href = `/main/${encodeURI(searchValue)}`;
-    enterkey(searchValue);
-  }
-
-  //엔터키 누르면
-  function enterkey(searchValue) {
-    if (window.event.keyCode == 13) {
-      const searchValue = search.value;
-      console.log('서치밸류 엔터', searchValue);
-      //엔터 치면 이동하는 화면
-      //hidden처리 할 곳
-      main_page.hidden = true;
-      // document.location.href = `/main/${encodeURI(searchValue)}`;
-
-
-
-      //****detailSearch.ejs script시작부분 const, console 바로 아랫부분
-      axios({
-          method: 'get',
-          url: `/api/colla/search/${searchWord}`,
-      }).then((res) => {
-          if (res.data.result) {
-            userBox.innerHTML = ''
-            msgBox.innerHTML = ''
-            console.log(res.data, '확인');
-            //searchBox.innerHTML = res.data.data;
-
-            res.data.userData.forEach(value => {
-              userSearchBox.innerHTML +=
-                `
-                <div id="findByUsername">
-                    <p>이름: ${value.username}</p>
-                    <p>이메일: ${value.email}</p>
-                    <p>부서: ${value.department}</p>
-                    <br>
-                </div>
-                `
-            })
-            res.data.msgData.forEach(value => {
-              msgSearchBox.innerHTML +=
-                `<div id ="findByTalk" style="display: flex; flex-direction: row;">
-                    <p> ${value.user.username}</p>
-                    <p>(${value.user.department})</p>
-                    <p>: ${value.talk}</p>
-                </div>
-                `
-            })
-          } else { userBox.innerText = '검색결과가 없습니다.' }
-        })
-      
-
-
-    }
-  }
-//헤더 검색할때 자동완성 부분
-  search.addEventListener('keyup', () => {
   const searchBox = document.querySelector('#searchBox');
-    const userBox = document.querySelector('#userBox');
-    const msgBox = document.querySelector('#msgBox');
 
-    if (search.value.length >= 2) {
-      const data = { search: search.value }
-      console.log('데이터는 뭐지?', data);
-      console.log('데이터 전송', search.value.length)
-      axios({
-        method: 'get',
-        url: `/api/colla/search/${data.search}`,
-      }).then((res) => {
-        if (res.data.result) {
-          userBox.innerHTML = ''
-          msgBox.innerHTML = ''
-          console.log(res.data, '확인');
-          //searchBox.innerHTML = res.data.data;
+  const main_page = document.querySelector('#main_page');
+  const userBox = document.querySelector('#userBox');
+  const msgBox = document.querySelector('#msgBox');
+  const main_chat = document.querySelector('#main_chat');
 
-          res.data.userData.forEach(value => {
-            userBox.innerHTML +=
-              `<div id="findByUsername">
-                    <p>이름: ${value.username}</p>
-                    <p>이메일: ${value.email}</p>
-                    <p>부서: ${value.department}</p>
-                    <br>
-                </div>
-              `
-          })
-          res.data.msgData.forEach(value => {
-            msgBox.innerHTML +=
-              `<div id ="findByTalk" style="display: flex; flex-direction: row;">
-                  <p> ${value.user.username}</p>
-                  <p>(${value.user.department})</p>
-                  <p>: ${value.talk}</p>
-              </div>
-              `
-          })
+  let states = []; // 상태를 저장할 배열
+  let currentIndex = 0; // 현재 상태의 인덱스
 
-        } else { userBox.innerText = '검색결과가 없습니다.' }
-      })
+  // 초기 상태를 저장하는 함수
+  function saveInitialState() {
+      const initialState = {
+          mainPageHidden: main_page.hidden,
+          userBoxHidden: userBox.hidden,
+          msgBoxHidden: msgBox.hidden,
+          mainChatHidden: main_chat.hidden,
+          mainSearchContent: search.value,
+          mainSearchUnable: search.disabled
+      };
+      states.push(initialState);
+      console.log("초기 상태 저장: ", initialState);
+  }
 
-    } else { userBox.innerText = '검색어는 두글자 이상 적어주세요' }
-  })
+  // 상태를 저장하는 함수
+  function saveState() {
+      const state = {
+          mainPageHidden: main_page.hidden,
+          userBoxHidden: userBox.hidden,
+          msgBoxHidden: msgBox.hidden,
+          mainChatHidden: main_chat.hidden,
+          mainSearchContent: search.value,
+          mainSearchUnable: search.disabled
+      };
+      states.push(state);
+      currentIndex++;
+      history.pushState({ index: currentIndex }, null, null);
+      console.log("상태 저장: ", state);
+      console.log("현재 인덱스: ", currentIndex);
+  }
 
-  function detailSearch() {
-    const searchValue = search.value;
-    console.log('서치밸류', searchValue);
-    // document.location.href = `/main/${encodeURI(searchValue)}`;
+  // 상태 복원 함수
+  function applyState(index) {
+      const state = states[index];
+      main_page.hidden = state.mainPageHidden;
+      userBox.hidden = state.userBoxHidden;
+      msgBox.hidden = state.msgBoxHidden;
+      main_chat.hidden = state.mainChatHidden;
+      search.value = state.mainSearchContent;
+      search.disabled = state.mainSearchUnable;
+      console.log("상태 복원 인덱스: ", index);
+  }
+
+  // 페이지가 로드될 때 초기 상태를 저장합니다.
+  window.onload = function() {
+      saveInitialState();
+      history.replaceState({ index: currentIndex }, null, null); // 현재 상태를 히스토리에 저장
+  };
+
+  // 뒤로가기 버튼을 눌렀을 때 상태를 복원
+  window.onpopstate = function(event) {
+      if (event.state && event.state.index !== undefined) {
+          currentIndex = event.state.index;
+
+          // 초기 상태(index=0)에 도달했을 때 뒤로가기를 멈추는 건데...안된다..!
+          if (currentIndex <= 0) {
+              currentIndex = 0;
+              // applyState(currentIndex);
+              console.log("Reached initial state, can't go back further.");
+              // window.location.href = '/main'
+              // 왜 안돼??? 0 이하일때도 계속 다른 페이지로 이동. 
+              // 로그인 페이지 연결한 후 다시 확인하기.
+              return ;
+          }
+
+          applyState(currentIndex);
+          console.log("뒤로가기(복원) 인덱스", currentIndex);
+
+          history.replaceState({index : currentIndex}, null, null);
+          // currentIndex 감소
+          // currentIndex--; //currentIndex = event.state.index;과 중복되므로 삭제.
+      }
+  };
+
+  // 검색 입력 이벤트 핸들러
+  search.addEventListener('keyup', () => {
+      if (search.value.length >= 2) {
+          const data = { search: search.value };
+          axios({
+              method: 'get',
+              url: `/api/colla/search/${data.search}`,
+          }).then((res) => {
+              if (res.data.result) {
+                  userBox.innerHTML = '';
+                  msgBox.innerHTML = '';
+                  res.data.userData.forEach(value => {
+                      userBox.innerHTML +=
+                          `<div id="findByUsername" onclick="clickFindByUsername()">
+                              <p>이름: ${value.username}</p>
+                              <p>이메일: ${value.email}</p>
+                              <p>부서: ${value.department}</p>
+                              <br>
+                          </div>`;
+                  });
+                  res.data.msgData.forEach(value => {
+                      msgBox.innerHTML +=
+                          `<div id="findByTalk" style="display: flex; flex-direction: row;" onclick="clickFindByTalk()">
+                              <p>${value.user.username}</p>
+                              <p>(${value.user.department})</p>
+                              <p>: ${value.talk}</p>
+                          </div>`;
+                  });
+              } else {
+                  userBox.innerText = '검색결과가 없습니다.';
+              }
+          });
+      } else {
+          userBox.innerText = '검색어는 두글자 이상 적어주세요';
+      }
+      main_page.hidden = true;
+      userBox.hidden = false;
+      msgBox.hidden = false;
+      // saveState(); // 상태를 저장합니다.
+  });
+
+  //난수 발생 함수
+  function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
+  function clickFindByUsername() {
+      saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
+
+      const div = event.currentTarget;
+
+      //상대방 정보
+      const ptags = div.querySelectorAll('p');
+      const username = ptags[0].textContent;
+      const email = ptags[1].textContent;
+      //이 위까지
+
+      //내 정보는 뭐지..?
+      //const myname;
+
+      const department = ptags[2].textContent;
+      const userContainer = document.querySelector('#user-container');
+      const input = document.querySelector('#chatting-input');
+      const button = document.querySelector('#send-button');
+      //채팅방 상단 이름
+      userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
+      userBox.hidden = true;
+      msgBox.hidden = true;
+      main_chat.hidden = false;
+      search.disabled = true;
+      saveState(); // 상태를 저장합니다.
+      
+      //****************소켓
+      //방 이름 생성
+      // const chat = generateRandomString(255);
+      // axios({
+      //       method: 'post',
+      //       url: '/api/colla/createchat',
+      //       data : {chat},
+      // });
+      // /* 2. 방 입장*/
+      // axios({
+      //       method: 'post',
+      //       url: '/api/colla/createuc',
+      //       // data : {userId : , chatId : },
+      // });
+      // socket.emit('join chat', {chat});
+      
+      
+
+
+
+      // /* 3. 룸 내 메세지 브로드캐스트 */
+      // //const myname : 내 사용자 이름, 부서
+      // button.addEventListener('click', function() {
+      //   socket.emit('chat message', {myname, value : input.value});
+      //   input.value="";
+      // });
+
+
+      // socket.on('chat message', function(myname, value) {
+      //   const talk = document.createElement('div');
+      //   talk.className = 'talk';
+
+      //   const nickname = document.createElement('div');
+      //   nickname.className = 'nickname';
+      //   nickname.textContent = myname;
+
+      //   const message = document.createElement('p');
+      //   message.className = 'm';
+      //   message.textContent = value;
+      //   message.className = 'chatting-list';
+
+      //   talk.appendChild(nickname);
+      //   talk.appendChild(message);
+
+      //   document.querySelector('.msg-containter').appendChild(talk);
+      // });
+
+      // /* 4. 클릭한 상대 chat에 초대 */
+      // socket.emit('invite chat', {username, chat});
+      // socket.on('invited', function(chat) {
+      //   alert(`You were invited to room: ${room}`);
+      // });
+      // //상대방 db입력
+      // axios({
+      //       method: 'post',
+      //       url: '/api/colla/createuc',
+      //       data : {userId : , chatId : },
+      // });
 
   }
-/*=============================================*/
-/*************여기까지 검색********************/
 
+  // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
+  function clickFindByTalk() {
+      saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
 
+      const div = event.currentTarget;
+      const ptags = div.querySelectorAll('p');
+      const username = ptags[0].textContent;
+      const department = ptags[1].textContent;
+      const talk = ptags[2].textContent;
+      const userContainer = document.querySelector('#user-container');
+      userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
 
-/*************검색 결과 눌렀을 때, 방으로 이동하는 
- * 페이지 이동(hidden)처리 함수* *********/
-const main_chat = document.querySelector('#main_chat');
-function clickFindByUsername() {
-      /**클릭한 div의 값도 보내기.*/
+      userBox.hidden = true;
+      msgBox.hidden = true;
       main_chat.hidden = false;
-      userSearchBox.hidden = true;
-      msgSearchBox.hidden = true;
-      
-}
-function clickFindByTalk() {
-      /**클릭한 div의 값도 보내기.*/
-      main_chat.hidden = false;
-      userSearchBox.hidden = true;
-      msgSearchBox.hidden = true;
-}
-//로고 클릭하면
-function clickLogo() {
-      main_page.hidden = false;
-      main_chat.hidden = true;
-}
-/*************페이지 이동(hidden)처리 함수 끝**********/
+      search.disabled = true;
+      saveState(); // 상태를 저장합니다.
 
+      //****************소켓 연결
+  }
 
+  /* 5. 로그아웃 -> 소켓 연결 해제
 
-
-
-
+  
 /**헤더 부분**/
     function toggleSubCategory(element) {
       element.classList.toggle("expanded");
