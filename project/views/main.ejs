@@ -352,7 +352,7 @@
 
 
         <div id="main_page">
-          <div id="image"><img src="./images/main.png" alt="bear"></div>
+          <!-- <div id="image"><img src="./images/main.png" alt="bear"></div> -->
           <div id="description">
             <p>프로젝트별 특정 주제의 그룹 대화는 "토픽"</p>
             <p>1:1 또는 그룹 대화는 "검색"을 이용해 보세요.</p>
@@ -374,25 +374,24 @@
         <!-- 채팅방 -->
         <div id="main_chat" hidden>
           <div id="user-container"><p id="nickname"></div>
-            <div id="wrapper">
-              <div id="display-container">
+            <!-- <div id="wrapper">
+              <div id="display-container"> -->
 
 
 
                     <div class="msg-container">
                         <div class="talk">
                             <div type="text" class="nickname"></div>
-                            <ul class="chatting-list">
-                                <li>안녕하세요</li>
-                            </ul>
+                            <p class="chatting-list">
+                            </p>
                         </div>
                     </div>
 
 
 
 
-              </div>  
-            </div>
+              <!-- </div>  
+            </div> -->
           <div id="send">
               <input type="text" id="chatting-input" />
               <button id="send-button">전송</button>
@@ -414,7 +413,7 @@
 
   <script>
     /*********1. socket 열기. 내 소켓 아이디 저장*/
-    // const socket = io();
+    const socket = io();
     // socket.emit('login', {username, email});
     
     /*************검색 start(sim)********************/
@@ -515,6 +514,7 @@
           }
       };
     
+
       // 검색 입력 이벤트 핸들러
       search.addEventListener('keyup', () => {
           if (search.value.length >= 2) {
@@ -529,9 +529,9 @@
                       res.data.userData.forEach(value => {
                           userBox.innerHTML +=
                               `<div id="findByUsername" onclick="clickFindByUsername()">
-                                  <p>이름: ${value.username}</p>
-                                  <p>이메일: ${value.email}</p>
-                                  <p>부서: ${value.department}</p>
+                                  <p>${value.username}</p>
+                                  <p>${value.email}</p>
+                                  <p>${value.department}</p>
                                   <br>
                               </div>`;
                       });
@@ -572,17 +572,21 @@
           saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
     
           const div = event.currentTarget;
+
     
           //상대방 정보
           const ptags = div.querySelectorAll('p');
           const username = ptags[0].textContent;
           const email = ptags[1].textContent;
+          const department = ptags[2].textContent;
+          console.log(email);
+          
+          // const user = 
           //이 위까지
     
           //내 정보는 뭐지..?
           //const myname;
     
-          const department = ptags[2].textContent;
           const userContainer = document.querySelector('#user-container');
           const input = document.querySelector('#chatting-input');
           const button = document.querySelector('#send-button');
@@ -596,7 +600,9 @@
           
           //****************소켓
           // 방 이름 생성
-          // const chat = generateRandomString(255);
+          const chat = generateRandomString(255);
+          console.log(chat);
+          
           // axios({
           //       method: 'post',
           //       url: '/api/colla/createchat',
@@ -608,40 +614,48 @@
           //       url: '/api/colla/createuc',
           //       // data : {userId : , chatId : },
           // });
-          // socket.emit('join chat', {chat});
+          socket.emit('join chat', chat);
           
           
     
     
     
           // /* 3. 룸 내 메세지 브로드캐스트 */
-          // //const myname : 내 사용자 이름, 부서
-          // button.addEventListener('click', function() {
-          //   socket.emit('chat message', {myname, value : input.value});
-          //   input.value="";
-          // });
+          //const myname : 내 사용자 이름, 부서
+          button.addEventListener('click', (function() {
+            console.log("client chat message: ", username, input.value);
+            
+            socket.emit('chat message', {username, value : input.value});
+            input.value="";
+          }));
     
     
-          // socket.on('chat message', function(myname, value) {
-          //   const talk = document.createElement('div');
-          //   talk.className = 'talk';
+          socket.on('chat message', (arg) => {
+            const {username, value} = arg;
+            const talk = document.createElement('div');
+            talk.classList.add('talk');
     
-          //   const nickname = document.createElement('div');
-          //   nickname.className = 'nickname';
-          //   nickname.textContent = myname;
+            const msgContainer =document.querySelector('.msg-container')
+            const p = document.createElement('p')
+            p.classList.add('eachMsg')
+            p.textContent=`${username}: ${value}`;
+            talk.appendChild(p);
+            msgContainer.appendChild(talk);
+            // const nickname = document.createElement('p');
+            // nickname.classList.add('nickname');
+            // nickname.textContent = username;
     
-          //   const message = document.createElement('p');
-          //   message.className = 'm';
-          //   message.textContent = value;
-          //   message.className = 'chatting-list';
+            // const message = document.createElement('p');
+            // message.textContent = value;
+            // message.classList.add('chatting-list');
     
-          //   talk.appendChild(nickname);
-          //   talk.appendChild(message);
+            // talk.appendChild(nickname);
+            // talk.appendChild(message);
     
-          //   document.querySelector('.msg-containter').appendChild(talk);
-          // });
+            // document.querySelector('.msg-container').appendChild(talk);
+          });
     
-          // /* 4. 클릭한 상대 chat에 초대 */
+          /* 4. 클릭한 상대 chat에 초대 */
           // socket.emit('invite chat', {username, chat});
           // socket.on('invited', function(chat) {
           //   alert(`You were invited to room: ${room}`);
@@ -650,11 +664,12 @@
           // axios({
           //       method: 'post',
           //       url: '/api/colla/createuc',
-          //       data : {userId : , chatId : },
+          //       // data : {userId : , chatId : },
           // });
     
       }
     
+
       // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
       function clickFindByTalk() {
           saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
