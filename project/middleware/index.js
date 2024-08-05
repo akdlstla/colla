@@ -10,7 +10,9 @@ exports.auth = (req, res, next) => {
         //jwt인증
         jwt.verify(token, process.env.LOGSECRET, (err, decode) => {
             if (err) {
-                return res.status(403).json({ result: false });
+
+                return res.status(403).json({ result: false, message: "토큰오류" });
+
             }
             req.userInfo = decode; //다음 미들웨어로 전달하는값
             next();
@@ -18,4 +20,6 @@ exports.auth = (req, res, next) => {
     } else {
         return res.status(401).json({ result: false });
     }
+
 };
+

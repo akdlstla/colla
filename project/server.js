@@ -15,7 +15,6 @@ app.set('views', './views');
 app.use(express.json());
 
 
-
 //aws 설정
 // aws.config.update({
 //     accessKeyId: process.env.ACCESSKEY,
@@ -43,6 +42,7 @@ app.use("/", pageRouter);
 //api 라우터
 const backRouter = require('./routes/back')
 app.use('/api/colla', backRouter)
+
 
 
 

@@ -169,16 +169,16 @@ const createMsg = async(req, res) => {
     }
 }
 
-
 const connectUserFind = async (req, res) => {
     try {
+        console.log("userInfo", req.userInfo)
         const { id } = req.userInfo;
         const result = await user.findByPk(id, {
-            attributes: ['username', 'email'],
-            //include: 쿼리를 실행할때 관련된 모델의 데이터도 함께 조회할 수 있도록하는 옵션
-            //include: [{ model: Profile, attributes: ['username', 'age', 'email'] }],
+            attributes: ['username'],
+           
         });
-        console.log('유저를 찾는 find', result);
+        console.log('파인드 결과값', result);
+
         res.json({ result: true, response: result });
     } catch (error) {
         console.log(error);
