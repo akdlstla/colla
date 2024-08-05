@@ -6,80 +6,87 @@
     <title>COLLA 회원가입</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        .hide {
-            display: none;
-            };
-
-        /* 전체 페이지 스타일 초기화 */
-        * {
+       body {
+        font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
         }
 
-        /* 페이지 배경색 및 중앙 정렬 */
-        body {
-         margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background-color: #f8f9fa;
-        }
-
-        /* 메인 컨테이너 스타일 */
         main {
-        width: 100%;
-        max-width: 400px;
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 타이틀 스타일 */
-        #title {
-        text-align: center;
-        margin-bottom: 20px;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         #title h3 {
-        font-size: 24px;
-        font-weight: bold;
-        color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
         }
 
-        /* 입력 필드 스타일 */
         fieldset {
-        margin-bottom: 15px;
-        border: none;
+            margin-bottom: 15px;
+            border: none;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            transition: border-color 0.3s;
+            }
+        button#next {
+            width: 100%;
+            padding: 10px;
+            background-color: #8ac7da;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f0f0f0;
-        transition: border-color 0.3s;
+        button#next:hover {
+            background-color: #007bff;
         }
 
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-        border-color: #80bdff;
-        outline: none;
+        #formcheck {
+            margin-bottom: 20px;
         }
 
-        /* 메시지 스타일 */
+        #formcheck div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #formcheck input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #f0f0f0;
+        }
+
+        #formcheck label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        #formcheck span {
+            margin-left: auto;
+            font-size: 12px;
+            color: red;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
         .success-message,
         .failure-message,
         .failure-message2,
@@ -87,57 +94,22 @@
         .mismatch-message,
         .company-message,
         .department-message {
-        font-size: 12px;
-        color: red;
-        margin-top: -10px;
-        margin-bottom: 10px;
-        display: none;
+            font-size: 12px;
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
         }
 
-        /* 체크박스 및 라벨 스타일 */
-        #formcheck {
-        margin-bottom: 20px;
+        .success-message{
+            color: #007bff;
         }
 
-        #formcheck div {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
+        .hide {
+            display: none; /* 메시지 숨김 */
         }
 
-        #formcheck input[type="checkbox"] {
-        margin-right: 10px;
-        }
-
-        #formcheck label {
-        font-size: 14px;
-        color: #333;
-        }
-
-        #formcheck span {
-        margin-left: auto;
-        font-size: 12px;
-        color: red;
-        cursor: pointer;
-        text-decoration: underline;
-        }
-
-        /* 버튼 스타일 */
-        button#next {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-        background-color: #8ac7da;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        }
-
-        button#next:hover {
-        background-color: #0056b3;
+        .signup {
+            margin-top: 20px;
         }
 
 
