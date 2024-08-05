@@ -6,9 +6,112 @@
     <title>COLLA 회원가입</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
+       body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        }
+
+        main {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #title h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        fieldset {
+            margin-bottom: 15px;
+            border: none;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            transition: border-color 0.3s;
+            }
+        button#next {
+            width: 100%;
+            padding: 10px;
+            background-color: #8ac7da;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button#next:hover {
+            background-color: #007bff;
+        }
+
+        #formcheck {
+            margin-bottom: 20px;
+        }
+
+        #formcheck div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #formcheck input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #f0f0f0;
+        }
+
+        #formcheck label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        #formcheck span {
+            margin-left: auto;
+            font-size: 12px;
+            color: red;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .success-message,
+        .failure-message,
+        .failure-message2,
+        .strongPassword-message,
+        .mismatch-message,
+        .company-message,
+        .department-message {
+            font-size: 12px;
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .success-message{
+            color: #007bff;
+        }
+
         .hide {
-            display: none;
-            };
+            display: none; /* 메시지 숨김 */
+        }
+
+        .signup {
+            margin-top: 20px;
+        }
+
 
     </style>
 </head>
