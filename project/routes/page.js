@@ -1,5 +1,5 @@
 const express = require("express");
-const { main, signup, terms, personal, login, notice } = require("../controller/page");
+const { main, signup, terms, personal, login, notice, siteinfo } = require("../controller/page");
 
 const router = express.Router();
 
@@ -12,5 +12,6 @@ router.get("/main", main);
 router.get('/terms',terms)
 router.get('/personal',personal)
 router.get('/notice',notice)
+router.get('/siteinfo', siteinfo)
 
 module.exports = router;
