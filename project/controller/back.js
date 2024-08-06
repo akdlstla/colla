@@ -173,7 +173,9 @@ const connectUserFind = async (req, res) => {
         console.log("userInfo", req.userInfo)
         const { id } = req.userInfo;
         const result = await user.findByPk(id, {
+
             attributes: ['username','email', 'id'],
+
         });
         console.log('파인드 결과값', result);
         res.json({ result: true, response: result });

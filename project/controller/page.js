@@ -20,6 +20,10 @@ const notice = (req,res) =>{
 const login = (req,res) =>{
     res.render('login')
   }
-module.exports = { main, signup, terms, personal, login, notice };
+
+const siteinfo = (req,res) =>{
+    res.render('siteinfo')
+}
+module.exports = { main, signup, terms, personal, login, notice , siteinfo};
 
 
