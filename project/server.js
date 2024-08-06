@@ -2,18 +2,18 @@ const express = require('express');
 const db = require('./models');
 const app = express();
 const PORT = 8000;
-// const aws = require('aws-sdk')
-// const multer = require('multer')
-// const multerS3 = require('multer-s3')
-
 const socketIo = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 const io = socketIo(server);
+
+// const aws = require('aws-sdk')
+// const multer = require('multer')
+// const multerS3 = require('multer-s3')
+
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.json());
-
 
 //aws 설정
 // aws.config.update({
@@ -44,59 +44,64 @@ const backRouter = require('./routes/back')
 app.use('/api/colla', backRouter)
 
 
-
-
 /** 1. 소켓 연결 */
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-//   /** 1. 내 소켓 아이디 저장.*/
+  //   /** 1. 내 소켓 아이디 저장.*/
   // socket.on('login', );
+  //   /** 2. 방 입장 */
+  socket.on('join chat', async (arg) => {
+    console.log("join chat server : ", arg);
 
-//   /** 2. 방 입장 */
-  socket.on('join chat', (chat) => {
     //join : 방 없으면 생성, 있으면 입장
-      socket.join(chat);
-      socket.chat = chat;
-      console.log(chat);
-      
-      console.log(`User joined room: ${chat}`);
+    const { username, myId, chatId } = arg;
+    socket.join(username);
+    // socket.chat = chat;
+    console.log(`User joined room: ${username}`);
+    await db.userchat.create({ userId: myId, chatId });
+  });
+
+  //   /** 3. socket 방 초대 */
+  socket.on('invite chat', async (arg) => {
+    const { yourId, chatId } = arg;
+    // usersocket = username.socket.id;
+    // if(usersocket) {
+    //   usersocket.join(chat);
+    //   usersocket.emit('invited', chat);
+    //   console.log(`User ${username} invited to chat ${chat}`);
+    // }
+    //상대방을 방정보에 입력하는 db 저장.
+    //find = await db.chat.findOne({ where: { chat: username } })
+    await db.userchat.create({ userId: yourId, chatId });
+
+  });
+
+  //   /** 4. 룸 내 메세지 브로드캐스트*/
+  socket.on('chat message', async (arg) => {
+    const { myId, value, chatId, username } = arg;
+    console.log("브로드캐스트 테스트", arg);
+    await db.msg.create({ userId: myId, chatId, talk: value });
+    io.to(username).emit('chat message', { myId, value });
+    // console.log("q브로드캐스트 후");
+
   });
 
 
-//   /** 3. 룸 내 메세지 브로드캐스트*/
-  socket.on('chat message', (arg) => {
-    const {username, value} = arg;
-    console.log("server: ", username, value);
-    
-    io.to(socket.chat).emit('chat message', {username, value});
-  });
 
-  
-//   /** 4. socket 방 초대 */
-  socket.on('invite chat', (username, chat) => {
-    usersocket = username.socket.id;
-    if(usersocket) {
-      usersocket.join(chat);
-      usersocket.emit('invited', chat);
-      console.log(`User ${username} invited to chat ${chat}`);
-    }
-  });
 
-// //   /** 5. 로그아웃 : 소켓 연결 해제 */
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//     })
-//   });
 
-})
-
-// 404
-app.use("*", (req, res) => {
-  res.status(404).send("페이지를 찾을 수 없습니다.");
+  //   /** 5. 로그아웃 : 소켓 연결 해제 */
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  })
 });
-db.sequelize.sync({ force: false}).then(() => {
-    server.listen(PORT,() => {
-        console.log(`http://localhost:${PORT}`);
-    })
+
+
+
+
+db.sequelize.sync({ force: false }).then(() => {
+  server.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`);
+  })
 })
