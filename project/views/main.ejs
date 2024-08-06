@@ -493,25 +493,25 @@
   <script>
     (async function () {
 
-const res = await axios({
-  method: 'get',
-  url: '/api/colla/connect',
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
-});
-const {username} = res.data.response;
-//profile에 나오는 dataValues : 는 무시해도 됨
-console.log('유저네임', username);
+      const res = await axios({
+        method: 'get',
+        url: '/api/colla/connect',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      const {username} = res.data.response;
+      //profile에 나오는 dataValues : 는 무시해도 됨
+      console.log('유저네임', username);
 
-document.querySelector('#connectUser').innerHTML = username
+      document.querySelector('#connectUser').innerHTML = username
 
-})();
+      })();
 
-function logout(){
-window.localStorage.removeItem("token")
-document.location.href = ('/login')
-}
+    function logout(){
+    window.localStorage.removeItem("token")
+    document.location.href = ('/login')
+    }
     /*********1. socket 열기. 내 소켓 아이디 저장*/
     // const socket = io();
     // socket.emit('login', {username, email});
