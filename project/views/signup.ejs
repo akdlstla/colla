@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLLA 회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+       body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        }
+
+        main {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #title h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        #boxbox {
+            justify-content: center;
+        }
+
+        fieldset {
+            margin-bottom: 30px;
+            margin-top: 15px;
+            border: none;
+            padding: 0;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            transition: border-color 0.3s;
+            }
+
+        button#next {
+            width: 100%;
+            padding: 10px;
+            background-color: #8ac7da;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button#next:hover {
+            background-color: #007bff;
+        }
+
+        #formcheck {
+            margin-bottom: 20px;
+        }
+
+        #formcheck div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #formcheck input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #f0f0f0;
+        }
+
+        #formcheck label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        #formcheck span {
+            margin-left: auto;
+            font-size: 12px;
+            color: red;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .success-message,
+        .failure-message,
+        .failure-message2,
+        .strongPassword-message,
+        .mismatch-message,
+        .company-message,
+        .department-message {
+            font-size: 12px;
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .success-message{
+            color: #007bff;
+        }
+
+        .hide {
+            display: none; /* 메시지 숨김 */
+        }
+
+        .signup {
+            margin-top: 20px;
+        }
+
+
+        /* 반응형 만들기 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; /* 모바일 환경에서 양쪽 여백 */
+            }
+
+            main {
+                width: 90%; /* 모바일에서 최대 너비 사용 */
+                padding: 15px; /* 패딩을 줄여서 공간 확보 */
+                box-shadow: none; /* 박스 그림자 제거 */
+                margin: 0; /* 자동 여백 제거 */
+            }
+
+            #title h3 {
+                font-size: 20px; /* 타이틀 폰트 크기 줄임 */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            button#next {
+                font-size: 16px; /* 입력 폰트 크기 조정 */
+                padding: 12px; /* 패딩을 조금 늘려서 터치 영역 확대 */
+            }
+
+            #formcheck label,
+            #formcheck span {
+                font-size: 13px; /* 폰트 크기 줄여서 공간 절약 */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <div id="title">
+            <h3>회원가입</h3>
+        </div>
+        <div id="boxbox">
+            <fieldset>
+                <input type="text" id="username" placeholder="본인 이름" />
+            </fieldset>
+    
+    
+            <fieldset>
+              <input type="email" id="email" placeholder="이메일주소" />
+            </fieldset>
+            <div class="success-message hide">사용할 수 있는 이메일 주소입니다</div>
+            <div class="failure-message hide">기존에 가입된 이메일 주소입니다</div>
+            <div class="failure-message2 hide">이메일 형식이 아닙니다</div>
+        
+            <fieldset>
+              <input type="password" id="password" placeholder="비밀번호" />
+            </fieldset>
+            <div class="strongPassword-message hide">3글자 이상 25글자 이하, 영문, 숫자, 특수문자(@$!%*#?&)를 사용하세요</div>
+        
+            <fieldset>
+              <input
+                     type="password"
+                     id="password-retype"
+                     placeholder="비밀번호 확인"
+                     />
+            </fieldset>
+            <div class="mismatch-message hide">비밀번호가 일치하지 않습니다</div>
+        
+            <fieldset>
+                <input type="text" id="companyName" placeholder="회사명" /> 
+            </fieldset>
+            <div class="company-message hide">회사명을 입력하세요</div>
+        
+            <fieldset>
+                <input type="text" id="departmentName" placeholder="부서명" /> 
+            </fieldset>
+            <div class="department-message hide">부서명을 입력하세요</div>
+        </div>
+        
+
+
+        <form id="checkbox">
+            <div id="formcheck">
+                <div>
+                    <input type="checkbox" id="terms">
+                    <label for="terms">[필수] 이용약관</label>
+                    <span onclick="terms()">보기</span>
+                </div>
+                <div>
+                    <input type="checkbox" id="personal">
+                    <label for="personal">[필수] 개인정보 수집 및 이용에 관한 동의</label>
+                    <span onclick="personal()">보기</span>
+                </div>
+            </div>
+        </form>
+
+        <fieldset class="signup">
+          <button id="next" type="button" onclick="signup()">회원가입</button>
+        </fieldset>
+    
+    </main>
+    <script>
+        // 1-1. 가입자 이름 정보 가져오기
+        // 1. 가입자 이름 입력창 정보 가져오기
+        let elInputUsername = document.querySelector('#username'); // input#username
+
+        // 1-2. 이메일 정보 가져오기
+        // 1. 이메일 입력창 정보 가져오기
+        let elInputEmail = document.querySelector('#email'); // input#email
+
+        // 2. 성공 메시지 정보 가져오기
+        let elSuccessMessage = document.querySelector('.success-message'); // div.success-message.hide
+
+        // 3. 실패 메시지 정보 가져오기 (기존에 가입된 이메일 주소)
+        let elFailureMessage = document.querySelector('.failure-message'); // div.failure-message.hide
+
+        // 4. 실패 메시지2 정보 가져오기 (이메일 형식)
+        let elFailureMessageTwo = document.querySelector('.failure-message2'); // div.failure-message2.hide
+
+        // 1-3. 비밀번호 정보 가져오기
+        // 1. 비밀번호 입력창 정보 가져오기
+        let elInputPassword = document.querySelector('#password'); // input#password
+        // 2. 비밀번호 확인 입력창 정보 가져오기
+        let elInputPasswordRetype = document.querySelector('#password-retype'); // input#password-retype
+        // 3. 실패 메시지 정보 가져오기 (비밀번호 불일치)
+        let elMismatchMessage = document.querySelector('.mismatch-message'); // div.mismatch-message.hide
+        // 4. 실패 메시지 정보 가져오기 (8글자 이상, 영문, 숫자, 특수문자 미사용)
+        let elStrongPasswordMessage = document.querySelector('.strongPassword-message'); // div.strongPassword-message.hide
+
+        // 2-1. 이메일(아이디) : 글자 수 제한 (1글자 이상, 100글자 이하)
+        // function emailLength(value) {
+        // return value.length >= 1 && value.length <= 100
+        // };
+
+        // 2-1. 이메일(중복값):
+
+        // 2-2. 이메일(아이디) : 이메일 형식영어 또는 숫자만 가능
+        // const textSpace = /\s/g;        
+          function onlyEmailAddress(str) {
+            
+            return /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/.test(str);
+
+        };
+        // 이메일 - /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i 
+        // return /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/.test(str);
+        // 2-1.(아이디로 사용 할) 이메일주소 유효성 검사(일단 주석)
+        // function emailLength(value) {
+        // return value.length >= 1 && value.length <= 100
+        // };
+
+        // const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
+
+        // function emailValidChk(email){
+        //         if(pattern.test(email) === false){
+        //             return false;
+        //         } else { return true; }
+        //     };
+
+        // function emailCheck(email_address){     
+        //         email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        //         if(!email_regex.test(email_address)){ 
+        //             return false; 
+        //         }else{
+        //             return true;
+        //         }
+        //     }
+
+        // 2-2. 비밀번호 유효성 검사
+        function strongPassword (str) {
+            return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,25}$/.test(str);
+            };
+
+
+        // 최소 3글자 이상이면서 25글자 이하, 알파벳과 숫자 및 특수문자(@$!%*#?&)가 하나 이상 포함될 경우 true, 아니면 false를 리턴한다.
+        
+        // 2-4. 비밀번호 확인 : 비밀번호와 비밀번호 확인 일치
+        function isMatch (password1, password2) {
+            return password1 === password2;
+            };
+        // 비밀번호와 비밀번호 확인이 일치할 경우 true, 아니면 false를 리턴한다
+
+        // 이메일 이벤트
+        elInputEmail.onkeyup = function () {
+        // 값을 입력한 경우
+        if (elInputEmail.value.length !== 0) {
+            // 이메일형식이 아닌 경우
+            if(onlyEmailAddress(elInputEmail.value) === false) {
+            elSuccessMessage.classList.add('hide');
+            elFailureMessage.classList.add('hide');
+            elFailureMessageTwo.classList.remove('hide'); // 이메일형식만 가능합니다
+            }
+            else if (onlyEmailAddress(elInputEmail.value)) {
+            elSuccessMessage.classList.remove('hide'); // 사용할 수 있는 아이디(이메일)입니다
+            elFailureMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+            elFailureMessageTwo.classList.add('hide'); // 실패 메시지2가 가려져야 함
+            }
+
+            // 글자 수가 1~100글자가 아닐 경우
+            // else if(emailLength(elInputEmail.value) === false) {
+            // elSuccessMessage.classList.add('hide'); // 성공 메시지가 가려져야 함
+            // elFailureMessage.classList.remove('hide'); // 아이디는 1~100글자이어야 합니다
+            // elFailureMessageTwo.classList.add('hide'); // 실패 메시지2가 가려져야 함
+            // }
+
+            // 조건을 모두 만족할 경우
+            // else if(idLength(elInputEmail.value) || onlyEmailAddress(elInputUsername.value)) {
+            // elSuccessMessage.classList.remove('hide'); // 사용할 수 있는 아이디입니다
+            // elFailureMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+            // elFailureMessageTwo.classList.add('hide'); // 실패 메시지2가 가려져야 함
+            // }
+        }
+        // 값을 입력하지 않은 경우 (지웠을 때)
+        // 모든 메시지를 가린다.
+        else {
+            elSuccessMessage.classList.add('hide');
+            elFailureMessage.classList.add('hide');
+            elFailureMessageTwo.classList.add('hide');
+        }
+        }
+
+        // 비밀번호 이벤트(3글자 이상 25글자 이하, 영문, 숫자, 특수문자 사용)
+        elInputPassword.onkeyup = function () {
+
+        // console.log(elInputPassword.value);
+        // 값을 입력한 경우
+        if (elInputPassword.value.length !== 0) {
+            if(strongPassword(elInputPassword.value)) {
+                elStrongPasswordMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+            }
+            else {
+                elStrongPasswordMessage.classList.remove('hide'); // 실패 메시지가 보여야 함
+            }
+            }
+        // 값을 입력하지 않은 경우 (지웠을 때)
+        // 모든 메시지를 가린다.
+        else {
+            elStrongPasswordMessage.classList.add('hide');
+            }
+        };
+
+        // 비밀번호 확인 이벤트 (비밀번호와 비밀번호 확인 일치)
+        elInputPasswordRetype.onkeyup = function () {
+
+        // console.log(elInputPasswordRetype.value);
+        if (elInputPasswordRetype.value.length !== 0) {
+        if(isMatch(elInputPassword.value, elInputPasswordRetype.value)) {
+            elMismatchMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+        }
+        else {
+            elMismatchMessage.classList.remove('hide'); // 실패 메시지가 보여야 함
+        }
+        }
+        else {
+        elMismatchMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+        }
+        };
+
+        async function signup() {
+            const terms = document.getElementById('terms')
+            const personal = document.getElementById('personal')
+            const checked1 = terms.checked
+            const checked2 = personal.checked
+            if(checked1 === false || checked2 === false ){
+                alert('이용약관과 개인정보 수집 및 이용에 관한 동의 확인이 되지 않았습니다')
+            } else {
+                if(onlyEmailAddress(elInputEmail.value)&&strongPassword(elInputPassword.value)&&isMatch(elInputPassword.value, elInputPasswordRetype.value)){
+                
+                const data = {
+                username: document.querySelector('#username').value,
+                email: document.querySelector('#email').value,
+                password: document.querySelector('#password').value,
+                company: document.querySelector('#companyName').value,
+                department: document.querySelector('#departmentName').value
+                
+                }
+                alert('회원가입이 완료되었습니다')
+                document.location.href = '/login';
+                const res  = await axios({
+                    method: 'post',
+
+                    url:'/api/colla/signup',
+
+                    data,
+                }).then((res) => {
+                    if (res.data.result) { document.location.href = '/login2' } else {
+                        alert('이메일을 확인해주세용!(자네 이미 가입한게 아닌가?)')
+                    }
+                })
+                } else {
+                    alert('잘못 입력된 값이 있습니다')
+                };
+                }
+        };
+        function terms() {
+            document.location.href = './terms'
+        };
+
+        function personal() {
+            document.location.href = './personal'
+        };
+
+            
+
+    </script>
+</body>
+</html>
