@@ -168,22 +168,18 @@ const createMsg = async(req, res) => {
         res.status(500).json({ result: false, message: '서버오류' });
     }
 }
-
 const connectUserFind = async (req, res) => {
     try {
         console.log("userInfo", req.userInfo)
         const { id } = req.userInfo;
         const result = await user.findByPk(id, {
-            attributes: ['username'],
-           
+            attributes: ['username',],
         });
         console.log('파인드 결과값', result);
-
         res.json({ result: true, response: result });
     } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
-
 module.exports = {signup,login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind}
