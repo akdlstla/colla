@@ -212,109 +212,129 @@
 
     .highlight {
       background-color: #c1e2ff;
-      font-weight: bold; 
+      font-weight: bold;
     }
 
 
-      @media (max-width: 768px) {
-        /* 반응형 헤더 */
-        header {
-          justify-content: space-between;
-          border-bottom: none;
-        }
-        header .fa-bars {
-          display: block !important;
-          cursor: pointer;
-        }
-        #search1 {
-          display: none !important;
-        }
-        #search2 {
-          height: 10vh;
-          display: flex !important;
-          flex-direction: row;
-          align-items: center;
-          background-color: #e0f0ff;
-          justify-content: center;
-          border: 1px solid black;
-          border-top: none;
-        }
-        #searchBox2 {
-          width: 50vw;
-          margin-left: 5px;
-          padding: 7px;
-          border: 1px solid black;
-          border-radius: 10px;
-        }
-        /* 반응형 사이드 바 */
-        #sideBar {
-          width: 250px;
-          padding: 5px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          position: absolute;
-          left: -500px; /* 사이드바를 화면 밖으로 위치시킴 */
-          height: 100vh;
-          transition: transform 0.5s ease-in-out; /* 트랜지션 설정 */
-        }
-        #sideBar.show {
-          transform: translateX(500px); /* 100vw만큼 오른쪽으로 이동 */
-        }
-        #gearIcon2 {
-          display: inline-block !important;
-        }
-        #myProfile {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 10px;
-          border: 1px solid black;
-          border-radius: 10px;
-          cursor: pointer;
-        }
-        #myProfile .fa-user {
-          font-size: 24px;
-        }
-        #profileBox {
-          width: 100% !important;
-          display: flex;
-        }
-        #myProfile ul {
-          display: block !important;
-          max-height: 0;
-          opacity: 0;
-          overflow: hidden;
-          list-style: none;
-          padding: 0;
-          margin-top: 10px;
-          width: 100%;
-          background-color: #e0f0ff;
-          /* border: 1px solid black; */
-          border-radius: 10px;
-          transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-        }
-        #myProfile.expanded ul {
-          max-height: 200px;
-          opacity: 1;
-        }
-        #myProfile ul li {
-          padding: 5px;
-          background-color: #c1e2ff;
-          border: 1px solid black;
-          border-radius: 10px;
-          margin: 2px 0;
-        }
+    @media (max-width: 768px) {
 
-        #userBox {
-    justify-content: center; /* 모바일에서는 중앙 정렬 */
-  }
+      /* 반응형 헤더 */
+      header {
+        justify-content: space-between;
+        border-bottom: none;
+      }
 
-  #userBox > div {
-    flex: 0 0 100%; /* 모바일에서 가로로 한 줄에 하나씩 배치 */
-    height: auto; /* 높이를 자동으로 조정 */
-    margin-bottom: 10px;
-  }
+      header .fa-bars {
+        display: block !important;
+        cursor: pointer;
+      }
+
+      #search1 {
+        display: none !important;
+      }
+
+      #search2 {
+        height: 10vh;
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        background-color: #e0f0ff;
+        justify-content: center;
+        border: 1px solid black;
+        border-top: none;
+      }
+
+      #searchBox2 {
+        width: 50vw;
+        margin-left: 5px;
+        padding: 7px;
+        border: 1px solid black;
+        border-radius: 10px;
+      }
+
+      /* 반응형 사이드 바 */
+      #sideBar {
+        width: 250px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: absolute;
+        left: -500px;
+        /* 사이드바를 화면 밖으로 위치시킴 */
+        height: 100vh;
+        transition: transform 0.5s ease-in-out;
+        /* 트랜지션 설정 */
+      }
+
+      #sideBar.show {
+        transform: translateX(500px);
+        /* 100vw만큼 오른쪽으로 이동 */
+      }
+
+      #gearIcon2 {
+        display: inline-block !important;
+      }
+
+      #myProfile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      #myProfile .fa-user {
+        font-size: 24px;
+      }
+
+      #profileBox {
+        width: 100% !important;
+        display: flex;
+      }
+
+      #myProfile ul {
+        display: block !important;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        list-style: none;
+        padding: 0;
+        margin-top: 10px;
+        width: 100%;
+        background-color: #e0f0ff;
+        /* border: 1px solid black; */
+        border-radius: 10px;
+        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      }
+
+      #myProfile.expanded ul {
+        max-height: 200px;
+        opacity: 1;
+      }
+
+      #myProfile ul li {
+        padding: 5px;
+        background-color: #c1e2ff;
+        border: 1px solid black;
+        border-radius: 10px;
+        margin: 2px 0;
+      }
+
+      #userBox {
+        justify-content: center;
+        /* 모바일에서는 중앙 정렬 */
+      }
+
+      #userBox>div {
+        flex: 0 0 100%;
+        /* 모바일에서 가로로 한 줄에 하나씩 배치 */
+        height: auto;
+        /* 높이를 자동으로 조정 */
+        margin-bottom: 10px;
+      }
 
   
 
@@ -392,98 +412,94 @@
 
 
 
-    <main>
-        <div id="sideBar">
-          <div id="myProfile">
-            <div class="profileBox">
-              <i class="fa-solid fa-user"></i>
-              <div id="connectUser"></div><div onclick="logout()">로그아웃</div>
-              <i class="fa-solid fa-gear" id="gearIcon2"></i>
-            </div>
-            <ul>
-              <li>프로필 설정</li>
-              <li>계정 설정</li>
-              <li>로그아웃</li>
-            </ul>
-          </div>
-          <div class="sideCategory" onclick="toggleSubCategory(this)">
-            <span>채널 <i class="fa-solid fa-angles-down"></i></span>
-            <ul>
-              <li>공지사항</li>
-              <li>경영팀</li>
-              <li>생산팀</li>
-              <li><a href="#">+</a>추가하기</li>
-            </ul>
-          </div>
-          <div class="sideCategory" onclick="toggleSubCategory(this)">
-            <span>채팅방 <i class="fa-solid fa-angles-down"></i></span>
-            <ul>
-              <li>임수정</li>
-              <li>채수빈</li>
-            </ul>
-          </div>
+  <main>
+    <div id="sideBar">
+      <div id="myProfile">
+        <div class="profileBox">
+          <i class="fa-solid fa-user"></i>
+          <div id="connectUser"></div>
+          <div onclick="logout()">로그아웃</div>
+          <i class="fa-solid fa-gear" id="gearIcon2"></i>
         </div>
-
-
-
-
-
-
-
-        <div id="main_page">
-          <div id="image"><img src="./images/main.png" alt="bear"></div>
-          <div id="description">
-            <p>프로젝트별 특정 주제의 그룹 대화는 "토픽"</p>
-            <p>1:1 또는 그룹 대화는 "검색"을 이용해 보세요.</p>
-          </div>
-          </div>
-        </div>
-
-        <!-- 헤더로부터 위치 이동 -->
-        <div id="userBox" hidden></div>
-        <!-- <div id="userSearchBox"> -->
-          <p></p>
-        </div>
-        <!-- 헤더로부터 위치 이동 -->
-        <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
-        <!-- <div id="msgSearchBox"> -->
-          <p></p>
-        </div>
-        
-        <!-- 채팅방 -->
-        <div id="main_chat" hidden>
-          <div id="user-container"><p id="nickname"></div>
-            <div id="wrapper">
-              <div id="display-container">
-
-
-                    <div class="msg-container">
-                        <div class="talk">
-                            <div type="text" class="nickname"></div>
-                            <ul class="chatting-list">
-                                <li>안녕하세요</li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="msg-container">
-                        <div class="talk">
-                            <div type="text" class="nickname"></div>
-                            <ul class="chatting-list">
-                                <li>안녕하세요</li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-              </div>  
-            </div>
-          <div id="send">
-              <input type="text" id="chatting-input" />
-              <button id="send-button">전송</button>
-          </div>
+        <ul>
+          <li>프로필 설정</li>
+          <li>계정 설정</li>
+          <li>로그아웃</li>
+        </ul>
       </div>
+      <div class="sideCategory" onclick="toggleSubCategory(this)">
+        <span>채널 <i class="fa-solid fa-angles-down"></i></span>
+        <ul>
+          <li>공지사항</li>
+          <li>경영팀</li>
+          <li>생산팀</li>
+          <li><a href="#">+</a>추가하기</li>
+        </ul>
+      </div>
+      <div class="sideCategory" onclick="toggleSubCategory(this)">
+        <span>채팅방 <i class="fa-solid fa-angles-down"></i></span>
+        <ul id="allChattingRoom">
+          <!-- <li onclick="joinRoom('이름: 홍길동')">이름: 홍길동</li> -->
+          <!-- <li>채수빈</li> -->
+        </ul>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div id="main_page">
+      <div id="image"><img src="./images/main.png" alt="bear"></div>
+      <div id="description">
+        <p>프로젝트별 특정 주제의 그룹 대화는 "토픽"</p>
+        <p>1:1 또는 그룹 대화는 "검색"을 이용해 보세요.</p>
+      </div>
+    </div>
+    </div>
+
+    <!-- 헤더로부터 위치 이동 -->
+    <div id="userBox" hidden></div>
+    <!-- <div id="userSearchBox"> -->
+    <p></p>
+    </div>
+    <!-- 헤더로부터 위치 이동 -->
+    <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
+    <!-- <div id="msgSearchBox"> -->
+    <p></p>
+    </div>
+
+    <!-- 채팅방 -->
+    <div id="main_chat" hidden>
+      <div id="user-container">
+        <p id="nickname">
+      </div>
+      <div id="wrapper">
+        <div id="display-container">
+
+
+
+                    <div class="msg-container">
+                        <div class="talk">
+                            <div type="text" class="nickname"></div>
+                            <ul class="chatting-list">
+                                <li>안녕하세요</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+        </div>
+      </div>
+      <div id="send">
+        <input type="text" id="chatting-input" />
+        <button id="send-button">전송</button>
+      </div>
+    </div>
 
 
 
@@ -499,6 +515,29 @@
 
 
   <script>
+    /*********1. socket 열기. 내 소켓 아이디 저장*/
+    const socket = io();
+    /*************검색 start(sim)********************/
+    // detailSearch.ejs 파일에서
+    const test = window.location.pathname;
+    // console.log(test, '패스네임');
+    //console.log('아아아');
+    const test2 = test.split('/')
+    //console.log(test2, '스플릿');
+    const searchWord1 = test2[2]
+    const searchWord = decodeURI(searchWord1)
+    //console.log(searchWord);
+    const search = document.querySelector('#mainSearch');
+    const searchBox = document.querySelector('#searchBox');
+
+    const main_page = document.querySelector('#main_page');
+    const userBox = document.querySelector('#userBox');
+    const msgBox = document.querySelector('#msgBox');
+    const main_chat = document.querySelector('#main_chat');
+
+    let states = []; // 상태를 저장할 배열
+    let currentIndex = 0; // 현재 상태의 인덱스
+    let myId = "";
     (async function () {
 
 
@@ -509,7 +548,40 @@ const res = await axios({
     Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
 });
-const {username} = res.data.response;
+const { username, id } = res.data.response;
+      //const { id: roomId, chat } = res.data.rooms
+      console.log(res.data.rooms)
+      const rooms = res.data.rooms
+      myId = id;
+
+      const chatlist = document.querySelector("#allChattingRoom")
+      rooms.forEach(value => {
+        // const li = document.createElement('li')
+        // li.setAttribute("onclick", joinRoom(value.chat))
+        // li.textContent = value.chat
+        // chatlist.appendChild(li)
+        const html = `
+        <li onclick="joinRoom('${value.chat}', ${value.id})">${value.chat}</li> 
+        `
+        chatlist.insertAdjacentHTML("beforeend", html)
+
+      })
+
+      // for(let i= 0; i < roomId.length; i++) {
+      //   const allChattingRoom = document.querySelector('#allChattingRoom');
+      //   const li = document.createElement('li');
+      //   li.textContent = roomId;
+      //   li.onclick = function(chat){
+      //     socket.join(roomName);
+      //     main_page.hidden = true;
+      //     main_chat.hidden = false;
+
+      //   }
+      //   allChattingRoom.appendChild(li);
+      // }
+
+
+
 //profile에 나오는 dataValues : 는 무시해도 됨
 console.log('유저네임', username);
 
@@ -517,38 +589,36 @@ document.querySelector('#connectUser').innerHTML = username
 
 })();
 
-function logout(){
-window.localStorage.removeItem("token")
-document.location.href = ('/login')
-}
+    function logout() {
+      window.localStorage.removeItem("token")
+      document.location.href = ('/login')
+    }
 
-    /*********1. socket 열기. 내 소켓 아이디 저장*/
-    // const socket = io();
     // socket.emit('login', {username, email});
     
     /*************검색 start(sim)********************/
       // detailSearch.ejs 파일에서
-      const test = window.location.pathname
-      console.log(test,'패스네임');
-      console.log('아아아');
-      const test2 = test.split('/')
-      console.log(test2, '스플릿');
-      const searchWord1 = test2[2]
-      const searchWord = decodeURI(searchWord1) 
-      console.log(searchWord);
+      // const test = window.location.pathname
+      // console.log(test,'패스네임');
+      // console.log('아아아');
+      // const test2 = test.split('/')
+      // console.log(test2, '스플릿');
+      // const searchWord1 = test2[2]
+      // const searchWord = decodeURI(searchWord1) 
+      // console.log(searchWord);
     
       
     
-      const search = document.querySelector('#mainSearch');
-      const searchBox = document.querySelector('#searchBox');
+      // const search = document.querySelector('#mainSearch');
+      // const searchBox = document.querySelector('#searchBox');
     
-      const main_page = document.querySelector('#main_page');
-      const userBox = document.querySelector('#userBox');
-      const msgBox = document.querySelector('#msgBox');
-      const main_chat = document.querySelector('#main_chat');
+      // const main_page = document.querySelector('#main_page');
+      // const userBox = document.querySelector('#userBox');
+      // const msgBox = document.querySelector('#msgBox');
+      // const main_chat = document.querySelector('#main_chat');
     
-      let states = []; // 상태를 저장할 배열
-      let currentIndex = 0; // 현재 상태의 인덱스
+      // let states = []; // 상태를 저장할 배열
+      // let currentIndex = 0; // 현재 상태의 인덱스
     
       // 초기 상태를 저장하는 함수
       function saveInitialState() {
@@ -630,181 +700,196 @@ document.location.href = ('/login')
         const regex = new RegExp(`(${searchTerm})`, 'gi'); // 검색어 찾기
         return content.replace(regex, '<span class="highlight">$1</span>'); // 일치하는 부분 <span>
       }
+    // 하이라이트 함수(검색 시 동일 내용 하이라이트)
+    function highlightText(searchTerm, content) {
+      if (!searchTerm) return content; // 검색어가 없을 때는 원본
+      const regex = new RegExp(`(${searchTerm})`, 'gi'); // 검색어 찾기
+      return content.replace(regex, '<span class="highlight">$1</span>'); // 일치하는 부분 <span>
+    }
 
-      // 검색 입력 이벤트 핸들러 수정
-      search.addEventListener('keyup', () => {
-        if (search.value.length >= 2) {
-          const searchTerm = search.value;
-          axios({
-            method: 'get',
-            url: `/api/colla/search/${searchTerm}`,
-          }).then((res) => {
-            if (res.data.result) {
-              userBox.innerHTML = '';
-              msgBox.innerHTML = '';
+    // 검색 입력 이벤트 핸들러
+    search.addEventListener('keyup', () => {
+      if (search.value.length >= 2) {
+        const data = { search: search.value };
+        axios({
+          method: 'get',
+          url: `/api/colla/search/${data.search}`,
+        }).then((res) => {
+          if (res.data.result) {
+            userBox.innerHTML = '';
+            msgBox.innerHTML = '';
+            res.data.userData.forEach(value => {
+              userBox.innerHTML +=
+                `<div id="findByUsername" onclick="clickFindByUsername(${value.id})">
+                              <p>이름: ${value.username}</p>
+                              <p>이메일: ${value.email}</p>
+                              <p>부서: ${value.department}</p>
+                              <br>
+                          </div>`;
+            });
+            res.data.msgData.forEach(value => {
+              msgBox.innerHTML +=
+                `<div id="findByTalk" style="display: flex; flex-direction: row;" onclick="clickFindByTalk()">
+                              <p>${value.user.username}</p>
+                              <p>(${value.user.department})</p>
+                              <p>: ${value.talk}</p>
+                          </div>`;
+            });
+          } else {
+            userBox.innerText = '검색결과가 없습니다.';
+          }
+        });
+      } else {
+        userBox.innerText = '검색어는 두글자 이상 적어주세요';
+      }
+      main_page.hidden = true;
+      userBox.hidden = false;
+      msgBox.hidden = false;
+      // saveState(); // 상태를 저장합니다.
+    });
 
-              res.data.userData.forEach(value => {
-                userBox.innerHTML +=
-                  `<div id="findByUsername" onclick="clickFindByUsername()">
-                      <p>이름: ${highlightText(searchTerm, value.username)}</p>
-                      <p>이메일: ${highlightText(searchTerm, value.email)}</p>
-                      <p>부서: ${highlightText(searchTerm, value.department)}</p>
-                      <br>
-                  </div>`;
-              });
+    //난수 발생 함수
+    function generateRandomString(length) {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+    //내 아이디 : myId. 상대방 아이디 : yourId
 
-              res.data.msgData.forEach(value => {
-                msgBox.innerHTML +=
-                  `<div id="findByTalk" style="display: flex; flex-direction: row;" onclick="clickFindByTalk()">
-                      <p>${highlightText(searchTerm, value.user.username)}</p>
-                      <p>(${highlightText(searchTerm, value.user.department)})</p>
-                      <p>: ${highlightText(searchTerm, value.talk)}</p>
-                  </div>`;
-              });
-            } else {
-              userBox.innerText = '검색결과가 없습니다.';
-            }
-          });
-        } else {
-          userBox.innerText = '검색어는 두 글자 이상 입력해주세요';
+    // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
+    function clickFindByUsername(id) {
+      saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
+
+      const div = event.currentTarget;
+
+      //상대방 정보
+      const ptags = div.querySelectorAll('p');
+      const username = ptags[0].textContent;
+      const email = ptags[1].textContent;
+      const yourId = id;
+      // 이 위까지
+
+      //내 정보는 뭐지..?
+      //const myname;
+
+      const department = ptags[2].textContent;
+      const userContainer = document.querySelector('#user-container');
+      const input = document.querySelector('#chatting-input');
+      const button = document.querySelector('#send-button');
+      //채팅방 상단 이름
+      userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
+      userBox.hidden = true;
+      msgBox.hidden = true;
+      main_chat.hidden = false;
+      search.disabled = true;
+      saveState(); // 상태를 저장합니다.
+
+      //****************소켓
+      // 방 생성
+      // const chat = username;
+      let chatId = ""
+      axios({
+        method: 'post',
+        url: '/api/colla/createchat',
+        data: {
+          chatName: username
         }
-        main_page.hidden = true;
-        userBox.hidden = false;
-        msgBox.hidden 
-          // saveState(); // 상태를 저장합니다.
+      }).then((res) => {
+        console.log('dlrjdi?', res);
+        chatId = res.data.result.id
+
+        //socket.emit('join chat', res.id);
+        // const myInfo = {chat, myId};
+        const myInfo = { username, myId, chatId };
+        console.log("before join chat client", myInfo);
+        socket.emit('join chat', myInfo);
+        console.log("join chat client", myInfo);
+
+
+        console.log("username", username)
+        /* 3. 클릭한 상대 chat에 초대 */
+        const yourInfo = { yourId, chatId };
+        socket.emit('invite chat', yourInfo);
       });
-      //난수 발생 함수
-      function generateRandomString(length) {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-      }
-    
-      // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
-      function clickFindByUsername() {
-          saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
-    
-          const div = event.currentTarget;
-    
-          //상대방 정보
-          const ptags = div.querySelectorAll('p');
-          const username = ptags[0].textContent;
-          const email = ptags[1].textContent;
-          //이 위까지
-    
-          //내 정보는 뭐지..?
-          //const myname;
-    
-          const department = ptags[2].textContent;
-          const userContainer = document.querySelector('#user-container');
-          const input = document.querySelector('#chatting-input');
-          const button = document.querySelector('#send-button');
-          //채팅방 상단 이름
-          userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
-          userBox.hidden = true;
-          msgBox.hidden = true;
-          main_chat.hidden = false;
-          search.disabled = true;
-          saveState(); // 상태를 저장합니다.
-          
-          //****************소켓
-          // 방 이름 생성
-          // const chat = generateRandomString(255);
-          // axios({
-          //       method: 'post',
-          //       url: '/api/colla/createchat',
-          //       data : {chat},
-          // });
-          // /* 2. 방 입장*/
-          // axios({
-          //       method: 'post',
-          //       url: '/api/colla/createuc',
-          //       // data : {userId : , chatId : },
-          // });
-          // socket.emit('join chat', {chat});
-          
-          
-    
-    
-    
-          // /* 3. 룸 내 메세지 브로드캐스트 */
-          // //const myname : 내 사용자 이름, 부서
-          // button.addEventListener('click', function() {
-          //   socket.emit('chat message', {myname, value : input.value});
-          //   input.value="";
-          // });
 
-    
-    
-          // socket.on('chat message', function(myname, value) {
-          //   const talk = document.createElement('div');
-          //   talk.className = 'talk';
-    
-          //   const nickname = document.createElement('div');
-          //   nickname.className = 'nickname';
-          //   nickname.textContent = myname;
-    
-          //   const message = document.createElement('p');
-          //   message.className = 'm';
-          //   message.textContent = value;
-          //   message.className = 'chatting-list';
-    
+      // socket.on('invited', function(chat) {
+      //   alert(`You were invited to room: ${room}`);
+      // });
 
-          //   talk.appendChild(nickname);
-          //   talk.appendChild(message);
+
+
+      /* 4. 룸 내 메세지 브로드캐스트 */
+      //const myname : 내 사용자 이름, 부서
+      button.addEventListener('click', function () {
+        //console.log("전송버튼클릭");
+        socket.emit('chat message', { myId, value: input.value, chatId, username });
+        //console.log("전송버튼클릭 후");
+        input.value = "";
+      });
+
+
+      socket.on('chat message', (arg) => {
+        //console.log("chat message on", arg);
+
+        const { myId, value, chat } = arg;
+        const talk = document.createElement('div');
+        talk.classList.add('talk');
+        const msgContainer = document.querySelector('.msg-container')
+        const p = document.createElement('p')
+        p.classList.add('eachMsg')
+        p.textContent = `${myId}: ${value}`;
+        talk.appendChild(p);
+        msgContainer.appendChild(talk);
+        // const nickname = document.createElement('p');
+        // nickname.classList.add('nickname');
+        // nickname.textContent = username;
+        // const message = document.createElement('p');
+        // message.textContent = value;
+        // message.classList.add('chatting-list');
+        // talk.appendChild(nickname);
+        // talk.appendChild(message);
+        // document.querySelector('.msg-container').appendChild(talk);
+      });
+
+
+
+    }
+
+    // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
+    function clickFindByTalk() {
+      saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
+
+      const div = event.currentTarget;
+      const ptags = div.querySelectorAll('p');
+      const username = ptags[0].textContent;
+      const department = ptags[1].textContent;
+      const talk = ptags[2].textContent;
+      const userContainer = document.querySelector('#user-container');
+      userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
+
+      userBox.hidden = true;
+      msgBox.hidden = true;
+      main_chat.hidden = false;
+      search.disabled = true;
+      saveState(); // 상태를 저장합니다.
+
+      //****************소켓 연결
+    }
+
+    /* 5. 로그아웃 -> 소켓 연결 해제
+  
     
-          //   document.querySelector('.msg-containter').appendChild(talk);
-          // });
-    
-          // /* 4. 클릭한 상대 chat에 초대 */
-          // socket.emit('invite chat', {username, chat});
-          // socket.on('invited', function(chat) {
-          //   alert(`You were invited to room: ${room}`);
-          // });
-          // //상대방 db입력
-          // axios({
-          //       method: 'post',
-          //       url: '/api/colla/createuc',
-          //       data : {userId : , chatId : },
-          // });
-    
-      }
-    
-      // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
-      function clickFindByTalk() {
-          saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
-    
-          const div = event.currentTarget;
-          const ptags = div.querySelectorAll('p');
-          const username = ptags[0].textContent;
-          const department = ptags[1].textContent;
-          const talk = ptags[2].textContent;
-          const userContainer = document.querySelector('#user-container');
-          userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
-    
-          userBox.hidden = true;
-          msgBox.hidden = true;
-          main_chat.hidden = false;
-          search.disabled = true;
-          saveState(); // 상태를 저장합니다.
-    
-          //****************소켓 연결
-      }
-    
-      /* 5. 로그아웃 -> 소켓 연결 해제
-    
-      
-    /**헤더 부분**/
-        function toggleSubCategory(element) {
-          element.classList.toggle("expanded");
-        }
-        function toggleOptionMenu(element) {
-          element.classList.toggle("expanded");
-        }
+  /**헤더 부분**/
+    function toggleSubCategory(element) {
+      element.classList.toggle("expanded");
+    }
+    function toggleOptionMenu(element) {
+      element.classList.toggle("expanded");
+    }
     /*detailSearch에서 추가로 들어가있던 코드. 헤더에서 사용하는 도중에 수정된듯.
         function toggleSubCategory(element) {
           const subCategories = element.querySelector("ul");
@@ -826,26 +911,70 @@ document.location.href = ('/login')
         });
         const search = document.querySelector('#mainSearch')
     */
-    
-    
-        document
-          .getElementById("gearIcon1")
-          .addEventListener("click", function () {
-            const optionsMenu = document.getElementById("optionsMenu");
-            optionsMenu.classList.toggle("show");
-          });
-        document
-          .getElementById("gearIcon2")
-          .addEventListener("click", function () {
-            const myProfile = document.getElementById("myProfile");
-            myProfile.classList.toggle("expanded");
-          });
-        document
-          .getElementById("barsIcon")
-          .addEventListener("click", function () {
-            const sideBar = document.getElementById("sideBar");
-            sideBar.classList.toggle("show");
-          });
-      </script>
-  </body>
+
+
+    document
+      .getElementById("gearIcon1")
+      .addEventListener("click", function () {
+        const optionsMenu = document.getElementById("optionsMenu");
+        optionsMenu.classList.toggle("show");
+      });
+    document
+      .getElementById("gearIcon2")
+      .addEventListener("click", function () {
+        const myProfile = document.getElementById("myProfile");
+        myProfile.classList.toggle("expanded");
+      });
+    document
+      .getElementById("barsIcon")
+      .addEventListener("click", function () {
+        const sideBar = document.getElementById("sideBar");
+        sideBar.classList.toggle("show");
+      });
+    function joinRoom(username, chatId) {
+      console.log(username)
+      main_page.hidden = true;
+      main_chat.hidden = false;
+
+      const input = document.querySelector('#chatting-input');
+      const button = document.querySelector('#send-button');
+      socket.emit('join chat', { username })
+
+      button.addEventListener('click', function () {
+        //console.log("전송버튼클릭");
+        socket.emit('chat message', { myId, value: input.value, chatId, username });
+        //console.log("전송버튼클릭 후");
+        input.value = "";
+      });
+
+       console.log("..........", myId, input.value, chatId);
+
+      socket.on('chat message', (arg) => {
+        //console.log("chat message on", arg);
+
+        const { myId, value, chat } = arg;
+        const talk = document.createElement('div');
+        talk.classList.add('talk');
+        const msgContainer = document.querySelector('.msg-container')
+        const p = document.createElement('p')
+        p.classList.add('eachMsg')
+        p.textContent = `${myId}: ${value}`;
+        talk.appendChild(p);
+        msgContainer.appendChild(talk);
+        // const nickname = document.createElement('p');
+        // nickname.classList.add('nickname');
+        // nickname.textContent = username;
+        // const message = document.createElement('p');
+        // message.textContent = value;
+        // message.classList.add('chatting-list');
+        // talk.appendChild(nickname);
+        // talk.appendChild(message);
+        // document.querySelector('.msg-container').appendChild(talk);
+      });
+
+    }
+
+  </script>
+</body>
+
 </html>
