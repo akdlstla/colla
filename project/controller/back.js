@@ -1,7 +1,7 @@
 const { user, msg, chat, userchat } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Op, where } = require('sequelize');
+const { Op } = require('sequelize');
 
 const salt = Number(process.env.SECRET);
 
@@ -230,4 +230,14 @@ const connectUserFind = async (req, res) => {
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
-module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind }
+const deleteChat = async(req,res) =>{
+    try {
+        console.log('id확인',req.body.id);
+        
+        const result = await msg.destroy({where:{id:req.body.id}})
+        
+    } catch (error) {
+        res.status(500).json({result: false, message:'메세지를 삭제할 수 없습니다'})
+    }
+}
+module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat }

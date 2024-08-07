@@ -78,7 +78,7 @@
     }
 
     .btn {
-      background-color:  #8ac7da;
+      background-color: #8ac7da;
       color: #fff;
       border: none;
       padding: 15px;
@@ -90,7 +90,7 @@
     }
 
     .btn:hover {
-      background-color:  #8ac7da;
+      background-color: #8ac7da;
     }
 
     .signup {
@@ -106,14 +106,52 @@
     .signup a:hover {
       text-decoration: underline;
     }
-    @media  screen and (max-width: 768px) {
-        .form-options div{
-            font-size: 11px;
-        }
-        .form-options a{
-            font-size: 11px;
-        }
+
+
+    /* 반응형이다 */
+    @media screen and (max-width: 768px) {
+      .login-container {
+        width: 90%; /* 모바일 너비 */
+        padding: 20px; 
+      }
+
+      .loginbox h1 {
+        font-size: 1.8em; 
+        padding: 8px; 
+      }
+
+      .form-group input {
+        padding: 12px;
+        font-size: 0.9em; 
+      }
+
+      .form-options {
+        flex-direction: column; 
+        align-items: flex-start; 
+        margin-bottom: 10px; 
+      }
+
+      .form-options div {
+        margin-bottom: 10px; 
+      }
+
+      .login-container {
+      box-shadow: none;
+
+      .form-options a {
+        font-size: 0.8em; 
+      }
+
+      .btn {
+        padding: 12px; 
+        font-size: 1em;
+      }
+
+      .signup {
+        font-size: 0.8em;
+      }
     }
+  }
 
 
   </style>
@@ -148,7 +186,7 @@
       <button type="button" class="btn" onclick="loginFunc()" id="loginbtn">로그인</button>
     </form>
     <div class="signup">
-      <span>콜라가 처음이신가요? <a href="#">회원가입</a></span>
+      <span>콜라가 처음이신가요? <a href="/signup">회원가입</a></span>
     </div>
   </div>
 
@@ -179,7 +217,7 @@
       };
       if(checkEmail){
         console.log('이메일 체크 들어옴', checkEmail);
-        document.querySelector('#remember-emaill').checked;
+        document.querySelector('#remember-email').checked = checkEmail;
       };
       
     

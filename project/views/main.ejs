@@ -92,210 +92,29 @@
 
     /* 수정된 부분 끝 */
 
-    main {
-      display: flex;
-      height: 93vh;
-    }
-
-    #sideBar {
-      width: 250px;
-      padding: 5px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    #myProfile {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border: 1px solid black;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .sideCategory {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
-      border: 1px solid black;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    #gearIcon2 {
-      display: none;
-    }
-
-    #myProfile ul {
-      display: none;
-    }
-
-    #myProfile .fa-user {
-      font-size: 24px;
-    }
-
-    .sideCategory ul {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      list-style: none;
-      padding: 0;
-      margin-top: 10px;
-      transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    }
-
-    .sideCategory.expanded ul {
-      max-height: 200px;
-      opacity: 1;
-      width: 80%;
-    }
-
-    .sideCategory ul li {
-      padding: 5px;
-      background-color: #c1e2ff;
-      border: 1px solid black;
-      border-radius: 10px;
-      margin: 2px 0;
-    }
-
-    #content {
-      flex: 1;
-      background-color: aliceblue;
-    }
-
-    #userBox {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 20px;
-      /* 아이템 간 간격 */
-      padding: 15px;
-      max-width: 100%;
-      margin: 30px auto;
-      background-color: white;
-      border-radius: 10px;
-      height: auto;
-      /* 높이를 자동으로 조정 */
-    }
-
-    #userBox>div {
-      flex: 0 0 30%;
-      /* 3개씩 한 줄에 배치 */
-      height: 100px;
-      padding: 10px;
-      border-radius: 10px;
-      background-color: whitesmoke;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    #userBox p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: black;
-    }
-
-    #msgBox {
-      display: flex;
-      flex-direction: column;
-      /* 한 줄에 하나씩 */
-      padding: 15px;
-      max-width: 100%;
-      margin: 10px auto;
-      background-color: white;
-      border-radius: 10px;
-    }
-
-    #msgBox>div {
-      width: 100%;
-      /* 전체 너비 사용 */
-      margin-bottom: 10px;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: whitesmoke;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    #msgBox p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: black;
-    }
-
-
-    .highlight {
-      background-color: #c1e2ff;
-      font-weight: bold;
-    }
-
-
-    @media (max-width: 768px) {
-
-      /* 반응형 헤더 */
-      header {
-        justify-content: space-between;
-        border-bottom: none;
+      main {
+        display: flex;
+        height: 93vh;
       }
 
-      header .fa-bars {
-        display: block !important;
-        cursor: pointer;
-      }
-
-      #search1 {
-        display: none !important;
-      }
-
-      #search2 {
-        height: 10vh;
-        display: flex !important;
-        flex-direction: row;
-        align-items: center;
-        background-color: #e0f0ff;
-        justify-content: center;
-        border: 1px solid black;
-        border-top: none;
-      }
-
-      #searchBox2 {
-        width: 50vw;
-        margin-left: 5px;
-        padding: 7px;
-        border: 1px solid black;
-        border-radius: 10px;
-      }
-
-      /* 반응형 사이드 바 */
       #sideBar {
         width: 250px;
         padding: 5px;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        position: absolute;
-        left: -500px;
-        /* 사이드바를 화면 밖으로 위치시킴 */
-        height: 100vh;
-        transition: transform 0.5s ease-in-out;
-        /* 트랜지션 설정 */
-      }
-
-      #sideBar.show {
-        transform: translateX(500px);
-        /* 100vw만큼 오른쪽으로 이동 */
-      }
-
-      #gearIcon2 {
-        display: inline-block !important;
       }
 
       #myProfile {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .sideCategory {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -305,36 +124,35 @@
         cursor: pointer;
       }
 
+      #gearIcon2 {
+        display: none;
+      }
+
+      #myProfile ul {
+        display: none;
+      }
+
       #myProfile .fa-user {
         font-size: 24px;
       }
 
-      #profileBox {
-        width: 100% !important;
-        display: flex;
-      }
-
-      #myProfile ul {
-        display: block !important;
+      .sideCategory ul {
         max-height: 0;
         opacity: 0;
         overflow: hidden;
         list-style: none;
         padding: 0;
         margin-top: 10px;
-        width: 100%;
-        background-color: #e0f0ff;
-        /* border: 1px solid black; */
-        border-radius: 10px;
         transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
       }
 
-      #myProfile.expanded ul {
+      .sideCategory.expanded ul {
         max-height: 200px;
         opacity: 1;
+        width: 80%;
       }
 
-      #myProfile ul li {
+      .sideCategory ul li {
         padding: 5px;
         background-color: #c1e2ff;
         border: 1px solid black;
@@ -342,42 +160,306 @@
         margin: 2px 0;
       }
 
-      #userBox {
-        justify-content: center;
-        /* 모바일에서는 중앙 정렬 */
+    #content {
+      flex: 1;
+      background-color: aliceblue;
+    }
+
+
+      .vertical-layout {
+        display: flex;
+        flex-direction: column;
+        /* width: 100%; */
       }
 
-      #userBox>div {
-        flex: 0 0 100%;
-        /* 모바일에서 가로로 한 줄에 하나씩 배치 */
-        height: auto;
-        /* 높이를 자동으로 조정 */
+      #userBox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 20px; /* 간격 */
+        padding: 15px;
+        /* width: 100%; */
+        margin: 30px auto;
+        background-color: white;
+        border-radius: 10px;
+        height: auto; /* 높이를 자동으로 조정 */
+      }
+
+      #userBox > div {
+        flex: 0 0 200; /* 한 줄에 세 개의 아이템이 들어가도록 너비 설정 */
+        max-width: 200px; /* 각 박스 최대 너비 */
+        height: 100px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: whitesmoke;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         margin-bottom: 10px;
       }
 
+      #userBox p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: black;
+      }
 
+      #msgBox {
+        display: flex;
+        flex-direction: column; /* 한 줄에 하나씩 */
+        padding: 15px;
+        width: 100%;
+        margin: 10px auto;
+        background-color: white;
+        border-radius: 10px;
+      }
 
-    }
+      #msgBox > div {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: whitesmoke;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
 
-    #mainSearchBox {
-      display: flex;
-      flex-direction: column;
-      justify-content: start;
-    }
+      #msgBox p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: black;
+      }
 
-    #main_page {
-      border: 1px solid black;
-    }
-  </style>
-</head>
+      .highlight {
+        background-color: #c1e2ff;
+        font-weight: bold;
+      }
 
+      #chatContainer {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+      }
 
-<body>
-  <header>
-    <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
-    <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
+      #user-container {
+        text-align: center;
+        margin-bottom: 15px;
+      }
 
-    <div id="search1">
+      #wrapper {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .msg-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .talk {
+        max-width: 60%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #dfe7ef;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .talk.received {
+        align-self: flex-start;
+        background-color: #d1e7fd;
+      }
+
+      .talk.sent {
+        align-self: flex-end;
+        background-color: #c1f0c1;
+      }
+
+      .message {
+        margin-top: 5px;
+        background-color: inherit;
+      }
+
+      #send {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      #chatting-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-right: 10px;
+      }
+
+      #send-button {
+        padding: 10px 20px;
+        background-color: #c1e2ff;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        /* 반응형 헤더 */
+        header {
+          justify-content: space-between;
+          border-bottom: none;
+        }
+        header .fa-bars {
+          display: block !important;
+          cursor: pointer;
+        }
+        #search1 {
+          display: none !important;
+        }
+        #search2 {
+          height: 10vh;
+          display: flex !important;
+          flex-direction: row;
+          align-items: center;
+          background-color: #e0f0ff;
+          justify-content: center;
+          border: 1px solid black;
+          border-top: none;
+        }
+        #searchBox2 {
+          width: 50vw;
+          margin-left: 5px;
+          padding: 7px;
+          border: 1px solid black;
+          border-radius: 10px;
+        }
+        /* 반응형 사이드 바 */
+        #sideBar {
+          width: 250px;
+          padding: 5px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          position: absolute;
+          left: -500px; /* 사이드바를 화면 밖으로 위치시킴 */
+          height: 100vh;
+          transition: transform 0.5s ease-in-out; /* 트랜지션 설정 */
+        }
+        #sideBar.show {
+          transform: translateX(500px); /* 100vw만큼 오른쪽으로 이동 */
+        }
+        #gearIcon2 {
+          display: inline-block !important;
+        }
+        #myProfile {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px;
+          border: 1px solid black;
+          border-radius: 10px;
+          cursor: pointer;
+        }
+        #myProfile .fa-user {
+          font-size: 24px;
+        }
+        #profileBox {
+          width: 100% !important;
+          display: flex;
+        }
+        #myProfile ul {
+          display: block !important;
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          list-style: none;
+          padding: 0;
+          margin-top: 10px;
+          width: 100%;
+          background-color: #e0f0ff;
+          /* border: 1px solid black; */
+          border-radius: 10px;
+          transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        #myProfile.expanded ul {
+          max-height: 200px;
+          opacity: 1;
+        }
+        #myProfile ul li {
+          padding: 5px;
+          background-color: #c1e2ff;
+          border: 1px solid black;
+          border-radius: 10px;
+          margin: 2px 0;
+        }
+
+        #resultContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  #userBox,
+  #msgBox {
+    width: 80%; /* 모바일에서는 너비를 더 크게 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+  }
+
+  #userBox > div {
+    flex: 0 0 90%; /* 모바일에서 가로로 한 줄에 하나씩 배치 */
+    height: auto; /* 높이를 자동으로 조정 */
+    max-width: none; /* 최대 너비 제한 제거 */
+    margin: auto;
+  }
+      }
+      #mainSearchBox {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+      }
+
+      #main_page {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
+      <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
+
+      <div id="search1">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <div id="mainSearchBox">
+          <input type="text" id="mainSearch" placeholder="검색">
+          <div id="searchBox"></div>
+          <!-- 아래 수정. 위치 이동 -->
+          <!-- <div id="userBox"></div> -->
+          <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
+        </div>
+      </div>
+
+      <i class="fa-solid fa-gear" id="gearIcon1"></i>
+      <div class="options" id="optionsMenu">
+        <div><a href="#">마이페이지</a></div>
+        <div><a href="./siteinfo">사이트 정보</a></div>
+        <div><a href="#">관리자 기능</a></div>
+        <div><a href="#">로그아웃</a></div>
+      </div>
+    </header>
+
+    <div id="search2" style="display: none">
       <i class="fa-solid fa-magnifying-glass"></i>
       <div id="mainSearchBox">
         <input type="text" id="mainSearch" placeholder="검색">
@@ -387,6 +469,7 @@
         <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
       </div>
     </div>
+
 
     <i class="fa-solid fa-gear" id="gearIcon1"></i>
     <div class="options" id="optionsMenu">
@@ -403,6 +486,7 @@
     <i class="fa-solid fa-magnifying-glass"></i>
     <input type="text" id="searchBox2" placeholder="전체에서 검색" />
   </div>
+
 
   <main>
     <div id="sideBar">
@@ -438,7 +522,6 @@
     </div>
 
 
-
     <div id="main_page">
       <div id="image"><img src="./images/main.png" alt="bear"></div>
       <div id="description">
@@ -448,38 +531,41 @@
     </div>
 
 
-    <div id="userBox" hidden>
+    <!-- 헤더로부터 위치 이동 -->
+    <div id="resultContainer" class="hidden">
+      <div id="userBox" hidden></div>
+      <!-- <div id="userSearchBox"> -->
+      <p></p>
+      <!-- 헤더로부터 위치 이동 -->
+      <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
+      <!-- <div id="msgSearchBox"> -->
       <p></p>
     </div>
-    <div id="msgBox" style="display: flex; flex-direction: column;" hidden>
-      <p></p>
     </div>
+
 
     <!-- 채팅방 -->
     <div id="main_chat" hidden>
-      <div id="user-container">
-        <p id="nickname">
-      </div>
-      <div id="wrapper">
-        <div id="display-container">
 
-          <div class="msg-container">
-            <div class="talk">
-              <div type="text" class="nickname"></div>
-              <ul class="chatting-list">
-                <li>안녕하세요</li>
-              </ul>
+      <div id="chatContainer">
+        <div id="user-container">
+          <p id="nickname">채팅방 이름 또는 상대방 이름</p>
+        </div>
+        <div id="wrapper">
+          <div id="display-container">
+            <div class="msg-container">
+              <!-- 채팅 메시지가 여기에 동적으로 추가됩니다 -->
             </div>
           </div>
-
+          <div id="send">
+            <input type="text" id="chatting-input" placeholder="메시지를 입력하세요..." />
+            <button id="send-button">전송</button>
+          </div>
         </div>
-      </div>
-      <div id="send">
-        <input type="text" id="chatting-input" />
-        <button id="send-button">전송</button>
       </div>
     </div>
   </main>
+
 
 
   <script>
@@ -498,6 +584,7 @@
     const userBox = document.querySelector('#userBox');
     const msgBox = document.querySelector('#msgBox');
     const main_chat = document.querySelector('#main_chat');
+    const resultContainer = document.querySelector("#resultContainer");
 
     let states = []; // 상태를 저장할 배열
     let currentIndex = 0; // 현재 상태의 인덱스
@@ -584,6 +671,7 @@
       // console.log("상태 복원 인덱스: ", index);
     }
 
+
     // 페이지가 로드될 때 초기 상태를 저장합니다.
     window.onload = function () {
       saveInitialState();
@@ -622,25 +710,20 @@
       return content.replace(regex, '<span class="highlight">$1</span>'); // 일치하는 부분 <span>
     }
 
-    // 검색 입력 이벤트 핸들러
-    search.addEventListener('keyup', () => {
-      if (search.value.length >= 2) {
-        const data = { search: search.value };
-        axios({
-          method: 'get',
-          url: `/api/colla/search/${data.search}`,
-        }).then((res) => {
-          if (res.data.result) {
-            userBox.innerHTML = '';
-            msgBox.innerHTML = '';
-            res.data.userData.forEach(value => {
-              //console.log("div클릭 전 value: ", value);
-              // const infoData = {
-              //   username : value.username,
-              //   email : value.email,
-              //   department : value.department
-              // }
-              const saveuserName = value.username;
+
+  // 검색 입력 이벤트 핸들러
+  search.addEventListener("keyup", () => {
+        if (search.value.length >= 2) {
+          const searchTerm = search.value;
+          axios({
+            method: "get",
+            url: `/api/colla/search/${searchTerm}`,
+          }).then((res) => {
+            if (res.data.result) {
+              userBox.innerHTML = "";
+              msgBox.innerHTML = "";
+
+              res.data.userData.forEach((value) => { const saveuserName = value.username;
               const saveuserId = value.id;
               const saveuserDep = value.department;
               // const parse = JSON.stringify(infoData)
@@ -653,26 +736,37 @@
                               <br>
                           </div>`;
             });
-            res.data.msgData.forEach(value => {
-              msgBox.innerHTML +=
-                `<div id="findByTalk" style="display: flex; flex-direction: row;" onclick="clickFindByTalk()">
-                              <p>${value.user.username}</p>
-                              <p>(${value.user.department})</p>
-                              <p>: ${value.talk}</p>
-                          </div>`;
-            });
-          } else {
-            userBox.innerText = '검색결과가 없습니다.';
-          }
-        });
-      } else {
-        userBox.innerText = '검색어는 두글자 이상 적어주세요';
-      }
-      main_page.hidden = true;
-      userBox.hidden = false;
-      msgBox.hidden = false;
-      // saveState(); // 상태를 저장합니다.
-    });
+              res.data.msgData.forEach((value) => {
+                msgBox.innerHTML += `<div id="findByTalk" onclick="clickFindByTalk()">
+                      <p>${highlightText(searchTerm, value.user.username)}</p>
+                      <p>(${highlightText(searchTerm, value.user.department)})</p>
+                      <p>: ${highlightText(searchTerm, value.talk)}</p>
+                  </div>`;
+              });
+
+              // 결과 컨테이너를 보여주고, 세로로 배치하기 가로는 절대 안 돼
+              resultContainer.hidden = false;
+              resultContainer.classList.add("vertical-layout");
+
+              main_page.hidden = true;
+              userBox.hidden = false;
+              msgBox.hidden = false;
+            } else {
+              userBox.innerText = "검색결과가 없습니다.";
+              resultContainer.hidden = false; // 결과가 없을 때도 컨테이너를 보여줘라 ㅈㅂ
+              msgBox.hidden = true; // 검색결과가 없으면 msgBox는 숨겨볼게요
+            }
+          });
+        } else {
+          userBox.innerText = "검색어는 두 글자 이상 입력해주세요";
+          resultContainer.hidden = false;
+          msgBox.hidden = true; // 검색어가 두 글자 미만일 때 msgBox를 숨기기
+        }
+
+        // 현재 상태를 저장합니다.
+        saveState();
+      });
+
 
     //난수 발생 함수
     function generateRandomString(length) {
@@ -787,7 +881,30 @@
         p.classList.add('eachMsg')
         p.textContent = `${myName}: ${value}`;
         talk.appendChild(p);
+        //수정 버튼
+        const editButton = document.createElement('button');
+                editButton.textContent = '수정';
+                editButton.classList.add('editButton');
+                editButton.addEventListener('click', () => {
+                    const editChat = prompt('새로운 메세지를 입력하세요', value);
+                    if (editChat) {
+                        p.textContent = `${myId}: ${editChat}`;
+                    }
+                });
+               
+        const deletebutton = document.createElement('button')
+                deletebutton.textContent = '삭제'
+                deletebutton.classList.add('deletebutton')
+                deletebutton.addEventListener('click',()=>{
+                  if(confirm('이 메세지를 삭제하시겠습니까?')){
+                      socket.emit('deletechat',{messageId})
+                      talk.remove()
+                    }
+                 })
+        talk.appendChild(editButton);
+        talk.appendChild(deletebutton)
         msgContainer.appendChild(talk);
+
       });
 
     }
@@ -927,7 +1044,7 @@
       socket.on('chat message', (arg) => {
         //console.log("chat message on", arg);
 
-        const { myId, value, chat } = arg;
+        const { myId, value, chat , messageId } = arg;
         const talk = document.createElement('div');
         talk.classList.add('talk');
         const msgContainer = document.querySelector('.msg-container')
@@ -936,6 +1053,37 @@
         p.textContent = `${myId}: ${value}`;
         talk.appendChild(p);
         msgContainer.appendChild(talk);
+
+        const editbutton = document.createElement('button')
+        editbutton.textContent = '수정';
+        editbutton.classList.add('editbutton')
+        editbutton.addEventListener('click',()=>{
+          const editChat = prompt('새로운 메세지를 입력하세요',value);
+          if(editChat){
+            p.textContent = `${myId}: ${value}`;
+          }
+        })
+        const deletebutton = document.createElement('button')
+        deletebutton.textContent = '삭제'
+        deletebutton.classList.add('deletebutton')
+        deletebutton.addEventListener('click',()=>{
+          if(confirm('이 메세지를 삭제하시겠습니까?')){
+            socket.emit('deletechat',{messageId})
+            talk.remove()
+          }
+        })
+        talk.appendChild(editbutton);
+        talk.appendChild(deletebutton)
+        // const nickname = document.createElement('p');
+        // nickname.classList.add('nickname');
+        // nickname.textContent = username;
+        // const message = document.createElement('p');
+        // message.textContent = value;
+        // message.classList.add('chatting-list');
+        // talk.appendChild(nickname);
+        // talk.appendChild(message);
+        // document.querySelector('.msg-container').appendChild(talk);
+
       });
 
     }
