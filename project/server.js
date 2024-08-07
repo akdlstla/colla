@@ -56,50 +56,39 @@ io.on('connection', (socket) => {
     console.log("join chat server : ", arg);
 
     //join : 방 없으면 생성, 있으면 입장
-    const { username, myId, chatId } = arg;
-    socket.join(username);
+    const { chatName, myId, chatId, flag } = arg;
+    socket.join(chatName);
     // socket.chat = chat;
-    console.log(`User joined room: ${username}`);
-    await db.userchat.create({ userId: myId, chatId });
+    console.log(`User joined room: ${chatName}`, flag);
+    if( flag === 0) {
+      await db.userchat.create({ userId: myId, chatId });
+    }
   });
 
   //   /** 3. socket 방 초대 */
   socket.on('invite chat', async (arg) => {
-    const { yourId, chatId } = arg;
-    // usersocket = username.socket.id;
-    // if(usersocket) {
-    //   usersocket.join(chat);
-    //   usersocket.emit('invited', chat);
-    //   console.log(`User ${username} invited to chat ${chat}`);
-    // }
-    //상대방을 방정보에 입력하는 db 저장.
-    //find = await db.chat.findOne({ where: { chat: username } })
-    await db.userchat.create({ userId: yourId, chatId });
+    const { yourId, chatId , flag} = arg;
+    if( flag === 0) {
+      await db.userchat.create({ userId: yourId, chatId });
+    }
 
   });
 
   //   /** 4. 룸 내 메세지 브로드캐스트*/
   socket.on('chat message', async (arg) => {
-    const { myId, value, chatId, username } = arg;
+    const { myName, myId, value, chatId, chatName } = arg;
     console.log("브로드캐스트 테스트", arg);
     await db.msg.create({ userId: myId, chatId, talk: value });
-    io.to(username).emit('chat message', { myId, value });
+    io.to(chatName).emit('chat message', { myName, value });
     // console.log("q브로드캐스트 후");
 
   });
-
-
-
-
 
   //   /** 5. 로그아웃 : 소켓 연결 해제 */
   socket.on('disconnect', () => {
     console.log('user disconnected');
   })
 });
-
-
-
 
 db.sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => {
