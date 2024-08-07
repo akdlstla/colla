@@ -28,15 +28,21 @@
             font-size: 24px;
         }
 
+        #boxbox {
+            justify-content: center;
+        }
+
         fieldset {
-            margin-bottom: 15px;
+            margin-bottom: 30px;
+            margin-top: 15px;
             border: none;
+            padding: 0;
             }
 
             input[type="text"],
             input[type="email"],
             input[type="password"] {
-            width: 100%;
+            width: calc(100% - 22px);
             padding: 10px;
             font-size: 14px;
             border: 1px solid #ccc;
@@ -44,6 +50,7 @@
             background-color: #f0f0f0;
             transition: border-color 0.3s;
             }
+
         button#next {
             width: 100%;
             padding: 10px;
@@ -113,6 +120,36 @@
         }
 
 
+        /* 반응형 만들기 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; /* 모바일 환경에서 양쪽 여백 */
+            }
+
+            main {
+                width: 90%; /* 모바일에서 최대 너비 사용 */
+                padding: 15px; /* 패딩을 줄여서 공간 확보 */
+                box-shadow: none; /* 박스 그림자 제거 */
+                margin: 0; /* 자동 여백 제거 */
+            }
+
+            #title h3 {
+                font-size: 20px; /* 타이틀 폰트 크기 줄임 */
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            button#next {
+                font-size: 16px; /* 입력 폰트 크기 조정 */
+                padding: 12px; /* 패딩을 조금 늘려서 터치 영역 확대 */
+            }
+
+            #formcheck label,
+            #formcheck span {
+                font-size: 13px; /* 폰트 크기 줄여서 공간 절약 */
+            }
+        }
     </style>
 </head>
 <body>
