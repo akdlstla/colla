@@ -843,7 +843,30 @@ document.querySelector('#connectUser').innerHTML = username
         p.classList.add('eachMsg')
         p.textContent = `${myId}: ${value}`;
         talk.appendChild(p);
+        //수정 버튼
+        const editButton = document.createElement('button');
+                editButton.textContent = '수정';
+                editButton.classList.add('editButton');
+                editButton.addEventListener('click', () => {
+                    const editChat = prompt('새로운 메세지를 입력하세요', value);
+                    if (editChat) {
+                        p.textContent = `${myId}: ${editChat}`;
+                    }
+                });
+               
+        const deletebutton = document.createElement('button')
+                deletebutton.textContent = '삭제'
+                deletebutton.classList.add('deletebutton')
+                deletebutton.addEventListener('click',()=>{
+                  if(confirm('이 메세지를 삭제하시겠습니까?')){
+                      socket.emit('deletechat',{messageId})
+                      talk.remove()
+                    }
+                 })
+        talk.appendChild(editButton);
+        talk.appendChild(deletebutton)
         msgContainer.appendChild(talk);
+        
         // const nickname = document.createElement('p');
         // nickname.classList.add('nickname');
         // nickname.textContent = username;
@@ -952,7 +975,7 @@ document.querySelector('#connectUser').innerHTML = username
       socket.on('chat message', (arg) => {
         //console.log("chat message on", arg);
 
-        const { myId, value, chat } = arg;
+        const { myId, value, chat , messageId } = arg;
         const talk = document.createElement('div');
         talk.classList.add('talk');
         const msgContainer = document.querySelector('.msg-container')
@@ -961,6 +984,26 @@ document.querySelector('#connectUser').innerHTML = username
         p.textContent = `${myId}: ${value}`;
         talk.appendChild(p);
         msgContainer.appendChild(talk);
+        const editbutton = document.createElement('button')
+        editbutton.textContent = '수정';
+        editbutton.classList.add('editbutton')
+        editbutton.addEventListener('click',()=>{
+          const editChat = prompt('새로운 메세지를 입력하세요',value);
+          if(editChat){
+            p.textContent = `${myId}: ${value}`;
+          }
+        })
+        const deletebutton = document.createElement('button')
+        deletebutton.textContent = '삭제'
+        deletebutton.classList.add('deletebutton')
+        deletebutton.addEventListener('click',()=>{
+          if(confirm('이 메세지를 삭제하시겠습니까?')){
+            socket.emit('deletechat',{messageId})
+            talk.remove()
+          }
+        })
+        talk.appendChild(editbutton);
+        talk.appendChild(deletebutton)
         // const nickname = document.createElement('p');
         // nickname.classList.add('nickname');
         // nickname.textContent = username;

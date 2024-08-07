@@ -79,15 +79,19 @@ io.on('connection', (socket) => {
   });
 
   //   /** 4. 룸 내 메세지 브로드캐스트*/
+
   socket.on('chat message', async (arg) => {
     const { myId, value, chatId, username } = arg;
     console.log("브로드캐스트 테스트", arg);
-    await db.msg.create({ userId: myId, chatId, talk: value });
-    io.to(username).emit('chat message', { myId, value });
+    const message = await db.msg.create({ userId: myId, chatId, talk: value });
+    io.to(username).emit('chat message', { myId, value, messageId : message.id });
     // console.log("q브로드캐스트 후");
 
   });
-
+  socket.on('deletechat', async(arg)=>{
+    const {messageId} =arg
+    await db.msg.destroy({where:{id: messageId}})
+  })
 
 
 
@@ -101,7 +105,7 @@ io.on('connection', (socket) => {
 
 
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false}).then(() => {
   server.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
   })
