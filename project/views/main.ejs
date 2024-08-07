@@ -11,7 +11,7 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <style>
-     * {
+      * {
         margin: 0;
         padding: 0;
         text-decoration: none;
@@ -221,6 +221,82 @@
         font-weight: bold;
       }
 
+      #chatContainer {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+      }
+
+      #user-container {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      #wrapper {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .msg-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .talk {
+        max-width: 60%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #dfe7ef;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .talk.received {
+        align-self: flex-start;
+        background-color: #d1e7fd;
+      }
+
+      .talk.sent {
+        align-self: flex-end;
+        background-color: #c1f0c1;
+      }
+
+      .message {
+        margin-top: 5px;
+        background-color: inherit;
+      }
+
+      #send {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      #chatting-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-right: 10px;
+      }
+
+      #send-button {
+        padding: 10px 20px;
+        background-color: #c1e2ff;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
       @media (max-width: 768px) {
         /* 반응형 헤더 */
         header {
@@ -320,14 +396,15 @@
 
   #userBox,
   #msgBox {
-    width: 90%; /* 모바일에서는 너비를 더 크게 설정 */
+    width: 80%; /* 모바일에서는 너비를 더 크게 설정 */
     margin: 0 auto; /* 중앙 정렬 */
   }
 
   #userBox > div {
-    flex: 0 0 100%; /* 모바일에서 가로로 한 줄에 하나씩 배치 */
+    flex: 0 0 90%; /* 모바일에서 가로로 한 줄에 하나씩 배치 */
     height: auto; /* 높이를 자동으로 조정 */
     max-width: none; /* 최대 너비 제한 제거 */
+    margin: auto;
   }
       }
       #mainSearchBox {
@@ -415,44 +492,38 @@
     </div>
 
     <!-- 헤더로부터 위치 이동 -->
-    <div id="userBox" hidden></div>
-    <!-- <div id="userSearchBox"> -->
-    <p></p>
+    <div id="resultContainer" class="hidden">
+      <div id="userBox" hidden></div>
+      <!-- <div id="userSearchBox"> -->
+      <p></p>
+      <!-- 헤더로부터 위치 이동 -->
+      <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
+      <!-- <div id="msgSearchBox"> -->
+      <p></p>
     </div>
-    <!-- 헤더로부터 위치 이동 -->
-    <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
-    <!-- <div id="msgSearchBox"> -->
-    <p></p>
     </div>
+
 
     <!-- 채팅방 -->
     <div id="main_chat" hidden>
-      <div id="user-container">
-        <p id="nickname">
-      </div>
-      <div id="wrapper">
-        <div id="display-container">
-                    <div class="msg-container">
-                        <div class="talk">
-                            <div type="text" class="nickname"></div>
-                            <ul class="chatting-list">
-                                <li>안녕하세요</li>
-                            </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-        <div id="send">
-          <input type="text" id="chatting-input" />
-          <button id="send-button">전송</button>
+      <div id="chatContainer">
+        <div id="user-container">
+          <p id="nickname">채팅방 이름 또는 상대방 이름</p>
+        </div>
+        <div id="wrapper">
+          <div id="display-container">
+            <div class="msg-container">
+              <!-- 채팅 메시지가 여기에 동적으로 추가됩니다 -->
+            </div>
+          </div>
+          <div id="send">
+            <input type="text" id="chatting-input" placeholder="메시지를 입력하세요..." />
+            <button id="send-button">전송</button>
+          </div>
         </div>
       </div>
     </div>
   </main>
-
-
-
-
 
 
 
@@ -476,6 +547,7 @@
     const userBox = document.querySelector('#userBox');
     const msgBox = document.querySelector('#msgBox');
     const main_chat = document.querySelector('#main_chat');
+    const resultContainer = document.querySelector("#resultContainer");
 
     let states = []; // 상태를 저장할 배열
     let currentIndex = 0; // 현재 상태의 인덱스
@@ -643,8 +715,8 @@ document.querySelector('#connectUser').innerHTML = username
       return content.replace(regex, '<span class="highlight">$1</span>'); // 일치하는 부분 <span>
     }
 
-   // 검색 입력 이벤트 핸들러
-   search.addEventListener("keyup", () => {
+  // 검색 입력 이벤트 핸들러
+  search.addEventListener("keyup", () => {
         if (search.value.length >= 2) {
           const searchTerm = search.value;
           axios({
