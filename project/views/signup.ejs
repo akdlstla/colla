@@ -128,7 +128,7 @@
         <fieldset>
           <input type="email" id="email" placeholder="이메일주소" />
         </fieldset>
-        <div class="success-message hide">사용할 수 있는 이메일 주소입니다</div>
+        <div class="success-message hide">사용할 수 있는 이메일 주소 형식입니다</div>
         <div class="failure-message hide">기존에 가입된 이메일 주소입니다</div>
         <div class="failure-message2 hide">이메일 형식이 아닙니다</div>
     
@@ -344,11 +344,11 @@
                 if(onlyEmailAddress(elInputEmail.value)&&strongPassword(elInputPassword.value)&&isMatch(elInputPassword.value, elInputPasswordRetype.value)){
                 
                 const data = {
-                username: document.querySelector('#username').value,
-                email: document.querySelector('#email').value,
-                password: document.querySelector('#password').value,
-                company: document.querySelector('#companyName').value,
-                department: document.querySelector('#departmentName').value
+                        username: document.querySelector('#username').value,
+                        email: document.querySelector('#email').value,
+                        password: document.querySelector('#password').value,
+                        company: document.querySelector('#companyName').value,
+                        department: document.querySelector('#departmentName').value
                 
                 }
                 alert('회원가입이 완료되었습니다')
@@ -360,7 +360,7 @@
 
                     data,
                 }).then((res) => {
-                    if (res.data.result) { document.location.href = '/login2' } else {
+                    if (res.data.result) { document.location.href = '/login' } else {
                         alert('이메일을 확인해주세용!(자네 이미 가입한게 아닌가?)')
                     }
                 })

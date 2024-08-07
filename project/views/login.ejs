@@ -136,7 +136,7 @@
       </div>
       <div class="form-options">
         <div>
-          <input type="checkbox" id="remember-email" onchange="emailRemember()" defaltChecked={true} />
+          <input type="checkbox" id="remember-email" onchange="emailRemember()" />
           <label for="remember-email" >이메일 기억하기</label>
         </div>
         <div>
@@ -167,8 +167,8 @@
       }
       loginCheck();
 
-      const keepEmail = localStorage.getItem('email');
-      const checkEmail = localStorage.getItem('check');
+      const keepEmail = localStorage.getItem('keepEmail');
+      const checkEmail = localStorage.getItem('checkEmail');
   
       
 
@@ -192,11 +192,11 @@
         localStorage.setItem('checkEmail',checkEmail);
 
         if(keepEmail && checkEmail){
-          localStorage.setItem('email', keepEmail);
+          localStorage.setItem('keepEmail', keepEmail);
           
         }
         if(!checkEmail){
-          localStorage.removeItem('email');
+          localStorage.removeItem('keepEmail');
         }
        
       }
