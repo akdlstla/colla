@@ -194,7 +194,7 @@
 
 
     // 로그인 상태에서 로그인 페이지로 강제 이동시 main.으로 바로 이동
-    function loginCheck () {
+      function loginCheck () {
        const token = localStorage.getItem('token')
               console.log(token,'토큰')
 
@@ -205,8 +205,8 @@
       }
       loginCheck();
 
-      const keepEmail = localStorage.getItem('keepEmail');
-      const checkEmail = localStorage.getItem('checkEmail');
+      const keepEmail = localStorage.getItem('email');
+      const checkEmail = localStorage.getItem('check');
   
       
 
@@ -230,11 +230,11 @@
         localStorage.setItem('checkEmail',checkEmail);
 
         if(keepEmail && checkEmail){
-          localStorage.setItem('keepEmail', keepEmail);
+          localStorage.setItem('email', keepEmail);
           
         }
         if(!checkEmail){
-          localStorage.removeItem('keepEmail');
+          localStorage.removeItem('email');
         }
        
       }

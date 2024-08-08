@@ -14,7 +14,6 @@ db.group = require('./group')(sequelize)
 db.groupuser = require('./groupuser')(sequelize)
 db.msg = require('./msg')(sequelize)
 db.comment = require('./comment')(sequelize)
-db.bord = require('./bord')(sequelize)
 
 db.user.hasMany(db.groupuser,{foreignKey:'userId', onDelete:'CASCADE'})
 db.groupuser.belongsTo(db.user,{foreignKey:'userId', onDelete:'CASCADE'})
@@ -33,8 +32,6 @@ db.msg.hasMany(db.comment, {foreignKey:'msgId', onDelete: 'CASCADE'})
 db.comment.belongsTo(db.msg, {foreignKey:'msgId', onDelete: 'CASCADE'})
 db.user.hasMany(db.msg,{foreignKey:'userId', onDelete: 'CASCADE'})
 db.msg.belongsTo(db.user, {foreignKey:'userId', onDelete: 'CASCADE'})
-db.user.hasMany(db.bord,{foreignKey:'userId', onDelete: 'CASCADE'})
-db.bord.belongsTo(db.user, {foreignKey:'userId', onDelete: 'CASCADE'})
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
