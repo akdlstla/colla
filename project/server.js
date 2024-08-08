@@ -81,8 +81,8 @@ io.on('connection', (socket) => {
     console.log("브로드캐스트 테스트", arg);
 
     const message = await db.msg.create({ userId: myId, chatId, talk: value });
-    io.to(chatName).emit('chat message', { myId, value, messageId : message.id });
-    // console.log("q브로드캐스트 후");
+    io.to(chatName).emit('new chat message', { myId, value, messageId : message.id });
+    console.log("브로드캐스트 후");
 
   });
   socket.on('deletechat', async(arg)=>{
