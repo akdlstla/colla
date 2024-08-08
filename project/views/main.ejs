@@ -10,6 +10,7 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
   <style>
     * {
@@ -599,7 +600,7 @@
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      console.log("dkdkdkd", res.data)
+      console.log("토큰", res.data)
       const { username, id } = res.data.response;
       //const { id: roomId, chat } = res.data.rooms
       console.log(res.data.rooms)
@@ -784,6 +785,7 @@
     let chatName = "";
     // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
     function clickFindByUsername(res1, res2, res3) {
+ 
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
 
       //console.log("이벤트핸들러 후 ", res1, res2, res3);
@@ -832,6 +834,8 @@
 
 
         console.log("chatName: ", chatName)
+
+
         /* 3. 클릭한 상대 chat에 초대 */
         const yourInfo = { yourId, chatId, flag };
         socket.emit('invite chat', yourInfo);
@@ -867,19 +871,24 @@
         console.log(chatId)
         //console.log("전송버튼클릭");
         socket.emit('chat message', { myName, myId, value: input.value, chatId, chatName });
-        //console.log("전송버튼클릭 후");
+        console.log("전송버튼클릭 후",myName, input.value, chatId, chatName);
         input.value = "";
       });
 
 
-      socket.on('chat message', (arg) => {
+      socket.on('new chat message', (arg) => {
         const { myName, value } = arg;
+        console.log('서버에서 받은 메세지 받냐?', arg);
+        
         const talk = document.createElement('div');
         talk.classList.add('talk');
         const msgContainer = document.querySelector('.msg-container')
         const p = document.createElement('p')
         p.classList.add('eachMsg')
         p.textContent = `${myName}: ${value}`;
+
+        console.log('출력 확인용',myName,value );
+        
         talk.appendChild(p);
         //수정 버튼
         const editButton = document.createElement('button');
@@ -1041,7 +1050,7 @@
 
       //  console.log("..........", myId, input.value, chatId);
 
-      socket.on('chat message', (arg) => {
+      socket.on('new chat message', (arg) => {
         //console.log("chat message on", arg);
 
         const { myId, value, chat , messageId } = arg;

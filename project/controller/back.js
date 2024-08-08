@@ -161,7 +161,7 @@ const createChat = async (req, res) => {
             //arr[0]
             result = await chat.findOne({
                 where: { id: arr[0] },
-                include: [{ model: msg, attributes: ["id", "userId", "talk"] }],
+                include: [{ model: msg, attributes: ["id", "userId",'chatId' ,"talk"] }],
             })
             flag = 1
         }
