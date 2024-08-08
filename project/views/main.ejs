@@ -259,10 +259,15 @@
       .msg-container {
         display: flex;
         flex-direction: column;
+        overflow-y: scroll;
+        width: 500px;
+        height: 600px;
+        justify-content: center;
       }
 
       .talk {
-        max-width: 60%;
+        position: relative;
+        /* max-width: 60%; */
         margin-bottom: 10px;
         padding: 10px;
         border-radius: 10px;
@@ -284,7 +289,33 @@
         margin-top: 5px;
         background-color: inherit;
       }
-
+      .myMsg{
+        display: flex;
+        justify-content: end;
+        padding: 2px;
+        position: relative;
+      }
+      .myMsg {
+        background-color: yellow;
+        margin: 0px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        width: fit-content;
+      }
+      .eachMsg{
+        display: flex;
+        justify-content: start;
+        padding: 2px;
+        position: relative;
+      }
+      .eachMsg {
+        background-color: white;
+        margin: 0px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        width: fit-content;
+      }
+      .each
       #send {
         display: flex;
         justify-content: space-between;
@@ -553,7 +584,7 @@
         </div>
         <div id="wrapper">
           <div id="display-container">
-            <div class="msg-container">
+            <div class="msg-container" id="msgwrapper">
               <!-- 채팅 메시지가 여기에 동적으로 추가됩니다 -->
             </div>
           </div>
@@ -628,8 +659,10 @@
     }
 
     // socket.emit('login', {username, email});
+    
     // 초기 상태를 저장하는 함수
-    function saveInitialState() {
+    646
+ function saveInitialState() {
       const initialState = {
         mainPageHidden: main_page.hidden,
         userBoxHidden: userBox.hidden,
@@ -702,6 +735,8 @@
         // currentIndex--; //currentIndex = event.state.index;과 중복되므로 삭제.
       }
     };
+
+   
 
     // 하이라이트 함수(검색 시 동일 내용 하이라이트)
     function highlightText(searchTerm, content) {
@@ -810,6 +845,7 @@
       // 방 생성
       // username -> chatName 변경
       chatName = myName + ", " + yourName;
+      let joinRoom = ''
       axios({
         method: 'post',
         url: '/api/colla/createchat',
@@ -819,19 +855,20 @@
           yourId
         }
       }).then((res) => {
+        // console.log('내이름: ',myName)
         console.log('dlrjdi?', res);
         chatId = res.data.response.id
         const flag = res.data.flag
-        const chatName = res.data.response.chat
+        joinRoom = res.data.response.chat
         //socket.emit('join chat', res.id);
         // const myInfo = {chat, myId};
-        const myInfo = { chatName, myId, chatId, flag };
+        const myInfo = { joinRoom, myId, chatId, flag };
         console.log("before join chat client", myInfo);
         socket.emit('join chat', myInfo);
         console.log("join chat client", myInfo);
 
 
-        console.log("chatName: ", chatName)
+        console.log("chatName: ", joinRoom)
         /* 3. 클릭한 상대 chat에 초대 */
         const yourInfo = { yourId, chatId, flag };
         socket.emit('invite chat', yourInfo);
@@ -846,6 +883,7 @@
             const p = document.createElement('p')
             if( userId === myId) {
               p.classList.add('myMsg')
+              console.log('내이름: ',myName)
             } else {
               p.classList.add('eachMsg')
             }
@@ -855,7 +893,7 @@
 
           })
         }
-      });
+      })
 
       // socket.on('invited', function(chat) {
       //   alert(`You were invited to room: ${room}`);
@@ -865,22 +903,28 @@
       //const myname : 내 사용자 이름, 부서
       button.addEventListener('click', function () {
         console.log(chatId)
+        console.log('내이름: ',myName)
+        
         //console.log("전송버튼클릭");
-        socket.emit('chat message', { myName, myId, value: input.value, chatId, chatName });
+        socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
         //console.log("전송버튼클릭 후");
+        console.log('전송후: ',myName)
         input.value = "";
       });
 
 
-      socket.on('chat message', (arg) => {
-        const { myName, value } = arg;
+      socket.on('new chat message', (arg) => {
+        const { msgUserName, msgUserId,value } = arg;
+        // console.log('내이름 콘솔: ',myName)
+        const myId = msgUserId
         const talk = document.createElement('div');
         talk.classList.add('talk');
         const msgContainer = document.querySelector('.msg-container')
         const p = document.createElement('p')
         p.classList.add('eachMsg')
-        p.textContent = `${myName}: ${value}`;
+        p.textContent = `${msgUserName}: ${value}`;
         talk.appendChild(p);
+        console.log(msgUserName,msgUserId)
         //수정 버튼
         const editButton = document.createElement('button');
                 editButton.textContent = '수정';
@@ -906,9 +950,11 @@
         msgContainer.appendChild(talk);
 
       });
+      
 
     }
-
+   
+    
     // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
     function clickFindByTalk() {
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
@@ -1087,8 +1133,44 @@
       });
 
     }
+      //   (function () {
+      //   const scollBottom = document
+      //     .querySelector(".msg-container")
+      //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
+      //   return scollBottom;
+      // })();
 
+      let scrollHeight = document.querySelector('.msg-container').scrollHeight;
+      let clientHeight = document.querySelector('.msg-container').clientHeight;
+      function addBoxes() {
+        const wrap = document.querySelector('.msg-container');
+        const numberOfNewBoxes = 10;
+        const currentBoxCount = wrap.getElementsByClassName("talk").length;
+
+        for (let i = 1; i <= numberOfNewBoxes; i++) {
+          const newBox = document.createElement("div");
+          newBox.className = "talk";
+          newBox.textContent = currentBoxCount + i;
+          wrap.prepend(newBox);
+        }
+      }
+
+      // 이벤트 리스너 추가
+      document.querySelector('.msg-container').addEventListener("scroll", () => {
+        // console.log("클라이언트 높이", clientHeight);
+        // console.log("스크롤 탑", document.querySelector('.msg-container').scrollTop);
+        // console.log("스크롤 높이", scrollHeight);
+        const wrap = document.querySelector('.msg-container');
+        if (wrap.scrollTop === 0) {
+          addBoxes();
+          // 새 박스를 추가한 후 스크롤 위치를 유지
+          wrap.scrollTop = 30;
+        }
+      });
+
+  
   </script>
+ 
 </body>
 
 </html>
