@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colla</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            background-color: #f4f4f9;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #e0f0ff;
+            padding: 10px 20px;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Kaushan Script', cursive;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons button {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .auth-buttons button:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+
+        .logo-container {
+            background-color: #d3d3d3;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-out;
+        }
+
+        .intro h1 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .feature {
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button {
+            background-color: #e0f0ff;
+            color: black;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #8ac7da;
+            transform: scale(1.1);
+        }
+
+        .testimonial {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            height: 70px; /* 높이 설정 */
+        }
+
+        .testimonial p {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            font-style: italic;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .testimonial p.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial p.inactive {
+            transform: translateY(100%);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+
+            header a {
+                margin-bottom: 10px;
+                font-size: 20px;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .auth-buttons button {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .logo-container {
+                width: 150px;
+                height: 150px;
+                font-size: 18px;
+            }
+
+            .intro h1 {
+                font-size: 24px;
+            }
+
+            .intro p {
+                font-size: 13px;
+                padding: 0 20px;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature {
+                width: 90%;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .feature h2 {
+                font-size: 20px;
+            }
+
+            .feature p {
+                font-size: 14px;
+            }
+
+            .cta-button {
+                width: 80%;
+                padding: 10px 0;
+                font-size: 14px;
+            }
+
+            .testimonial {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="#">Colla</a>
+        <div class="auth-buttons">
+            <button onclick="location.href='login'">로그인</button>
+            <button onclick="location.href='signup'">회원가입</button>
+        </div>
+    </header>
+    <main>
+        <div class="logo-container">
+            콜라 로고
+        </div>
+        <div class="intro">
+            <h1>협업을 위한 최고의 도구</h1>
+            <p>Colla와 함께 더 나은 협업을 경험해보세요. 실시간 채팅, 파일 공유, 프로젝트 관리 기능을 한 곳에서.</p>
+        </div>
+        <div class="features">
+            <div class="feature">
+                <h2>실시간 채팅</h2>
+                <p>팀원들과 즉시 소통하세요.</p>
+            </div>
+            <div class="feature">
+                <h2>파일 공유</h2>
+                <p>프로젝트 파일을 손쉽게 공유하세요.</p>
+            </div>
+            <div class="feature">
+                <h2>프로젝트 관리</h2>
+                <p>프로젝트의 진행 상황을 쉽게 관리하세요.</p>
+            </div>
+        </div>
+        <button class="cta-button" onclick="location.href='signup'">지금 시작하기</button>
+        <div class="testimonial">
+            <p class="active">"Colla 덕분에 팀원들과의 협업이 훨씬 수월해졌어요!" - 채*희 </p>
+            <p class="inactive">"이 도구를 사용하고 나서 생산성이 크게 향상되었습니다!" - 주*재 </p>
+            <p class="inactive">"Colla의 인터페이스는 매우 직관적이고 사용하기 쉽습니다." - 심*형 </p>
+            <p class="inactive">"고객 지원도 매우 훌륭하고 빠릅니다." - 조*재 </p>
+            <p class="inactive">"우리 팀은 Colla 없이 이제 일을 할 수 없을 정도입니다." - 정*은 </p>
+        </div>
+    </main>
+
+    <script>
+        const testimonials = document.querySelectorAll('.testimonial p');
+        let currentTestimonialIndex = 0;
+
+        function showNextTestimonial() {
+            testimonials[currentTestimonialIndex].classList.remove('active');
+            testimonials[currentTestimonialIndex].classList.add('inactive');
+            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+            testimonials[currentTestimonialIndex].classList.remove('inactive');
+            testimonials[currentTestimonialIndex].classList.add('active');
+        }
+
+        setInterval(showNextTestimonial, 3500); // 3.5초마다 후기를 변경
+    </script>
+
+</body>
+
+</html>

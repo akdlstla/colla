@@ -2,6 +2,7 @@ const { user, msg, chat, userchat } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
+const { index } = require('./page');
 
 const salt = Number(process.env.SECRET);
 
@@ -151,11 +152,41 @@ const createChat = async (req, res) => {
         const arr = arr1temp.filter(value => arr2temp.includes(value));
         console.log("result", arr)
 
+        const { chatName, myId, yourId } = req.body;
+
+        const arr1temp = []
+        const arr2temp = []
+        const arr1 = await userchat.findAll({ where: { userId: Number(myId) } })
+        const arr2 = await userchat.findAll({ where: { userId: Number(yourId) } })
+
+        arr1.forEach(value => {
+            arr1temp.push(value.chatId)
+        })
+        arr2.forEach(value => {
+            arr2temp.push(value.chatId)
+        })
+        const arr = arr1temp.filter(value => arr2temp.includes(value));
+        console.log("result", arr)
+
         let result = ''
         let flag = 0
         if (arr.length === 0) {
             //새로운 방 생성
+        let flag = 0
+        if (arr.length === 0) {
+            //새로운 방 생성
             result = await chat.create({ chat: chatName });
+            flag = 0
+        } else {
+            //arr[0]
+            result = await chat.findOne({
+                where: { id: arr[0] },
+                include: [{ model: msg, attributes: ["id", "userId", "talk"] }],
+            })
+            flag = 1
+        }
+        res.json({ result: true, flag, response: result });
+
             flag = 0
         } else {
             //arr[0]
@@ -181,6 +212,7 @@ const createUserChat = async (req, res) => {
         const result = await userchat.create({ userId, chatId });
         console.log('result: ', result);
         res.json({ result: true, result });
+        res.json({ result: true, result });
     } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
@@ -192,6 +224,7 @@ const createMsg = async (req, res) => {
     try {
         const { userId, chatId, talk } = req.body;
         const result = await msg.create({ userId, chatId, talk });
+        // console.log('result: ', result);
         // console.log('result: ', result);
 
     } catch (error) {
@@ -207,13 +240,28 @@ const connectUserFind = async (req, res) => {
             attributes: ['username', 'id'],
         });
         const exists = await userchat.findAll({ where: { userId: id } })
+        const exists = await userchat.findAll({ where: { userId: id } })
         const rooms = []
+        for (let i = 0; i < exists.length; i++) {
+            const find = await chat.findOne({
+                where: { id: exists[i].chatId },
+            })
         for (let i = 0; i < exists.length; i++) {
             const find = await chat.findOne({
                 where: { id: exists[i].chatId },
             })
             rooms.push(find)
         }
+        // console.log('파인드 결과값', rooms);
+        // const final = []
+        // for( let i = 0; i < rooms.length; i++) {
+        //     const find = await userchat.findOne({where: {chatId: rooms[i].id}})
+        //     final.push(find)
+        // }
+        // // const userId = rooms.userchat.forEach(value => {
+        // //     console.log(value)
+        // // })
+        // console.log('파인드 결과값', final);
         // console.log('파인드 결과값', rooms);
         // const final = []
         // for( let i = 0; i < rooms.length; i++) {
@@ -240,9 +288,13 @@ const deleteChat = async(req,res) =>{
         res.status(500).json({result: false, message:'메세지를 삭제할 수 없습니다'})
     }
 }
+<<<<<<< HEAD
 
 const noticewrite = async(req,res) =>{
     const {name,content} =req.body
     const result = await msg.create({})
 }
 module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat, noticewrite }
+=======
+module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat ,index}
+>>>>>>> 67c60e84c52d27dfd89a87d091bae953ff7b8b6b

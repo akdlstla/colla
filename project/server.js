@@ -72,6 +72,7 @@ io.on('connection', (socket) => {
     if( flag === 0) {
       await db.userchat.create({ userId: yourId, chatId });
     }
+    
 
   });
 
@@ -80,9 +81,10 @@ io.on('connection', (socket) => {
   socket.on('chat message', async (arg) => {
     const { myName, myId, value, chatId, chatName } = arg;
     console.log("브로드캐스트 테스트", arg);
-
+    const msgUserName =myName
+    const msgUserId =myId
     const message = await db.msg.create({ userId: myId, chatId, talk: value });
-    io.to(chatName).emit('chat message', { myId, value, messageId : message.id });
+    io.to(chatName).emit('new chat message', { msgUserName,msgUserId, value});
     // console.log("q브로드캐스트 후");
 
   });
