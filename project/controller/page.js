@@ -24,6 +24,9 @@ const login = (req,res) =>{
 const siteinfo = (req,res) =>{
     res.render('siteinfo')
 }
-module.exports = { main, signup, terms, personal, login, notice , siteinfo};
+const noticewrite = (req,res) =>{
+    res.render('noticewrite')
+}
+module.exports = { main, signup, terms, personal, login, notice , siteinfo, noticewrite};
 
 
