@@ -471,7 +471,7 @@
     </div>
 
 
-    <i class="fa-solid fa-gear" id="gearIcon1"></i>
+    <!-- <i class="fa-solid fa-gear" id="gearIcon1"></i> -->
     <div class="options" id="optionsMenu">
       <div><a href="#">마이페이지</a></div>
 
@@ -730,9 +730,9 @@
               ////console.log(parse)
               userBox.innerHTML +=
                 `<div id='findByUsername' onclick='clickFindByUsername("${saveuserName}", "${saveuserId}", "${saveuserDep}")'>
-                              <p>이름: ${value.username}</p>
-                              <p>이메일: ${value.email}</p>
-                              <p>부서: ${value.department}</p>
+                              <p>이름: ${highlightText(searchTerm,value.username)}</p>
+                              <p>이메일: ${highlightText(searchTerm,value.email)}</p>
+                              <p>부서: ${highlightText(searchTerm,value.department)}</p>
                               <br>
                           </div>`;
             });

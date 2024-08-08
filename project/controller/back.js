@@ -2,6 +2,7 @@ const { user, msg, chat, userchat } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
+const { index } = require('./page');
 
 const salt = Number(process.env.SECRET);
 
@@ -240,4 +241,4 @@ const deleteChat = async(req,res) =>{
         res.status(500).json({result: false, message:'메세지를 삭제할 수 없습니다'})
     }
 }
-module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat }
+module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat ,index}
