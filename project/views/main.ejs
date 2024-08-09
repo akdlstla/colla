@@ -1221,20 +1221,7 @@
       //   return scollBottom;
       // })();
 
-      let scrollHeight = document.querySelector('.msg-container').scrollHeight;
-      let clientHeight = document.querySelector('.msg-container').clientHeight;
-      function addBoxes() {
-        const wrap = document.querySelector('.msg-container');
-        const numberOfNewBoxes = 10;
-        const currentBoxCount = wrap.getElementsByClassName("talk").length;
-
-        for (let i = 1; i <= numberOfNewBoxes; i++) {
-          const newBox = document.createElement("div");
-          newBox.className = "talk";
-          newBox.textContent = currentBoxCount + i;
-          wrap.prepend(newBox);
-        }
-      }
+      
 
       // 이벤트 리스너 추가
       document.querySelector('.msg-container').addEventListener("scroll", () => {
@@ -1259,7 +1246,7 @@
         document.querySelector('#pop_info').style.display = 'none';
     });
 
-
+</script>
 </body>
 
 </html>
