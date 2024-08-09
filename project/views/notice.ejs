@@ -12,28 +12,39 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
-  <h3>공지사항</h3>
-  <div id="content"></div>
-
+  <h3 id="boardname">공지사항</h3>
+  <div id="notice" hidden>notice</div>
+  <div id="content_title" onclick="titleclick()"></div>
+  <div id="content_board" ></div>
 
   <div><a href="/noticewrite">쓰기(아이콘)</a></div>
   <script>
-    const content = document.querySelector('#content')
+    const title = document.querySelector('#content_title')
+    const board = document.querySelector('#content_board')
+    const boardname = document.querySelector('#notice').textContent;
     (async function() {
       const res = await axios({
-        method:'get',
+        method:'post',
         url:'/api/colla/noticeall',
+        data: {data: boardname}
       })
+
       console.log(res);
-      for(let i=0; i < res.data.length; i++){
+      res.data.contents.forEach(item => {
         const html = 
-        `<div>${res.data.name}</div>
-        <div>${res.data.department}</div>
-        <div>${res.data.talk}</div>`
-        content.insertAdjacentHTML('beforeend', html)
-      }
+        `<div>${item.user.username}</div>
+        <div>${item.title}</div>`
+        const css =
+        `<div>${item.contents}</div>`
+        title.insertAdjacentHTML('beforeend', html)
+        title.insertAdjacentHTML('beforeend',css)
+      });
+      
     })();
 
+   function titleclick(){
+
+   }
 
   </script>
 </body>

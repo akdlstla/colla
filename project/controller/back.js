@@ -1,4 +1,4 @@
-const { user, msg, chat, userchat } = require('../models');
+const { user, msg, chat, userchat , bord} = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
@@ -136,21 +136,21 @@ const createChat = async (req, res) => {
     try {
         console.log('req:', req.body);
 
-        const { chatName, myId, yourId } = req.body;
+        // const { chatName, myId, yourId } = req.body;
 
-        const arr1temp = []
-        const arr2temp = []
-        const arr1 = await userchat.findAll({ where: { userId: Number(myId) } })
-        const arr2 = await userchat.findAll({ where: { userId: Number(yourId) } })
+        // const arr1temp = []
+        // const arr2temp = []
+        // const arr1 = await userchat.findAll({ where: { userId: Number(myId) } })
+        // const arr2 = await userchat.findAll({ where: { userId: Number(yourId) } })
 
-        arr1.forEach(value => {
-            arr1temp.push(value.chatId)
-        })
-        arr2.forEach(value => {
-            arr2temp.push(value.chatId)
-        })
-        const arr = arr1temp.filter(value => arr2temp.includes(value));
-        console.log("result", arr)
+        // arr1.forEach(value => {
+        //     arr1temp.push(value.chatId)
+        // })
+        // arr2.forEach(value => {
+        //     arr2temp.push(value.chatId)
+        // })
+        // const arr = arr1temp.filter(value => arr2temp.includes(value));
+        // console.log("result", arr)
 
         const { chatName, myId, yourId } = req.body;
 
@@ -240,12 +240,12 @@ const connectUserFind = async (req, res) => {
             attributes: ['username', 'id'],
         });
         const exists = await userchat.findAll({ where: { userId: id } })
-        const exists = await userchat.findAll({ where: { userId: id } })
+        //const exists = await userchat.findAll({ where: { userId: id } })
         const rooms = []
-        for (let i = 0; i < exists.length; i++) {
-            const find = await chat.findOne({
-                where: { id: exists[i].chatId },
-            })
+        // for (let i = 0; i < exists.length; i++) {
+        //     const find = await chat.findOne({
+        //         where: { id: exists[i].chatId },
+        //     })
         for (let i = 0; i < exists.length; i++) {
             const find = await chat.findOne({
                 where: { id: exists[i].chatId },
@@ -288,13 +288,38 @@ const deleteChat = async(req,res) =>{
         res.status(500).json({result: false, message:'메세지를 삭제할 수 없습니다'})
     }
 }
-<<<<<<< HEAD
 
-const noticewrite = async(req,res) =>{
-    const {name,content} =req.body
-    const result = await msg.create({})
+const writeFunc = async(req,res) =>{
+    console.log('라이트 리퀘스트 바디',req.body);
+    try {
+        // const {id} = req.userInfo
+        console.log('req.userInfo',req.userInfo);
+        const {id} = req.userInfo
+        const {type, title, contents} =req.body
+        console.log(req.body);
+        
+        const result = await bord.create({type, title,contents, userId:id})
+        console.log('라이트리절트', result);
+        res.json({result:true, message:'작성완료!'})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+    
 }
-module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat, noticewrite }
-=======
-module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat ,index}
->>>>>>> 67c60e84c52d27dfd89a87d091bae953ff7b8b6b
+const noticeall = async(req,res) =>{
+    console.log(req.body,'바디가 뭔뎅');
+    const data = req.body.data
+
+    const contents = await bord.findAll({
+        include: [
+            {
+                model: user,
+                attributes: ['username'],
+            },
+        ], where: { type: data }
+    })
+    console.log('노티스올 리절트',contents);
+    res.json({result: true, contents })
+}
+module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, index, noticeall }

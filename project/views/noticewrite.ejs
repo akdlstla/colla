@@ -1,47 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CKEditor 5 - Quick start CDN</title>
-        <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css" />
-    </head>
-    <body>
-        <div id="editor">
-            <p>Hello from CKEditor 5!</p>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TOAST UI Editor 적용하기</title>
+
+    <!-- TUI 에디터 CSS CDN -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h2 style="text-align: center;">공지사항 글 써줘!</h2>
+    <form>
+        <input type="radio" id="notice" checked disabled value="notice">공지사항<br>
+        <input type="text" id="title" placeholder="제목">
+
+        <!-- 에디터를 적용할 요소 (컨테이너) -->
+        <div id="content">
+
         </div>
+        <button type="button" id="GH">HTML보기</button>
+        <button type="button" onclick="writeFunc()">글쓰기</button>
+        <button type="button" onclick="cancle()">취소</button>
+    </form>
+    <!-- TUI 에디터 JS CDN -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+        const editor = new toastui.Editor({
+            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
+            height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+            initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+            initialValue: '입력할 수 있으면 해보시지! ㅡ/////ㅡ',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+            previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
+        });
+        console.log(editor.getHTML())
+        document.getElementById('GH').addEventListener('click', () => {
+            console.log(editor.getHTML());
 
-        <script type="importmap">
-            {
-                "imports": {
-                    "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.js",
-                    "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.0.0/"
+        })
+        function writeFunc() {
+            const type = document.querySelector('#notice').value
+            const title = document.querySelector('#title').value
+            const contents = editor.getHTML()
+            console.log(contents, type, title);
+
+            axios({
+                method: 'post',
+                url: '/api/colla/writeFunc',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+                data: {
+                    type,
+                    title,
+                    contents,
                 }
+            }).then(() => {
+                alert('작성이 완료되었슴둥!'),
+                    window.location.href = '/notice'
             }
-        </script>
+            ).catch(error => {
+                console.error('작성 중 오류 발생:', error);
+                alert('작성 중 오류가 발생했습니다.');
+            });
+        }
+        function cancle() {
+            if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
+                window.location.href = '/notice'
 
-        <script type="module">
-            import {
-                ClassicEditor,
-                Essentials,
-                Bold,
-                Italic,
-                Font,
-                Paragraph
-            } from 'ckeditor5';
+            } else {
+                return
+            }
 
-            ClassicEditor
-                .create( document.querySelector( '#editor' ), {
-                    plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
-                    toolbar: {
-                        items: [
-                            'undo', 'redo', '|', 'bold', 'italic', '|',
-                            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-                        ]
-                    }
-                } )
-                .then( /* ... */ )
-                .catch( /* ... */ );
-        </script>
-    </body>
+        }
+    </script>
+</body>
+
 </html>
