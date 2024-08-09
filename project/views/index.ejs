@@ -9,150 +9,167 @@
         * {
             margin: 0;
             padding: 0;
-            text-decoration: none;
             box-sizing: border-box;
         }
 
         body,
         html {
             height: 100%;
-            background-color: #f4f4f9;
+            background-color: white;
             color: #333;
             font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: #e0f0ff;
-            padding: 10px 20px;
+            background-color: #638cc7;
+            padding: 15px 30px;
             color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Poppins', sans-serif;
         }
 
         header a {
             color: white;
             text-decoration: none;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            font-family: 'Kaushan Script', cursive;
         }
 
         .auth-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .auth-buttons button {
-            background-color: white;
-            color: black;
+            background-color: #ffffff;
+            color: #638cc7;
             border: none;
-            border-radius: 20px;
-            padding: 5px 15px;
+            border-radius: 25px;
+            padding: 8px 20px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s, color 0.3s;
         }
 
         .auth-buttons button:hover {
-            background-color: #f0f0f0;
+            background-color: #0f4c81;
+            color: white;
             transform: scale(1.05);
         }
 
         main {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            background-color: #f9f9f9;
-            height: calc(100vh - 60px);
+            padding: 40px 20px;
+            background-color: #ffffff;
             overflow-y: auto;
         }
 
         .logo-container {
-            background-color: #d3d3d3;
-            width: 200px;
-            height: 200px;
+            background-color: #ffffff;
+            width: 220px;
+            height: 220px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid black;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            margin-bottom: 30px;
             animation: fadeIn 1s ease-in-out;
-            font-size: 24px;
+            font-size: 32px;
             font-weight: bold;
             color: #333;
         }
 
         .intro {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             animation: slideIn 1s ease-out;
         }
 
         .intro h1 {
-            font-size: 32px;
+            font-size: 36px;
             color: #333;
+            font-family: 'Poppins', sans-serif;
         }
 
         .intro p {
-            font-size: 18px;
+            font-size: 20px;
             color: #555;
+            margin-top: 10px;
         }
 
         .features {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         .feature {
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
             width: 30%;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .feature:hover {
             transform: translateY(-10px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            color: #555;
         }
 
         .cta-button {
-            background-color: #e0f0ff;
-            color: black;
+            background-color: #638cc7;
+            color: white;
             border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             transition: background-color 0.3s, transform 0.3s;
         }
 
         .cta-button:hover {
-            background-color: #8ac7da;
+            background-color: #0f4c81;
             transform: scale(1.1);
         }
 
         .testimonial {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
+            background-color: #f9f9f9;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
             width: 80%;
             text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
-            height: 70px; /* 높이 설정 */
+            height: 80px;
         }
 
         .testimonial p {
@@ -172,6 +189,24 @@
 
         .testimonial p.inactive {
             transform: translateY(100%);
+        }
+
+        footer {
+            background-color: #4a4843;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #638cc7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         @keyframes fadeIn {
@@ -200,37 +235,36 @@
             header {
                 flex-direction: column;
                 text-align: center;
-                padding: 15px;
+                padding: 20px;
             }
 
             header a {
                 margin-bottom: 10px;
-                font-size: 20px;
+                font-size: 24px;
             }
 
             .auth-buttons {
                 flex-direction: column;
-                gap: 5px;
+                gap: 10px;
             }
 
             .auth-buttons button {
                 width: 100%;
-                padding: 10px;
+                padding: 12px;
             }
 
             .logo-container {
-                width: 150px;
-                height: 150px;
-                font-size: 18px;
+                width: 160px;
+                height: 160px;
+                font-size: 20px;
             }
 
             .intro h1 {
-                font-size: 24px;
+                font-size: 28px;
             }
 
             .intro p {
-                font-size: 13px;
-                padding: 0 20px;
+                font-size: 16px;
             }
 
             .features {
@@ -240,26 +274,27 @@
 
             .feature {
                 width: 90%;
-                padding: 15px;
+                padding: 20px;
                 margin-bottom: 20px;
-            }
-
-            .feature h2 {
-                font-size: 20px;
-            }
-
-            .feature p {
-                font-size: 14px;
             }
 
             .cta-button {
                 width: 80%;
-                padding: 10px 0;
-                font-size: 14px;
+                padding: 12px 0;
+                font-size: 16px;
             }
 
             .testimonial {
                 display: none;
+            }
+
+            footer .footer-info {
+                text-align: center;
+            }
+
+            footer p {
+                font-size: 12px;
+                line-height: 1.5;
             }
         }
     </style>
@@ -279,7 +314,7 @@
         </div>
         <div class="intro">
             <h1>협업을 위한 최고의 도구</h1>
-            <p>Colla와 함께 더 나은 협업을 경험해보세요. 실시간 채팅, 파일 공유, 프로젝트 관리 기능을 한 곳에서.</p>
+            <p>가장 쉬운 업무용 협업툴 colla! <br /> 스타트업부터 대기업, 커머스·제조·IT·F&B·미디어 등 성장하는 기업이 협업툴 colla로 일하고 있습니다. </p>
         </div>
         <div class="features">
             <div class="feature">
@@ -304,6 +339,10 @@
             <p class="inactive">"우리 팀은 Colla 없이 이제 일을 할 수 없을 정도입니다." - 정*은 </p>
         </div>
     </main>
+    <footer>
+        <p>상호:(주)COLLA | email:Colla@gmail.com | 대표자: 채지희 | 사업자 등록 번호: 069-78665 | 주소: 서울시 마포구 숭문 4길 6  <br/>
+            Tel: 070-7253-2750 | &copy; 2024 Colla. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
 
     <script>
         const testimonials = document.querySelectorAll('.testimonial p');
