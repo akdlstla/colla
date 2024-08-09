@@ -56,10 +56,10 @@ io.on('connection', (socket) => {
     console.log("join chat server : ", arg);
 
     //join : 방 없으면 생성, 있으면 입장
-    const { chatName, myId, chatId, flag } = arg;
-    socket.join(chatName);
+    const { joinRoom, myId, chatId, flag } = arg;
+    socket.join(joinRoom);
     // socket.chat = chat;
-    console.log(`User joined room: ${chatName}`, flag);
+    console.log(`User joined room: ${joinRoom}`, flag);
     if( flag === 0) {
       await db.userchat.create({ userId: myId, chatId });
     }
@@ -71,17 +71,15 @@ io.on('connection', (socket) => {
     if( flag === 0) {
       await db.userchat.create({ userId: yourId, chatId });
     }
-
   });
 
   //   /** 4. 룸 내 메세지 브로드캐스트*/
 
   socket.on('chat message', async (arg) => {
-    const { myName, myId, value, chatId, chatName } = arg;
+    const { myName, myId, value, chatId, joinRoom } = arg;
     console.log("브로드캐스트 테스트", arg);
-
-    const message = await db.msg.create({ userId: myId, chatId, talk: value });
-    io.to(chatName).emit('chat message', { myId, value, messageId : message.id });
+    await db.msg.create({ userId: myId, chatId, talk: value });
+    io.to(joinRoom).emit('new chat message', { myName,myId, value});
     // console.log("q브로드캐스트 후");
 
   });
