@@ -78,7 +78,7 @@
     }
 
     .btn {
-      background-color: #8ac7da;
+      background-color: #638cc7;
       color: #fff;
       border: none;
       padding: 15px;
@@ -90,7 +90,7 @@
     }
 
     .btn:hover {
-      background-color: #8ac7da;
+      background-color: #0f4c81;
     }
 
     .signup {
@@ -194,7 +194,7 @@
 
 
     // 로그인 상태에서 로그인 페이지로 강제 이동시 main.으로 바로 이동
-      function loginCheck () {
+    function loginCheck () {
        const token = localStorage.getItem('token')
               console.log(token,'토큰')
 
@@ -205,8 +205,8 @@
       }
       loginCheck();
 
-      const keepEmail = localStorage.getItem('email');
-      const checkEmail = localStorage.getItem('check');
+      const keepEmail = localStorage.getItem('keepEmail');
+      const checkEmail = localStorage.getItem('checkEmail');
   
       
 
@@ -230,11 +230,11 @@
         localStorage.setItem('checkEmail',checkEmail);
 
         if(keepEmail && checkEmail){
-          localStorage.setItem('email', keepEmail);
+          localStorage.setItem('keepEmail', keepEmail);
           
         }
         if(!checkEmail){
-          localStorage.removeItem('email');
+          localStorage.removeItem('keepEmail');
         }
        
       }

@@ -78,6 +78,7 @@ io.on('connection', (socket) => {
   socket.on('chat message', async (arg) => {
     const { myName, myId, value, chatId, joinRoom } = arg;
     console.log("브로드캐스트 테스트", arg);
+
     await db.msg.create({ userId: myId, chatId, talk: value });
     io.to(joinRoom).emit('new chat message', { myName,myId, value});
     // console.log("q브로드캐스트 후");
