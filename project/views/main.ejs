@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <script src="https://kit.fontawesome.com/d44f71ab07.js" crossorigin="anonymous"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-
-  <style>
+<style>
     * {
       margin: 0;
       padding: 0;
@@ -560,7 +547,7 @@
   </head>
 
   <body>
-    <header>
+ <header>
       <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
       <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
 
@@ -599,16 +586,17 @@
   </div>
 
 
-    <div id="search2" style="display: none">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <div id="mainSearchBox">
-        <input type="text" id="mainSearch" placeholder="검색">
-        <div id="searchBox"></div>
-        <!-- 아래 수정. 위치 이동 -->
-        <!-- <div id="userBox"></div> -->
-        <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
-      </div>
+  <div id="search2" style="display: none">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <div id="mainSearchBox">
+      <input type="text" id="mainSearch" placeholder="검색">
+      <div id="searchBox"></div>
+      <!-- 아래 수정. 위치 이동 -->
+      <!-- <div id="userBox"></div> -->
+      <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
     </div>
+  </div>
+
 
 
 
@@ -661,16 +649,12 @@
     </div>
 
 
-    <!-- 헤더로부터 위치 이동 -->
-    <div id="resultContainer" class="hidden">
-      <div id="userBox" hidden></div>
-      <!-- <div id="userSearchBox"> -->
-      <p></p>
-      <!-- 헤더로부터 위치 이동 -->
-      <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div>
-      <!-- <div id="msgSearchBox"> -->
-      <p></p>
-    </div>
+    <!-- <div id="resultContainer" class="hidden"> -->
+    <div id="userBox" hidden></div>
+    <p></p>
+    <!-- <div id="msgBox" style="display: flex; flex-direction: column;" hidden></div> -->
+    <!-- <p></p> -->
+    <!-- </div> -->
     </div>
 
 
@@ -712,9 +696,9 @@
 
     const main_page = document.querySelector('#main_page');
     const userBox = document.querySelector('#userBox');
-    const msgBox = document.querySelector('#msgBox');
+    // const msgBox = document.querySelector('#msgBox');
     const main_chat = document.querySelector('#main_chat');
-    const resultContainer = document.querySelector("#resultContainer");
+    // const resultContainer = document.querySelector("#resultContainer");
 
     let states = []; // 상태를 저장할 배열
     let currentIndex = 0; // 현재 상태의 인덱스
@@ -737,10 +721,12 @@
       myId = id;
       myName = username;
 
+      //너의 아이디
+
       const chatlist = document.querySelector("#allChattingRoom")
       rooms.forEach(value => {
         const html = `
-        <li onclick="joinRoom('${value.chat}', ${value.id})">${value.chat}</li> 
+        <li onclick="joinRoom('${value.chat}', ${value.id}, ${value.yourId}, '${value.your}', '${value.yourEmail}')">${value.your}, (${value.yourEmail})</li> 
         `
         chatlist.insertAdjacentHTML("beforeend", html)
       })
@@ -758,14 +744,14 @@
     }
 
     // socket.emit('login', {username, email});
-    
+
+
     // 초기 상태를 저장하는 함수
-    646
  function saveInitialState() {
       const initialState = {
         mainPageHidden: main_page.hidden,
         userBoxHidden: userBox.hidden,
-        msgBoxHidden: msgBox.hidden,
+        // msgBoxHidden: msgBox.hidden,
         mainChatHidden: main_chat.hidden,
         mainSearchContent: search.value,
         mainSearchUnable: search.disabled
@@ -779,10 +765,11 @@
       const state = {
         mainPageHidden: main_page.hidden,
         userBoxHidden: userBox.hidden,
-        msgBoxHidden: msgBox.hidden,
+        // msgBoxHidden: msgBox.hidden,
         mainChatHidden: main_chat.hidden,
         mainSearchContent: search.value,
-        mainSearchUnable: search.disabled
+        mainSearchUnable: search.disabled,
+
       };
       states.push(state);
       currentIndex++;
@@ -796,7 +783,7 @@
       const state = states[index];
       main_page.hidden = state.mainPageHidden;
       userBox.hidden = state.userBoxHidden;
-      msgBox.hidden = state.msgBoxHidden;
+      // msgBox.hidden = state.msgBoxHidden;
       main_chat.hidden = state.mainChatHidden;
       search.value = state.mainSearchContent;
       search.disabled = state.mainSearchUnable;
@@ -835,7 +822,6 @@
       }
     };
 
-   
 
     // 하이라이트 함수(검색 시 동일 내용 하이라이트)
     function highlightText(searchTerm, content) {
@@ -845,61 +831,66 @@
     }
 
 
-  // 검색 입력 이벤트 핸들러
-  search.addEventListener("keyup", () => {
-        if (search.value.length >= 2) {
-          const searchTerm = search.value;
-          axios({
-            method: "get",
-            url: `/api/colla/search/${searchTerm}`,
-          }).then((res) => {
-            if (res.data.result) {
-              userBox.innerHTML = "";
-              msgBox.innerHTML = "";
+    // 검색 입력 이벤트 핸들러
+    search.addEventListener("keyup", () => {
+      main_chat.hidden = true;
+      userBox.style.display = "flex";
+      if (search.value.length >= 2) {
+        const searchTerm = search.value;
+        axios({
+          method: "get",
+          url: `/api/colla/search/${searchTerm}`,
+        }).then((res) => {
+          if (res.data.result) {
+            userBox.innerHTML = "";
+            // msgBox.innerHTML = "";
 
-              res.data.userData.forEach((value) => { const saveuserName = value.username;
+            res.data.userData.forEach((value) => {
+              const saveuserName = value.username;
               const saveuserId = value.id;
               const saveuserDep = value.department;
+              const saveuserEmail = value.email;
               // const parse = JSON.stringify(infoData)
               ////console.log(parse)
               userBox.innerHTML +=
-                `<div id='findByUsername' onclick='clickFindByUsername("${saveuserName}", "${saveuserId}", "${saveuserDep}")'>
+
+                `<div id='findByUsername' onclick='clickFindByUsername("${saveuserName}", "${saveuserId}", "${saveuserDep}",  "${saveuserEmail}")'>
                               <p>이름: ${highlightText(searchTerm,value.username)}</p>
                               <p>이메일: ${highlightText(searchTerm,value.email)}</p>
                               <p>부서: ${highlightText(searchTerm,value.department)}</p>
                               <br>
                           </div>`;
             });
-              res.data.msgData.forEach((value) => {
-                msgBox.innerHTML += `<div id="findByTalk" onclick="clickFindByTalk()">
-                      <p>${highlightText(searchTerm, value.user.username)}</p>
-                      <p>(${highlightText(searchTerm, value.user.department)})</p>
-                      <p>: ${highlightText(searchTerm, value.talk)}</p>
-                  </div>`;
-              });
+            // res.data.msgData.forEach((value) => {
+            //   msgBox.innerHTML += `<div id="findByTalk" onclick="clickFindByTalk()">
+            //         <p>${highlightText(searchTerm, value.user.username)}</p>
+            //         <p>(${highlightText(searchTerm, value.user.department)})</p>
+            //         <p>: ${highlightText(searchTerm, value.talk)}</p>
+            //     </div>`;
+            // });
 
-              // 결과 컨테이너를 보여주고, 세로로 배치하기 가로는 절대 안 돼
-              resultContainer.hidden = false;
-              resultContainer.classList.add("vertical-layout");
+            // 결과 컨테이너를 보여주고, 세로로 배치하기 가로는 절대 안 돼
+            // resultContainer.hidden = false;
+            // resultContainer.classList.add("vertical-layout");
 
-              main_page.hidden = true;
-              userBox.hidden = false;
-              msgBox.hidden = false;
-            } else {
-              userBox.innerText = "검색결과가 없습니다.";
-              resultContainer.hidden = false; // 결과가 없을 때도 컨테이너를 보여줘라 ㅈㅂ
-              msgBox.hidden = true; // 검색결과가 없으면 msgBox는 숨겨볼게요
-            }
-          });
-        } else {
-          userBox.innerText = "검색어는 두 글자 이상 입력해주세요";
-          resultContainer.hidden = false;
-          msgBox.hidden = true; // 검색어가 두 글자 미만일 때 msgBox를 숨기기
-        }
+            main_page.hidden = true;
+            userBox.hidden = false;
+            // msgBox.hidden = false;
+          } else {
+            userBox.innerText = "검색결과가 없습니다.";
+            // resultContainer.hidden = false; // 결과가 없을 때도 컨테이너를 보여줘라 ㅈㅂ
+            // msgBox.hidden = true; // 검색결과가 없으면 msgBox는 숨겨볼게요
+          }
+        });
+      } else {
+        userBox.innerText = "검색어는 두 글자 이상 입력해주세요";
+        // resultContainer.hidden = false;
+        // msgBox.hidden = true; // 검색어가 두 글자 미만일 때 msgBox를 숨기기
+      }
 
-        // 현재 상태를 저장합니다.
-        saveState();
-      });
+      // 현재 상태를 저장합니다.
+      saveState();
+    });
 
 
     //난수 발생 함수
@@ -917,33 +908,33 @@
     let chatId = "";
     let chatName = "";
     // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
-    function clickFindByUsername(res1, res2, res3) {
+    function clickFindByUsername(yourName, yourId, yourDepartment, yourEmail) {
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
 
       //console.log("이벤트핸들러 후 ", res1, res2, res3);
 
-      // const {username, id, department} = JSON.parse(arg);
-      //상대방 정보
-      const yourName = res1;
-      const yourId = res2;
-      const yourDepartment = res3;
-      // 이 위까지
-
+      //yourName, yourId, yourDepartment, yourEmail : 상대방 정보
       const userContainer = document.querySelector('#user-container');
       const input = document.querySelector('#chatting-input');
       const button = document.querySelector('#send-button');
       //채팅방 상단 이름
-      userContainer.innerHTML = `<p id="nickname">${yourName} (${yourDepartment})</p>`;
-      userBox.hidden = true;
-      msgBox.hidden = true;
+      userContainer.innerHTML = `<p id="nickname">${yourName} (${yourEmail})</p>`;
+      // resultContainer.style.display = "none";
+      userBox.style.display = "none";
+      // msgBox.hidden = true;
       main_chat.hidden = false;
-      search.disabled = true;
+      // search.disabled = true;
       saveState(); // 상태를 저장합니다.
+
+       
+      //이전 방 나가기
+
 
       //****************소켓
       // 방 생성
       // username -> chatName 변경
-      chatName = myName + ", " + yourName;
+
+      chatName = myId + ", " + yourId;
       let joinRoom = ''
       axios({
         method: 'post',
@@ -972,21 +963,31 @@
         const yourInfo = { yourId, chatId, flag };
         socket.emit('invite chat', yourInfo);
 
+        //html 비우기
+        const msgContainer = document.querySelector('.msg-container');
+
+        //msgContainer.remove()
+
+        console.log(msgContainer);
+        
+        //이전채팅 불러오기
         if (flag === 1) {
           const msg = res.data.response.msgs
+          const msgContainer = document.querySelector('.msg-container');
           msg.forEach(value => {
-            const { id, talk:talks, userId } = value;
+            const { id, talk: talks, userId } = value;
             const talk = document.createElement('div');
             talk.classList.add('talk');
-            const msgContainer = document.querySelector('.msg-container')
             const p = document.createElement('p')
-            if( userId === myId) {
+
+            if (userId === myId) {
               p.classList.add('myMsg')
-              console.log('내이름: ',myName)
+              console.log('내이름: ', myName)
+
             } else {
               p.classList.add('eachMsg')
             }
-            p.textContent = userId===myId ? `${myName}: ${talks}`: `${yourName}: ${talks}`;
+            p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
             talk.appendChild(p);
             msgContainer.appendChild(talk);
 
@@ -1002,76 +1003,145 @@
       //const myname : 내 사용자 이름, 부서
       button.addEventListener('click', function () {
         console.log(chatId)
-        console.log('내이름: ',myName)
-        
+
+        console.log('내이름: ', myName)
+
         //console.log("전송버튼클릭");
         socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
         //console.log("전송버튼클릭 후");
-        console.log('전송후: ',myName)
+        console.log('전송후: ', myName)
         input.value = "";
       });
 
 
       socket.on('new chat message', (arg) => {
-        const { msgUserName, msgUserId,value } = arg;
-        // console.log('내이름 콘솔: ',myName)
-        const myId = msgUserId
+        const { myName, myId: userId, value: talks } = arg;
         const talk = document.createElement('div');
         talk.classList.add('talk');
         const msgContainer = document.querySelector('.msg-container')
         const p = document.createElement('p')
-        p.classList.add('eachMsg')
-        p.textContent = `${msgUserName}: ${value}`;
-        talk.appendChild(p);
-        console.log(msgUserName,msgUserId)
-        //수정 버튼
-        const editButton = document.createElement('button');
-                editButton.textContent = '수정';
-                editButton.classList.add('editButton');
-                editButton.addEventListener('click', () => {
-                    const editChat = prompt('새로운 메세지를 입력하세요', value);
-                    if (editChat) {
-                        p.textContent = `${myId}: ${editChat}`;
-                    }
-                });
-               
-        const deletebutton = document.createElement('button')
-                deletebutton.textContent = '삭제'
-                deletebutton.classList.add('deletebutton')
-                deletebutton.addEventListener('click',()=>{
-                  if(confirm('이 메세지를 삭제하시겠습니까?')){
-                      socket.emit('deletechat',{messageId})
-                      talk.remove()
-                    }
-                 })
-        talk.appendChild(editButton);
-        talk.appendChild(deletebutton)
-        msgContainer.appendChild(talk);
 
+        if (userId === myId) {
+          p.classList.add('myMsg')
+          console.log('내이름: ', myName)
+        } else {
+          p.classList.add('eachMsg')
+        }
+        p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
+        talk.appendChild(p);
+        msgContainer.appendChild(talk);
       });
       
-
     }
-   
-    
+  
+
     // 클릭 이벤트 핸들러 (참여중인 채팅방 입장)
-    function clickFindByTalk() {
-      saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
-      const div = event.currentTarget;
-      const ptags = div.querySelectorAll('p');
-      const username = ptags[0].textContent;
-      const department = ptags[1].textContent;
-      const talk = ptags[2].textContent;
+    // function clickFindByTalk() {
+    //   saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
+    //   const div = event.currentTarget;
+    //   const ptags = div.querySelectorAll('p');
+    //   const username = ptags[0].textContent;
+    //   const department = ptags[1].textContent;
+    //   const talk = ptags[2].textContent;
+    //   const userContainer = document.querySelector('#user-container');
+    //   userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
+
+    //   userBox.hidden = true;
+    //   msgBox.hidden = true;
+    //   main_chat.hidden = false;
+    //   search.disabled = true;
+    //   saveState(); // 상태를 저장합니다.
+
+    //   //****************소켓 연결
+    // }
+
+
+    function joinRoom(chatName, chatId, yourId, yourName, yourEmail) {
+      console.log("사이드바 클릭시 chatName, chatId : ", chatName, chatId)
       const userContainer = document.querySelector('#user-container');
-      userContainer.innerHTML = `<p id="nickname">${username} (${department})</p>`;
-
-      userBox.hidden = true;
-      msgBox.hidden = true;
+      const input = document.querySelector('#chatting-input');
+      const button = document.querySelector('#send-button');
+      // location.reload(true);
+      main_page.hidden = true;
       main_chat.hidden = false;
-      search.disabled = true;
-      saveState(); // 상태를 저장합니다.
+      userBox.style.display = "none";
 
-      //****************소켓 연결
+      let joinRoom = ""
+      axios({
+        method: 'post',
+        url: '/api/colla/createchat',
+        data: {
+          chatName,
+          myId,
+          yourId
+        }
+      }).then((res) => {
+        // console.log('내이름: ',myName)
+        console.log('dlrjdi?', res);
+        chatId = res.data.response.id
+        const flag = res.data.flag
+        joinRoom = res.data.response.chat
+        //socket.emit('join chat', res.id);
+        // const myInfo = {chat, myId};
+        const myInfo = { joinRoom, myId, chatId, flag };
+        console.log("before join chat client", myInfo);
+        socket.emit('join chat', myInfo);
+        console.log("join chat client", myInfo);
+
+        //채팅방 상단 이름
+        userContainer.innerHTML = `<p id="nickname">${yourName} (${yourEmail})</p>`;
+              
+        console.log("chatName: ", joinRoom)
+        //이전채팅 불러오기
+        if (flag === 1) {
+          const msg = res.data.response.msgs
+          msg.forEach(value => {
+            const { id, talk: talks, userId } = value;
+            const talk = document.createElement('div');
+            talk.classList.add('talk');
+            const msgContainer = document.querySelector('.msg-container')
+            const p = document.createElement('p')
+            if (userId === myId) {
+              p.classList.add('myMsg')
+              console.log('내이름: ', myName)
+            } else {
+              p.classList.add('eachMsg')
+            }
+            p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
+            talk.appendChild(p);
+            msgContainer.appendChild(talk);
+
+          })
+        }
+      })
+      button.addEventListener('click', function () {
+        console.log(chatId)
+        console.log('내이름: ', myName)
+
+        //console.log("전송버튼클릭");
+        socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
+        //console.log("전송버튼클릭 후");
+        console.log('전송후: ', myName)
+        input.value = "";
+      });
+
+
+      socket.on('new chat message', (arg) => {
+        const { myName, myId: userId, value: talks } = arg;
+        const talk = document.createElement('div');
+        talk.classList.add('talk');
+        const msgContainer = document.querySelector('.msg-container')
+        const p = document.createElement('p')
+        if (userId === myId) {
+          p.classList.add('myMsg')
+          console.log('내이름: ', myName)
+        } else {
+          p.classList.add('eachMsg')
+        }
+        p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
+        talk.appendChild(p);
+        msgContainer.appendChild(talk);
+      });
     }
 
     /**헤더 부분**/
@@ -1122,115 +1192,27 @@
         const sideBar = document.getElementById("sideBar");
         sideBar.classList.toggle("show");
       });
-    function joinRoom(chatName, chatId) {
-      console.log(chatName)
-      main_page.hidden = true;
-      main_chat.hidden = false;
 
-      axios({
-        method: 'post',
-        url: '/api/colla/createchat',
-        data: {
-          chatName,
-          myId,
-          yourId
-        }
-      }).then((res) => {
-        console.log('dlrjdi?', res);
-        chatId = res.data.result.id
-        const flag = res.data.flag
-        //socket.emit('join chat', res.id);
-        // const myInfo = {chat, myId};
-        const myInfo = { chatName, myId, chatId, flag };
-        console.log("before join chat client", myInfo);
-        socket.emit('join chat', myInfo);
-        console.log("join chat client", myInfo);
+    //   (function () {
+    //   const scollBottom = document
+    //     .querySelector(".msg-container")
+    //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
+    //   return scollBottom;
+    // })();
 
+    let scrollHeight = document.querySelector('.msg-container').scrollHeight;
+    let clientHeight = document.querySelector('.msg-container').clientHeight;
+    function addBoxes() {
+      const wrap = document.querySelector('.msg-container');
+      const numberOfNewBoxes = 10;
+      const currentBoxCount = wrap.getElementsByClassName("talk").length;
 
-        console.log("chatName: ", chatName)
-        /* 3. 클릭한 상대 chat에 초대 */
-        const yourInfo = { yourId, chatId, flag };
-        socket.emit('invite chat', yourInfo);
-
-        if (flag === 1) {
-          const msg = res.data.response.msgs
-          msg.forEach(value => {
-            const { id, talk:talks, userId } = value;
-            const talk = document.createElement('div');
-            talk.classList.add('talk');
-            const msgContainer = document.querySelector('.msg-container')
-            const p = document.createElement('p')
-            if( userId === myId) {
-              p.classList.add('myMsg')
-            } else {
-              p.classList.add('eachMsg')
-            }
-            p.textContent = userId===myId ? `${myName}: ${talks}`: `${yourName}: ${talks}`;
-            talk.appendChild(p);
-            msgContainer.appendChild(talk);
-
-          })
-        }
-      });
-
-      const input = document.querySelector('#chatting-input');
-      const button = document.querySelector('#send-button');
-      socket.emit('join chat', { username, flag: 1 })
-
-      button.addEventListener('click', function () {
-        //console.log("전송버튼클릭");
-        socket.emit('chat message', { myId, value: input.value, chatId, username });
-        //console.log("전송버튼클릭 후");
-        input.value = "";
-      });
-
-      //  console.log("..........", myId, input.value, chatId);
-
-      socket.on('chat message', (arg) => {
-        //console.log("chat message on", arg);
-
-        const { myId, value, chat , messageId } = arg;
-        const talk = document.createElement('div');
-        talk.classList.add('talk');
-        const msgContainer = document.querySelector('.msg-container')
-        const p = document.createElement('p')
-        p.classList.add('eachMsg')
-        p.textContent = `${myId}: ${value}`;
-        talk.appendChild(p);
-        msgContainer.appendChild(talk);
-
-        const editbutton = document.createElement('button')
-        editbutton.textContent = '수정';
-        editbutton.classList.add('editbutton')
-        editbutton.addEventListener('click',()=>{
-          const editChat = prompt('새로운 메세지를 입력하세요',value);
-          if(editChat){
-            p.textContent = `${myId}: ${value}`;
-          }
-        })
-        const deletebutton = document.createElement('button')
-        deletebutton.textContent = '삭제'
-        deletebutton.classList.add('deletebutton')
-        deletebutton.addEventListener('click',()=>{
-          if(confirm('이 메세지를 삭제하시겠습니까?')){
-            socket.emit('deletechat',{messageId})
-            talk.remove()
-          }
-        })
-        talk.appendChild(editbutton);
-        talk.appendChild(deletebutton)
-        // const nickname = document.createElement('p');
-        // nickname.classList.add('nickname');
-        // nickname.textContent = username;
-        // const message = document.createElement('p');
-        // message.textContent = value;
-        // message.classList.add('chatting-list');
-        // talk.appendChild(nickname);
-        // talk.appendChild(message);
-        // document.querySelector('.msg-container').appendChild(talk);
-
-      });
-
+      for (let i = 1; i <= numberOfNewBoxes; i++) {
+        const newBox = document.createElement("div");
+        newBox.className = "talk";
+        newBox.textContent = currentBoxCount + i;
+        wrap.prepend(newBox);
+      }
     }
       //   (function () {
       //   const scollBottom = document
@@ -1277,9 +1259,7 @@
         document.querySelector('#pop_info').style.display = 'none';
     });
 
-  
-  </script>
- 
+
 </body>
 
 </html>
