@@ -671,7 +671,7 @@
       const chatlist = document.querySelector("#allChattingRoom")
       rooms.forEach(value => {
         const html = `
-        <li onclick="joinRoom('${value.chat}', ${value.id}, ${value.yourId}, '${value.your}')">${value.chat}</li> 
+        <li onclick="joinRoom('${value.chat}', ${value.id}, ${value.yourId}, '${value.your}', '${value.yourEmail}')">${value.your}, (${value.yourEmail})</li> 
         `
         chatlist.insertAdjacentHTML("beforeend", html)
       })
@@ -691,7 +691,6 @@
     // socket.emit('login', {username, email});
 
     // 초기 상태를 저장하는 함수
-    646
  function saveInitialState() {
       const initialState = {
         mainPageHidden: main_page.hidden,
@@ -795,10 +794,11 @@
               const saveuserName = value.username;
               const saveuserId = value.id;
               const saveuserDep = value.department;
+              const saveuserEmail = value.email;
               // const parse = JSON.stringify(infoData)
               ////console.log(parse)
               userBox.innerHTML +=
-                `<div id='findByUsername' onclick='clickFindByUsername("${saveuserName}", "${saveuserId}", "${saveuserDep}")'>
+                `<div id='findByUsername' onclick='clickFindByUsername("${saveuserName}", "${saveuserId}", "${saveuserDep}", "${saveuserEmail}")'>
                               <p>이름: ${value.username}</p>
                               <p>이메일: ${value.email}</p>
                               <p>부서: ${value.department}</p>
@@ -852,24 +852,17 @@
     let chatId = "";
     let chatName = "";
     // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
-    function clickFindByUsername(res1, res2, res3) {
+    function clickFindByUsername(yourName, yourId, yourDepartment, yourEmail) {
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
-
-      //html 비우기
 
       //console.log("이벤트핸들러 후 ", res1, res2, res3);
 
-      //상대방 정보
-      const yourName = res1;
-      const yourId = res2;
-      const yourDepartment = res3;
-      // 이 위까지
-
+      //yourName, yourId, yourDepartment, yourEmail : 상대방 정보
       const userContainer = document.querySelector('#user-container');
       const input = document.querySelector('#chatting-input');
       const button = document.querySelector('#send-button');
       //채팅방 상단 이름
-      userContainer.innerHTML = `<p id="nickname">${yourName} (${yourDepartment})</p>`;
+      userContainer.innerHTML = `<p id="nickname">${yourName} (${yourEmail})</p>`;
       // resultContainer.style.display = "none";
       userBox.style.display = "none";
       // msgBox.hidden = true;
@@ -877,10 +870,14 @@
       // search.disabled = true;
       saveState(); // 상태를 저장합니다.
 
+       
+      //이전 방 나가기
+
+
       //****************소켓
       // 방 생성
       // username -> chatName 변경
-      chatName = myName + ", " + yourName;
+      chatName = myId + ", " + yourId;
       let joinRoom = ''
       axios({
         method: 'post',
@@ -909,15 +906,23 @@
         const yourInfo = { yourId, chatId, flag };
         socket.emit('invite chat', yourInfo);
 
+        //html 비우기
+        const msgContainer = document.querySelector('.msg-container');
+
+        //msgContainer.remove()
+
+        console.log(msgContainer);
+        
         //이전채팅 불러오기
         if (flag === 1) {
           const msg = res.data.response.msgs
+          const msgContainer = document.querySelector('.msg-container');
           msg.forEach(value => {
             const { id, talk: talks, userId } = value;
             const talk = document.createElement('div');
             talk.classList.add('talk');
-            const msgContainer = document.querySelector('.msg-container')
             const p = document.createElement('p')
+
             if (userId === myId) {
               p.classList.add('myMsg')
               console.log('내이름: ', myName)
@@ -993,7 +998,7 @@
     // }
 
 
-    function joinRoom(chatName, chatId, yourId, yourName) {
+    function joinRoom(chatName, chatId, yourId, yourName, yourEmail) {
       console.log("사이드바 클릭시 chatName, chatId : ", chatName, chatId)
       const userContainer = document.querySelector('#user-container');
       const input = document.querySelector('#chatting-input');
@@ -1026,7 +1031,7 @@
         console.log("join chat client", myInfo);
 
         //채팅방 상단 이름
-        userContainer.innerHTML = `<p id="nickname">${yourName}</p>`;
+        userContainer.innerHTML = `<p id="nickname">${yourName} (${yourEmail})</p>`;
               
         console.log("chatName: ", joinRoom)
         //이전채팅 불러오기

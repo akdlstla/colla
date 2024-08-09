@@ -242,7 +242,8 @@ const connectUserFind = async (req, res) => {
                 chat: rooms[i].chat,
                 id: rooms[i].id,
                 yourId: rooms[i].userchats[0].userId,
-                your:your.username
+                your:your.username,
+                yourEmail:your.email
             }
             data.push(obj)
         }
