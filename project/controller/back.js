@@ -266,5 +266,5 @@ const deleteChat = async(req,res) =>{
     }
 }
 
-module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat ,index}
+module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat ,index}
 
