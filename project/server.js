@@ -41,7 +41,8 @@ app.use(express.json());
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 //api 라우터
-const backRouter = require('./routes/back')
+const backRouter = require('./routes/back');
+const { truncate } = require('fs/promises');
 app.use('/api/colla', backRouter)
 
 

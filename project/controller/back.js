@@ -1,4 +1,4 @@
-const { user, msg, chat, userchat } = require('../models');
+const { user, msg, chat, userchat , bord} = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op, where } = require('sequelize');
@@ -155,6 +155,22 @@ const createChat = async (req, res) => {
     try {
         console.log('req:', req.body);
 
+        // const { chatName, myId, yourId } = req.body;
+
+        // const arr1temp = []
+        // const arr2temp = []
+        // const arr1 = await userchat.findAll({ where: { userId: Number(myId) } })
+        // const arr2 = await userchat.findAll({ where: { userId: Number(yourId) } })
+
+        // arr1.forEach(value => {
+        //     arr1temp.push(value.chatId)
+        // })
+        // arr2.forEach(value => {
+        //     arr2temp.push(value.chatId)
+        // })
+        // const arr = arr1temp.filter(value => arr2temp.includes(value));
+        // console.log("result", arr)
+
         const { chatName, myId, yourId } = req.body;
 
         const arr1temp = []
@@ -175,7 +191,21 @@ const createChat = async (req, res) => {
         let flag = 0
         if (arr.length === 0) {
             //새로운 방 생성
+        let flag = 0
+        if (arr.length === 0) {
+            //새로운 방 생성
             result = await chat.create({ chat: chatName });
+            flag = 0
+        } else {
+            //arr[0]
+            result = await chat.findOne({
+                where: { id: arr[0] },
+                include: [{ model: msg, attributes: ["id", "userId", "talk"] }],
+            })
+            flag = 1
+        }
+        res.json({ result: true, flag, response: result });
+
             flag = 0
         } else {
             //arr[0]
@@ -201,6 +231,7 @@ const createUserChat = async (req, res) => {
         const result = await userchat.create({ userId, chatId });
         console.log('result: ', result);
         res.json({ result: true, result });
+        res.json({ result: true, result });
     } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
@@ -212,6 +243,7 @@ const createMsg = async (req, res) => {
     try {
         const { userId, chatId, talk } = req.body;
         const result = await msg.create({ userId, chatId, talk });
+        // console.log('result: ', result);
         // console.log('result: ', result);
 
     } catch (error) {
@@ -227,7 +259,12 @@ const connectUserFind = async (req, res) => {
             attributes: ['username', 'id'],
         });
         const exists = await userchat.findAll({ where: { userId: id } })
+        //const exists = await userchat.findAll({ where: { userId: id } })
         const rooms = []
+        // for (let i = 0; i < exists.length; i++) {
+        //     const find = await chat.findOne({
+        //         where: { id: exists[i].chatId },
+        //     })
         for (let i = 0; i < exists.length; i++) {
             const find = await chat.findOne({
                 where: { id: exists[i].chatId },
@@ -235,6 +272,7 @@ const connectUserFind = async (req, res) => {
             })
             rooms.push(find)
         }
+
 
         const data = []
         for(let i = 0; i < rooms.length; i++) {
@@ -250,6 +288,7 @@ const connectUserFind = async (req, res) => {
         }
 
         res.json({ result: true, response: result, rooms:data });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
@@ -266,5 +305,39 @@ const deleteChat = async(req,res) =>{
     }
 }
 
-module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat ,index}
+
+const writeFunc = async(req,res) =>{
+    console.log('라이트 리퀘스트 바디',req.body);
+    try {
+        // const {id} = req.userInfo
+        console.log('req.userInfo',req.userInfo);
+        const {id} = req.userInfo
+        const {type, title, contents} =req.body
+        console.log(req.body);
+        
+        const result = await bord.create({type, title,contents, userId:id})
+        console.log('라이트리절트', result);
+        res.json({result:true, message:'작성완료!'})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+    
+}
+const noticeall = async(req,res) =>{
+    console.log(req.body,'바디가 뭔뎅');
+    const data = req.body.data
+
+    const contents = await bord.findAll({
+        include: [
+            {
+                model: user,
+                attributes: ['username'],
+            },
+        ], where: { type: data }
+    })
+    console.log('노티스올 리절트',contents);
+    res.json({result: true, contents })
+}
+module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, index, noticeall }
 
