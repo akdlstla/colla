@@ -1,6 +1,6 @@
 const express = require("express");
 
-const {index, signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, noticeall} = require("../controller/back");
+const {index, signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, noticeall} = require("../controller/back");
 
 const router = express.Router();
 const {auth} = require('../middleware');

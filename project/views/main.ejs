@@ -947,7 +947,7 @@
       // 방 생성
       // username -> chatName 변경
 
-      chatName = myId + ", " + yourId;
+      chatName = myId + "," + yourId;
       let joinRoom = ''
       axios({
         method: 'post',
@@ -959,14 +959,15 @@
         }
       }).then((res) => {
         // console.log('내이름: ',myName)
-        console.log('dlrjdi?', res);
+        console.log('.. create chat axios 후?', res);
         chatId = res.data.response.id
         const flag = res.data.flag
         joinRoom = res.data.response.chat
+        
         //socket.emit('join chat', res.id);
         // const myInfo = {chat, myId};
         const myInfo = { joinRoom, myId, chatId, flag };
-        console.log("before join chat client", myInfo);
+        // console.log("before join chat client", myInfo);
         socket.emit('join chat', myInfo);
         console.log("join chat client", myInfo);
 
