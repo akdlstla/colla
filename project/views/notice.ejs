@@ -37,7 +37,7 @@
     (async function () {
       const res = await axios({
         method: 'post',
-        url: '/api/colla/noticeall',
+        url: '/api/board/noticeall',
         data: { data: boardname }
       })
 
@@ -92,7 +92,7 @@
                 };
                 const res = axios({
                     method: 'delete',
-                    url: '/api/colla/deletebord',
+                    url: '/api/board/deletebord',
                     data,
                     // headers: {
                     //     Authorization: `Bearer ${localStorage.getItem('token')}`,

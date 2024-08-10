@@ -45,7 +45,7 @@
         (async function () {
             const res = await axios({
                 method: 'get',
-                url: `/api/colla/editnotice/${pathname}`,
+                url: `/api/board/editnotice/${pathname}`,
 
             })
             console.log(res);
@@ -64,7 +64,7 @@
                 };
                 const res = axios({
                     method: 'patch',
-                    url: '/api/colla/updatebord',
+                    url: '/api/board/updatebord',
                     data,
                     // headers: {
                     //     Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -42,9 +42,10 @@ const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 //api 라우터
 const backRouter = require('./routes/back');
+const boardRouter = require('./routes/board')
 const { truncate } = require('fs/promises');
 app.use('/api/colla', backRouter)
-
+app.use('/api/board', boardRouter)
 
 /** 1. 소켓 연결 */
 io.on('connection', (socket) => {

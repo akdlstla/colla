@@ -155,22 +155,6 @@ const createChat = async (req, res) => {
     try {
         console.log('req:', req.body);
 
-        // const { chatName, myId, yourId } = req.body;
-
-        // const arr1temp = []
-        // const arr2temp = []
-        // const arr1 = await userchat.findAll({ where: { userId: Number(myId) } })
-        // const arr2 = await userchat.findAll({ where: { userId: Number(yourId) } })
-
-        // arr1.forEach(value => {
-        //     arr1temp.push(value.chatId)
-        // })
-        // arr2.forEach(value => {
-        //     arr2temp.push(value.chatId)
-        // })
-        // const arr = arr1temp.filter(value => arr2temp.includes(value));
-        // console.log("result", arr)
-
         const { chatName, myId, yourId } = req.body;
 
         const arr1temp = []
@@ -189,23 +173,10 @@ const createChat = async (req, res) => {
 
         let result = ''
         let flag = 0
-        if (arr.length === 0) {
-            //새로운 방 생성
-        let flag = 0
+        
         if (arr.length === 0) {
             //새로운 방 생성
             result = await chat.create({ chat: chatName });
-            flag = 0
-        } else {
-            //arr[0]
-            result = await chat.findOne({
-                where: { id: arr[0] },
-                include: [{ model: msg, attributes: ["id", "userId", "talk"] }],
-            })
-            flag = 1
-        }
-        res.json({ result: true, flag, response: result });
-
             flag = 0
         } else {
             //arr[0]
@@ -231,7 +202,6 @@ const createUserChat = async (req, res) => {
         const result = await userchat.create({ userId, chatId });
         console.log('result: ', result);
         res.json({ result: true, result });
-        res.json({ result: true, result });
     } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
@@ -243,7 +213,6 @@ const createMsg = async (req, res) => {
     try {
         const { userId, chatId, talk } = req.body;
         const result = await msg.create({ userId, chatId, talk });
-        // console.log('result: ', result);
         // console.log('result: ', result);
 
     } catch (error) {
@@ -259,12 +228,7 @@ const connectUserFind = async (req, res) => {
             attributes: ['username', 'id'],
         });
         const exists = await userchat.findAll({ where: { userId: id } })
-        //const exists = await userchat.findAll({ where: { userId: id } })
         const rooms = []
-        // for (let i = 0; i < exists.length; i++) {
-        //     const find = await chat.findOne({
-        //         where: { id: exists[i].chatId },
-        //     })
         for (let i = 0; i < exists.length; i++) {
             const find = await chat.findOne({
                 where: { id: exists[i].chatId },
@@ -306,74 +270,6 @@ const deleteChat = async(req,res) =>{
 }
 
 
-const writeFunc = async(req,res) =>{
-    console.log('라이트 리퀘스트 바디',req.body);
-    try {
-        // const {id} = req.userInfo
-        console.log('req.userInfo',req.userInfo);
-        const {id} = req.userInfo
-        const {type, title, contents} =req.body
-        console.log(req.body);
-        
-        const result = await bord.create({type, title,contents, userId:id})
-        console.log('라이트리절트', result);
-        res.json({result:true, message:'작성완료!'})
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '서버오류' });
-    }
-    
-}
-const noticeall = async(req,res) =>{
-    console.log(req.body,'바디가 뭔뎅');
-    const data = req.body.data
+module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat, index,  }
 
-    const contents = await bord.findAll({
-        include: [
-            {
-                model: user,
-                attributes: ['username'],
-            },
-        ], where: { type: data }
-    })
-    console.log('노티스올 리절트',contents);
-    res.json({result: true, contents })
-}
-
-const one = async(req,res)=>{
-    console.log(req.params.id)
-    const result = await bord.findOne({where:{id:req.params.id}})
-    console.log('one', result)
-    res.json({result:true,data:result})
-}
-// 게시판(공지사항) 수정 완료
-const updateBordConfirm = async (req, res) => {
-    try {
-        const { pathname, title, contents } = req.body;
-        console.log('요청내용 블라블라', pathname, title, contents);
-        const find = await bord.findOne({ where: { id: pathname } });
-        if (find) {
-            await bord.update({ title, contents }, { where: { id: pathname} });
-            res.json({ result: true, message: '수정했다치고' });
-        } else {
-            res.json({ result: false, message: '아니아니 아니됨' });
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '게시판 글 수정완료 기능 서버오류' });
-    }
-};
-// 게시판(공지사항) 삭제 완료
-const deleteBordConfirm = async (req, res) => {
-    try {
-        const { pathname } = req.body;
-        console.log('삭제할 글 id값', pathname);
-        await bord.destroy({ where: { id: pathname } });
-        res.json({ result: true, message: '삭제됐다치고' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '게시판 글 삭제완료 기능 서버오류' });
-    }
-};
-module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, index, noticeall, one, updateBordConfirm, deleteBordConfirm }
 
