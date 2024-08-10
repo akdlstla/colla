@@ -177,10 +177,10 @@
           <input type="checkbox" id="remember-email" onchange="emailRemember()" defaltChecked={true} />
           <label for="remember-email" >이메일 기억하기</label>
         </div>
-        <div>
+        <!-- <div>
           <input type="checkbox" id="keep-logged-in" />
           <label for="keep-logged-in">로그인 상태유지</label>
-        </div>
+        </div> -->
         <a href="#">비밀번호 찾기</a>
       </div>
       <button type="button" class="btn" onclick="loginFunc()" id="loginbtn">로그인</button>
@@ -263,7 +263,7 @@
                   email: document.querySelector('#email').value,
                   password: document.querySelector('#password').value,
                   keepEmail: document.querySelector('#remember-email').checked,
-                  keepLogin: document.querySelector('#keep-logged-in').checked,
+                  // keepLogin: document.querySelector('#keep-logged-in').checked,
               },
 
 

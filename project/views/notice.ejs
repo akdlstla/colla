@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,46 +10,104 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
 </head>
+
 <body>
-  <h3 id="boardname">공지사항</h3>
+  <h3 id="boardname" >공지사항</h3>
   <div id="notice" hidden>notice</div>
-  <div id="content_king">
-  <div id="content_title" onclick="titleclick()"></div>
-  <div id="content_board" ></div>
-</div>
+  <div id="content_king" >
+    <div id="content_title" ></div>
+    <div id="content_board"></div>
+  </div>
 
   <div><a href="/noticewrite">쓰기(아이콘)</a></div>
   <script>
     const title = document.querySelector('#content_title')
     const board = document.querySelector('#content_board')
     const boardname = document.querySelector('#notice').textContent;
-    (async function() {
+     // JWT 토큰을 가져와서 디코딩
+     const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
+    const decodedToken = jwt_decode(token); // 토큰 디코딩
+    const id = decodedToken.id; // 디코딩한 토큰에서 id 추출
+    
+    (async function () {
       const res = await axios({
-        method:'post',
-        url:'/api/colla/noticeall',
-        data: {data: boardname}
+        method: 'post',
+        url: '/api/colla/noticeall',
+        data: { data: boardname }
       })
 
       console.log(res);
       res.data.contents.forEach(item => {
-        const html = 
-        `<div>${item.user.username}</div>
-        <div>${item.title}</div>`
-        const css =
-        `<div>${item.contents}</div>`
+        let html =`
+          <div class='notice-item'>
+            <div id='bordId'>${item.id}</div>
+            <div>${item.user.username}</div>
+            <div>${formatDate(item.createdAt)}</div> <!-- 등록일 나오는거 -->
+            <div class='noticetitle' onclick='titleclick(this)'>${item.title}</div>
+          </div>
+          <div class='noticecontent' style="display: none; padding-left: 20px;">${item.contents}</div>
+        `
+        
+        if (item.userId === id) {
+          html += `
+            <button type='button' onclick='editFunc(${item.id})'>수정</button>
+            <button type='button' onclick='deleteItem(${item.id})'>삭제</button>
+          `;
+        }
+        
         title.insertAdjacentHTML('beforeend', html)
-        title.insertAdjacentHTML('beforeend',css)
       });
-      
+
     })();
 
-   function titleclick(){
+    function titleclick(element) {
+      const noticecontent = element.parentElement.nextElementSibling;
+      if (noticecontent.style.display === 'none') {
+        noticecontent.style.display = 'block';
+        
+      } else {
+        noticecontent.style.display = 'none';
+      }
+    }
 
-   }
+    function editFunc(id){
+      window.location.href=`/editnotice/${id}`
+    }
 
+     // 게시판(공지사항) 삭제완료 버튼
+     async function deleteItem(id) {
+      const pathname = id
+      console.log(pathname,'패쓰네임');
+      
+            if (!confirm('정성스레 작성한 글을 삭제할려?')) {
+                    return;
+                }
+                const data = {
+                    pathname,
+                };
+                const res = axios({
+                    method: 'delete',
+                    url: '/api/colla/deletebord',
+                    data,
+                    // headers: {
+                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    // },
+                });
+                alert('바로 삭제');
+                document.location.reload();
+          };
+
+
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return new Date(dateString).toLocaleDateString('ko-KR', options);
+    }
   </script>
 </body>
-</html>
 
+</html>

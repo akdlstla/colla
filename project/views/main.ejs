@@ -753,7 +753,9 @@
     function logout() {
       window.localStorage.removeItem("token");
       document.location.href = ('/login');
-      /* 5. 로그아웃 -> 소켓 연결 해제*/
+      /* 5. 로그아웃 -> 소켓 연결 해제
+      
+      */
     }
 
     // socket.emit('login', {username, email});

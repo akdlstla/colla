@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TOAST UI Editor 적용하기</title>
+
+    <!-- TUI 에디터 CSS CDN -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h2 style="text-align: center;">공지사항 글 써줘!</h2>
+    <form>
+        <input type="radio" id="notice" checked disabled value="notice">공지사항<br>
+        <input type="text" id="title" placeholder="제목">
+
+        <!-- 에디터를 적용할 요소 (컨테이너) -->
+        <div id="content">
+
+        </div>
+        <button type="button" id="GH">HTML보기</button>
+        <button type="button" onclick="editFunc()">수정</button>
+        <button type="button" onclick="cancle()">취소</button>
+    </form>
+    <!-- TUI 에디터 JS CDN -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+        const editor = new toastui.Editor({
+            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
+            height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+            initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+            initialValue: '  ',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+            previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
+        });
+        console.log(editor.getHTML())
+        document.getElementById('GH').addEventListener('click', () => {
+            console.log(editor.getHTML());
+
+        })
+        const [_,pathname] = document.location.pathname.split('/editnotice/');
+        console.log(pathname);
+        
+        (async function () {
+            const res = await axios({
+                method: 'get',
+                url: `/api/colla/editnotice/${pathname}`,
+
+            })
+            console.log(res);
+             const {title, contents} = res.data.data;
+            document.querySelector('#title').value = title;
+            editor.setHTML(contents)
+        })()
+
+
+// 게시판(공지사항) 수정완료 버튼
+      async function editFunc() {
+                const data = {
+                    pathname,
+                    title : document.querySelector('#title').value,
+                    contents : editor.getHTML()
+                };
+                const res = axios({
+                    method: 'patch',
+                    url: '/api/colla/updatebord',
+                    data,
+                    // headers: {
+                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    // },
+                });
+                alert('작성된 글이 수정되었지요');
+                window.location.href = '/notice'
+          };
+        
+        function cancle() {
+            if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
+                window.location.href = '/notice'
+
+            } else {
+                return
+            }
+
+        }
+    </script>
+</body>
+
+</html>

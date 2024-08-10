@@ -32,6 +32,9 @@ const index = (req,res) =>{
 const noticewrite = (req,res) =>{
     res.render('noticewrite')
 }
-module.exports = { main, signup, terms, personal, login, notice , siteinfo, noticewrite, index};
+const editnotice = (req,res) =>{
+    res.render('editnotice')
+}
+module.exports = { main, signup, terms, personal, login, notice , siteinfo, noticewrite, index, editnotice};
 
 
