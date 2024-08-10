@@ -28,6 +28,10 @@ const siteinfo = (req,res) =>{
 const index = (req,res) =>{
     res.render('index')
 }
-module.exports = { main, signup, terms, personal, login, notice , siteinfo, index};
+
+const noticewrite = (req,res) =>{
+    res.render('noticewrite')
+}
+module.exports = { main, signup, terms, personal, login, notice , siteinfo, noticewrite, index};
 
 
