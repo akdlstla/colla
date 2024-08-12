@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>글 수정</title>
+    <title>TOAST UI Editor 적용하기</title>
 
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    <h2 style="text-align: center;">공지사항 글 써줘!</h2>
+    <h2 style="text-align: center;">게시판 글 써줘!</h2>
     <form>
-        <input type="radio" id="notice" checked disabled value="notice">공지사항<br>
+        <input type="radio" id="board" checked disabled value="board">게시판<br>
         <input type="text" id="title" placeholder="제목">
 
         <!-- 에디터를 적용할 요소 (컨테이너) -->
@@ -39,7 +39,7 @@
             console.log(editor.getHTML());
 
         })
-        const [_,pathname] = document.location.pathname.split('/editnotice/');
+        const [_,pathname] = document.location.pathname.split('/editboard/');
         console.log(pathname);
         
         (async function () {
@@ -57,10 +57,10 @@
 
 // 게시판(공지사항) 수정완료 버튼
       async function editFunc() {
-                const titlevalue = document.querySelector('#title').value
-                if(titlevalue !== ''){const data = {
+        const titlevalue = document.querySelector('#title').value
+        if(titlevalue !==''){                const data = {
                     pathname,
-                    title : titlevalue,
+                    title : document.querySelector('#title').value,
                     contents : editor.getHTML()
                 };
                 const res = axios({
@@ -72,13 +72,14 @@
                     // },
                 });
                 alert('작성된 글이 수정되었지요');
-                window.location.href = '/notice'}
+                window.location.href = '/board'}
                 else{alert('제목을 입력해 주세요')}
+
           };
         
         function cancle() {
             if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
-                window.location.href = '/notice'
+                window.location.href = '/board'
 
             } else {
                 return
