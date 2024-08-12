@@ -14,7 +14,7 @@ router.post('/login', login);
 router.get('/search/:search',search);
 router.post('/createchat', createChat);
 router.get('/connect', auth, connectUserFind);
-router.delete('/deletechat', deleteChat)
+
 
 // router.patch('/update', auth, update);
 // router.delete('/delete', auth, deleteFunc);
