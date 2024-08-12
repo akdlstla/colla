@@ -645,10 +645,12 @@
       </div>
       <div class="sideCategory" onclick="toggleSubCategory(this)">
         <span>채팅방 <i class="fa-solid fa-angles-down"></i></span>
-        <ul id="allChattingRoom">
+        
+          <ul id="allChattingRoom">
           <!-- <li onclick="joinRoom('이름: 홍길동')">이름: 홍길동</li> -->
           <!-- <li>채수빈</li> -->
-        </ul>
+          </ul>
+        
       </div>
     </div>
 
@@ -685,7 +687,7 @@
             </div>
           </div>
           <div id="send">
-            <input type="text" id="chatting-input" placeholder="메시지를 입력하세요..." />
+            <input type="text" id="chatting-input" placeholder="메시지를 입력하세요..."/>
             <button id="send-button">전송</button>
           </div>
         </div>
@@ -961,7 +963,7 @@
       // 방 생성
       // username -> chatName 변경
 
-      chatName = myId + ", " + yourId;
+      chatName = myId + "," + yourId;
       let joinRoom = ''
       axios({
         method: 'post',
@@ -973,14 +975,15 @@
         }
       }).then((res) => {
         // console.log('내이름: ',myName)
-        console.log('dlrjdi?', res);
+        console.log('.. create chat axios 후?', res);
         chatId = res.data.response.id
         const flag = res.data.flag
         joinRoom = res.data.response.chat
+        
         //socket.emit('join chat', res.id);
         // const myInfo = {chat, myId};
         const myInfo = { joinRoom, myId, chatId, flag };
-        console.log("before join chat client", myInfo);
+        // console.log("before join chat client", myInfo);
         socket.emit('join chat', myInfo);
         console.log("join chat client", myInfo);
 
@@ -1039,7 +1042,13 @@
         console.log('전송후: ', myName)
         input.value = "";
       });
-
+      //엔터키로 전송
+      input.addEventListener('keyup', function(event) {
+        if(window.event.keyCode == 13) {
+          socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
+          input.value = "";
+        }
+      }) 
 
       socket.on('new chat message', (arg) => {
         const { myName, myId: userId, value: talks } = arg;
@@ -1082,6 +1091,7 @@
     //   //****************소켓 연결
     // }
 
+    
 
     function joinRoom(chatName, chatId, yourId, yourName, yourEmail) {
       console.log("사이드바 클릭시 chatName, chatId : ", chatName, chatId)
@@ -1152,6 +1162,15 @@
         input.value = "";
       });
 
+      //엔터키로 전송
+      input.addEventListener('keyup', function(event) {
+        if(window.event.keyCode == 13) {
+          socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
+          input.value = "";
+          
+        }
+      }) 
+
 
       socket.on('new chat message', (arg) => {
         const { myName, myId: userId, value: talks } = arg;
@@ -1219,13 +1238,6 @@
         const sideBar = document.getElementById("sideBar");
         sideBar.classList.toggle("show");
       });
-
-    //   (function () {
-    //   const scollBottom = document
-    //     .querySelector(".msg-container")
-    //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
-    //   return scollBottom;
-    // })();
 
     let scrollHeight = document.querySelector('.msg-container').scrollHeight;
     let clientHeight = document.querySelector('.msg-container').clientHeight;
