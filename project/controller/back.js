@@ -11,9 +11,9 @@ const signup = async (req, res) => {
     try {
         const { username, email, password, department } = req.body;
         const find = await user.findOne({ where: { email } });
-        console.log('find', find);
+        console.log('파인드!', find);
 
-        if (find) {
+        if (find !== null) {
             res.json({ result: false, message: '이미 가입한 회원임' });
 
         } else {
