@@ -696,6 +696,18 @@
 
 
   <script>
+
+      //   // 토큰 없으면 index.으로 바로 이동
+      //   function tokenCheck () {
+      //  const token = localStorage.getItem('token')
+      //         console.log(token,'토큰')
+      //       if(token){
+      //         return  document.location.href = '/main';
+      //       };
+      // };
+      // tokenCheck();
+
+
     /*********1. socket 열기. 내 소켓 아이디 저장*/
     const socket = io();
     /*************검색 start(sim)********************/
@@ -753,7 +765,9 @@
     function logout() {
       window.localStorage.removeItem("token");
       document.location.href = ('/login');
-      /* 5. 로그아웃 -> 소켓 연결 해제*/
+      /* 5. 로그아웃 -> 소켓 연결 해제
+      
+      */
     }
 
     // socket.emit('login', {username, email});
