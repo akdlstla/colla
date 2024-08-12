@@ -1015,20 +1015,20 @@
     }
     //내 아이디 : myId. 상대방 아이디 : yourId
 
-    function leaveAllRooms() {
-      // Socket.IO의 내장된 rooms 객체를 사용하여 참여 중인 방 목록을 가져옴
-      if (socket.rooms && Object.keys(socket.rooms).length > 0) {
-        const rooms = Object.keys(socket.rooms);
-        console.log("참여중인 방 목록 : ", roooms);
+    // function leaveAllRooms() {
+    //   // Socket.IO의 내장된 rooms 객체를 사용하여 참여 중인 방 목록을 가져옴
+    //   if (socket.rooms && Object.keys(socket.rooms).length > 0) {
+    //     const rooms = Object.keys(socket.rooms);
+    //     console.log("참여중인 방 목록 : ", roooms);
 
-        rooms.forEach(roomName => {
-          socket.emit('leave', roomName);
-        });
-      } else {
-        console.log("The client is not in any rooms.");
-      }
+    //     rooms.forEach(roomName => {
+    //       socket.emit('leave', roomName);
+    //     });
+    //   } else {
+    //     console.log("The client is not in any rooms.");
+    //   }
 
-    }
+    // }
 
     let chatId = "";
     let chatName = "";
@@ -1036,7 +1036,7 @@
     function clickFindByUsername(yourName, yourId, yourDepartment, yourEmail) {
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
       clearMessages();
-      leaveAllRooms();
+      // leaveAllRooms();
       //console.log("이벤트핸들러 후 ", res1, res2, res3);
 
       //yourName, yourId, yourDepartment, yourEmail : 상대방 정보
@@ -1197,7 +1197,7 @@
       
 
       clearMessages();
-      leaveAllRooms();
+      // leaveAllRooms();
 
       console.log("사이드바 클릭시 chatName, chatId : ", chatName, chatId)
       const userContainer = document.querySelector('#user-container');
