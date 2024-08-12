@@ -151,6 +151,34 @@ const createChat = async (req, res) => {
     }
 }
 
+//사용자_채팅방목록 생성 : post
+const createUserChat = async (req, res) => {
+    try {
+        console.log("createUserChat", req.body)
+        const { userId, chatId } = req.body;
+        const result = await userchat.create({ userId, chatId });
+        console.log('result: ', result);
+        res.json({ result: true, result });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+}
+
+
+//채팅내용 생성 : post
+const createMsg = async (req, res) => {
+    try {
+        const { userId, chatId, talk } = req.body;
+        const result = await msg.create({ userId, chatId, talk });
+        // console.log('result: ', result);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ result: false, message: '서버오류' });
+    }
+}
+
 const connectUserFind = async (req, res) => {
     try {
         console.log("userInfo", req.userInfo)
@@ -191,38 +219,6 @@ const connectUserFind = async (req, res) => {
 };
 
 
-const writeFunc = async(req,res) =>{
-    console.log('라이트 리퀘스트 바디',req.body);
-    try {
-        // const {id} = req.userInfo
-        console.log('req.userInfo',req.userInfo);
-        const {id} = req.userInfo
-        const {type, title, contents} =req.body
-        console.log(req.body);
-        
-        const result = await bord.create({type, title,contents, userId:id})
-        console.log('라이트리절트', result);
-        res.json({result:true, message:'작성완료!'})
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '서버오류' });
-    }
-    
-}
-const noticeall = async(req,res) =>{
-    console.log(req.body,'바디가 뭔뎅');
-    const data = req.body.data
 
-    const contents = await bord.findAll({
-        include: [
-            {
-                model: user,
-                attributes: ['username'],
-            },
-        ], where: { type: data }
-    })
-    console.log('노티스올 리절트',contents);
-    res.json({result: true, contents })
-}
-module.exports = { signup, login, search, createChat, connectUserFind, writeFunc, index, noticeall }
+module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat, index,  }
 

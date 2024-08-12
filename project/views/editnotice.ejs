@@ -21,7 +21,7 @@
 
         </div>
         <button type="button" id="GH">HTML보기</button>
-        <button type="button" onclick="writeFunc()">글쓰기</button>
+        <button type="button" onclick="editFunc()">수정</button>
         <button type="button" onclick="cancle()">취소</button>
     </form>
     <!-- TUI 에디터 JS CDN -->
@@ -31,7 +31,7 @@
             el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
             height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
             initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-            initialValue: '',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+            initialValue: '  ',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
             previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
         });
         console.log(editor.getHTML())
@@ -39,32 +39,41 @@
             console.log(editor.getHTML());
 
         })
-        function writeFunc() {
-            const type = document.querySelector('#notice').value
-            const title = document.querySelector('#title').value
-            const contents = editor.getHTML()
-            console.log(contents, type, title);
+        const [_,pathname] = document.location.pathname.split('/editnotice/');
+        console.log(pathname);
+        
+        (async function () {
+            const res = await axios({
+                method: 'get',
+                url: `/api/board/editnotice/${pathname}`,
 
-            axios({
-                method: 'post',
-                url: '/api/board/writeFunc',
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-                data: {
-                    type,
-                    title,
-                    contents,
-                }
-            }).then(() => {
-                alert('작성이 완료되었슴둥!'),
-                    window.location.href = '/notice'
-            }
-            ).catch(error => {
-                console.error('작성 중 오류 발생:', error);
-                alert('작성 중 오류가 발생했습니다.');
-            });
-        }
+            })
+            console.log(res);
+             const {title, contents} = res.data.data;
+            document.querySelector('#title').value = title;
+            editor.setHTML(contents)
+        })()
+
+
+// 게시판(공지사항) 수정완료 버튼
+      async function editFunc() {
+                const data = {
+                    pathname,
+                    title : document.querySelector('#title').value,
+                    contents : editor.getHTML()
+                };
+                const res = axios({
+                    method: 'patch',
+                    url: '/api/board/updatebord',
+                    data,
+                    // headers: {
+                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    // },
+                });
+                alert('작성된 글이 수정되었지요');
+                window.location.href = '/notice'
+          };
+        
         function cancle() {
             if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
                 window.location.href = '/notice'

@@ -1,6 +1,7 @@
 const express = require("express");
 
-const {index, signup, login, search, createChat, connectUserFind, writeFunc, noticeall} = require("../controller/back");
+const {index, signup, login, search, searchUser,  createChat, createUserChat, createMsg, connectUserFind, deleteChat} = require("../controller/back");
+
 
 const router = express.Router();
 const {auth} = require('../middleware');
@@ -12,8 +13,8 @@ router.post('/login', login);
 router.get('/search/:search',search);
 router.post('/createchat', createChat);
 router.get('/connect', auth, connectUserFind);
-router.post('/writeFunc',auth,writeFunc)
-router.post('/noticeall',noticeall)
+router.delete('/deletechat', deleteChat)
+
 // router.patch('/update', auth, update);
 // router.delete('/delete', auth, deleteFunc);
 
