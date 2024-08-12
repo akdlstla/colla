@@ -16,9 +16,16 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
       background-color: #f4f6f9;
       padding: 20px;
+      padding-top: 5px;
+  }
+
+  #homehome {
+    text-decoration: none;
+  }
+  #gohome {
+    color: #638cc7;
   }
 
     h3 {
@@ -45,6 +52,7 @@
         background-color: #ffffff;
         border-radius: 10px;
         overflow: hidden;
+        table-layout: fixed; /* 이 부분을 추가하여 테이블 레이아웃을 고정 */
     }
 
     table, th, td {
@@ -84,15 +92,17 @@
 
     .noticecontent {
         font-size: 14px;
-        color: #333;
+        color: black;
         display: none;
         padding-top: 10px;
-        text-align: left;
         line-height: 1.5;
+        padding: 20px; 
+        white-space: normal; 
+        word-break: break-all; 
+        width: 115vh;
     }
 
     .notice-item-buttons {
-        display: flex;
         justify-content: center;
         gap: 10px;
     }
@@ -138,16 +148,39 @@
 
     /* 반응형 */
     @media (max-width: 768px) {
-      h3{
-        font-size: 10;
+      table, th, td {
+        padding: 8px;
+        font-size: 10px;
+      }
+
+      th:nth-child(4),
+      td:nth-child(4) {
+        display: none; /*등록일 숨기기 */
+      }
+
+      th:nth-child(2), td:nth-child(2) {
+        text-align: left;
+      }
+
+      th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3), th:nth-child(5), td:nth-child(5) {
+        text-align: center; 
+      }
+
+      .noticecontent {
+        font-size: 14px;
+        padding: 10px;
+        text-align: center;
       }
     }
+
+    
 
   </style>
 
 </head>
 
 <body>
+  <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
   <h3 id="boardname" >공지사항</h3>
   <div id="notice" hidden>notice</div>
   <div id="content_king">
@@ -208,7 +241,7 @@
         </td>
       </tr>
       <tr class='noticecontent' style="display: none;">
-        <td colspan="5">${item.contents}</td>
+        <td colspan="5" style="padding: 20px; text-align: left;">${item.contents}</td>
       </tr>
     `;
 
@@ -240,7 +273,7 @@
       const pathname = id
       console.log(pathname,'패쓰네임');
       
-            if (!confirm('정성스레 작성한 글을 삭제할려?')) {
+            if (!confirm('삭제하시겠습니까?')) {
                     return;
                 }
                 const data = {
@@ -250,9 +283,6 @@
                     method: 'delete',
                     url: '/api/board/deletebord',
                     data,
-                    // headers: {
-                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    // },
                 });
                 alert('바로 삭제');
                 document.location.reload();
