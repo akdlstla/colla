@@ -94,7 +94,7 @@
 
       main {
         display: flex;
-        height: 93vh;
+        height: 100%;
       }
 
       #sideBar {
@@ -103,6 +103,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        height: 100%;
       }
 
       #myProfile {
@@ -163,6 +164,7 @@
     #content {
       flex: 1;
       background-color: aliceblue;
+      height: 100%;
     }
 
 
@@ -237,13 +239,14 @@
       }
 
       #chatContainer {
-        flex: 1;
+        flex: 1; /* 채팅 창이 가능한 많은 공간을 차지 */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         padding: 15px;
-        background-color:  #e0f0ff;
+        background-color: #e0f0ff;
         border-radius: 10px;
+        width: 100vh;
       }
 
       #user-container {
@@ -260,22 +263,14 @@
         display: block;
         flex-direction: column;
         overflow-y: scroll;
-        width: 500px;
-        height: 600px;
+        width: 100%;
+        height: 100%;
         justify-content: center;
       }
 
-      .talk {
-        position: relative;
-        /* max-width: 60%; */
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        background-color: #dfe7ef;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
+   
 
-      .talk.received {
+      /* .talk.received {
         align-self: flex-start;
         background-color: #d1e7fd;
       }
@@ -283,7 +278,7 @@
       .talk.sent {
         align-self: flex-end;
         background-color: #c1f0c1;
-      }
+      } */
 
       .message {
         margin-top: 5px;
@@ -1239,41 +1234,49 @@
         sideBar.classList.toggle("show");
       });
 
-    let scrollHeight = document.querySelector('.msg-container').scrollHeight;
-    let clientHeight = document.querySelector('.msg-container').clientHeight;
-    function addBoxes() {
-      const wrap = document.querySelector('.msg-container');
-      const numberOfNewBoxes = 10;
-      const currentBoxCount = wrap.getElementsByClassName("talk").length;
+    //   (function () {
+    //   const scollBottom = document
+    //     .querySelector(".msg-container")
+    //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
+    //   return scollBottom;
+    // })();
+      // 스크롤 이벤트 임시 주석 처리 시작부분
+    // let scrollHeight = document.querySelector('.msg-container').scrollHeight;
+    // let clientHeight = document.querySelector('.msg-container').clientHeight;
+    // function addBoxes() {
+    //   const wrap = document.querySelector('.msg-container');
+    //   const numberOfNewBoxes = 10;
+    //   const currentBoxCount = wrap.getElementsByClassName("talk").length;
 
-      for (let i = 1; i <= numberOfNewBoxes; i++) {
-        const newBox = document.createElement("div");
-        newBox.className = "talk";
-        newBox.textContent = currentBoxCount + i;
-        wrap.prepend(newBox);
-      }
-    }
-      //   (function () {
-      //   const scollBottom = document
-      //     .querySelector(".msg-container")
-      //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
-      //   return scollBottom;
-      // })();
+    //   for (let i = 1; i <= numberOfNewBoxes; i++) {
+    //     const newBox = document.createElement("div");
+    //     newBox.className = "talk";
+    //     newBox.textContent = currentBoxCount + i;
+    //     wrap.prepend(newBox);
+    //   }
+    // }
+    //   //   (function () {
+    //   //   const scollBottom = document
+    //   //     .querySelector(".msg-container")
+    //   //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
+    //   //   return scollBottom;
+    //   // })();
 
       
 
-      // 이벤트 리스너 추가
-      document.querySelector('.msg-container').addEventListener("scroll", () => {
-        // console.log("클라이언트 높이", clientHeight);
-        // console.log("스크롤 탑", document.querySelector('.msg-container').scrollTop);
-        // console.log("스크롤 높이", scrollHeight);
-        const wrap = document.querySelector('.msg-container');
-        if (wrap.scrollTop === 0) {
-          addBoxes();
-          // 새 박스를 추가한 후 스크롤 위치를 유지
-          wrap.scrollTop = 30;
-        }
-      });
+    //   // 이벤트 리스너 추가
+    //   document.querySelector('.msg-container').addEventListener("scroll", () => {
+    //     // console.log("클라이언트 높이", clientHeight);
+    //     // console.log("스크롤 탑", document.querySelector('.msg-container').scrollTop);
+    //     // console.log("스크롤 높이", scrollHeight);
+    //     const wrap = document.querySelector('.msg-container');
+    //     if (wrap.scrollTop === 0) {
+    //       addBoxes();
+    //       // 새 박스를 추가한 후 스크롤 위치를 유지
+    //       wrap.scrollTop = 30;
+    //     }
+    //   });
+      // 스크롤 이벤트 임시 주석 처리 끝나는 부분
 
 
       document.querySelector('.pop_info_trigger').addEventListener('click', function(e) {

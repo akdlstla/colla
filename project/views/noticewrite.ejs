@@ -3,27 +3,172 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TOAST UI Editor 적용하기</title>
+    <title>공지사항 작성하기</title>
 
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 50px;
+            color: #0f4c81;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 85%;
+            height: 70vh; /* 전체 화면 높이의 70% */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .custom-radio {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #638cc7;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .custom-radio::after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            flex-shrink: 0; /* 크기가 줄어들지 않도록 */
+        }
+
+        #content {
+            flex-grow: 1; /* 남은 공간을 모두 사용 */
+            margin-bottom: 20px;
+            height: auto;
+        }
+
+        .button-container {
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+            flex-shrink: 0; /* 크기가 줄어들지 않도록 */
+        }
+
+        button {
+            background-color: #638cc7;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            min-width: 100px;
+        }
+
+        button:hover {
+            background-color: #0f4c81;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            h2 {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                font-size: 20px;
+            }
+
+            form {
+                width: 90%; /* 작은 화면에서는 너비를 90%로 설정 */
+                height: 70vh; /* 화면 높이의 70% */
+                padding: 15px;
+            }
+
+            input[type="text"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            #content {
+                height: auto;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
-    <h2 style="text-align: center;">공지사항 글 써줘!</h2>
+    <h2 style="text-align: center;">공지사항 글 써줘!</h2> 
     <form>
-        <input type="radio" id="notice" checked disabled value="notice">공지사항<br>
+        <div class="radio-container">
+            <input type="radio" id="notice" checked disabled value="notice">
+            <span class="custom-radio"></span>
+            <label for="notice">공지사항</label>
+        </div>
         <input type="text" id="title" placeholder="제목">
 
         <!-- 에디터를 적용할 요소 (컨테이너) -->
-        <div id="content">
+        <div id="content"></div>
 
+        <div class="button-container">
+            <button type="button" onclick="writeFunc()">글쓰기</button>
+            <button type="button" onclick="cancle()">취소</button>
         </div>
-        <button type="button" id="GH">HTML보기</button>
-        <button type="button" onclick="writeFunc()">글쓰기</button>
-        <button type="button" onclick="cancle()">취소</button>
     </form>
+
     <!-- TUI 에디터 JS CDN -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
@@ -34,16 +179,11 @@
             initialValue: '',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
             previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
         });
-        console.log(editor.getHTML())
-        document.getElementById('GH').addEventListener('click', () => {
-            console.log(editor.getHTML());
 
-        })
         function writeFunc() {
-            const type = document.querySelector('#notice').value
-            const title = document.querySelector('#title').value
-            const contents = editor.getHTML()
-            console.log(contents, type, title);
+            const type = document.querySelector('#notice').value;
+            const title = document.querySelector('#title').value;
+            const contents = editor.getHTML();
 
             axios({
                 method: 'post',
@@ -57,22 +197,20 @@
                     contents,
                 }
             }).then(() => {
-                alert('작성이 완료되었슴둥!'),
-                    window.location.href = '/notice'
-            }
-            ).catch(error => {
+                alert('작성이 완료되었슴둥!');
+                window.location.href = '/notice';
+            }).catch(error => {
                 console.error('작성 중 오류 발생:', error);
                 alert('작성 중 오류가 발생했습니다.');
             });
         }
+
         function cancle() {
             if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
-                window.location.href = '/notice'
-
+                window.location.href = '/notice';
             } else {
-                return
+                return;
             }
-
         }
     </script>
 </body>
