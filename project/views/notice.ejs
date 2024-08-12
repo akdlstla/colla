@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -142,10 +144,11 @@
     }
 
   </style>
+
 </head>
 
 <body>
-  <h3 id="boardname">공지사항</h3>
+  <h3 id="boardname" >공지사항</h3>
   <div id="notice" hidden>notice</div>
   <div id="content_king">
     <table>
@@ -171,14 +174,16 @@
   <script>
     const title = document.querySelector('#content_title')
     const boardname = document.querySelector('#notice').textContent;
-    const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
+
+     // JWT 토큰을 가져와서 디코딩
+     const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
     const decodedToken = jwt_decode(token); // 토큰 디코딩
     const id = decodedToken.id; // 디코딩한 토큰에서 id 추출
-
+    
     (async function () {
       const res = await axios({
         method: 'post',
-        url: '/api/colla/noticeall',
+        url: '/api/board/noticeall',
         data: { data: boardname }
       })
 
@@ -208,25 +213,54 @@
 
         title.insertAdjacentHTML('beforeend', html);
       });
+
     })();
 
     function titleclick(element) {
       const noticecontent = element.parentElement.nextElementSibling;
       if (noticecontent.style.display === 'none') {
         noticecontent.style.display = 'block';
+
+       
       } else {
         noticecontent.style.display = 'none';
       }
     }
 
+
+    function editFunc(id){
+      window.location.href=`/editnotice/${id}`
+    }
+
+     // 게시판(공지사항) 삭제완료 버튼
+     async function deleteItem(id) {
+      const pathname = id
+      console.log(pathname,'패쓰네임');
+      
+            if (!confirm('정성스레 작성한 글을 삭제할려?')) {
+                    return;
+                }
+                const data = {
+                    pathname,
+                };
+                const res = axios({
+                    method: 'delete',
+                    url: '/api/board/deletebord',
+                    data,
+                    // headers: {
+                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    // },
+                });
+                alert('바로 삭제');
+                document.location.reload();
+          };
+
+
     function formatDate(dateString) {
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       return new Date(dateString).toLocaleDateString('ko-KR', options);
     }
-
-    function editFunc(id){
-      window.location.href=`/editwrite/${id}`
-    }
   </script>
 </body>
+
 </html>
