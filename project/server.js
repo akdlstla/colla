@@ -51,14 +51,18 @@ app.use('/api/board', boardRouter)
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  //   /** 1. 내 소켓 아이디 저장.*/
-  // socket.on('login', );
   //   /** 2. 방 입장 */
   socket.on('join chat', async (arg) => {
     console.log("join chat server : ", arg);
 
     //join : 방 없으면 생성, 있으면 입장
     const { joinRoom, myId, chatId, flag } = arg;
+    socket.leave(joinRoom);
+
+  //   if (socket.rooms.has(joinRoom)) {
+  //     console.log(`Client is already in the room: ${joinRoom}`);
+  //     return;
+  // }
     socket.join(joinRoom);
     // socket.chat = chat;
     console.log(`User joined room: ${joinRoom}`, flag);
@@ -86,6 +90,16 @@ io.on('connection', (socket) => {
     // console.log("q브로드캐스트 후");
 
   });
+
+    // 모든 방에서 나가기
+    socket.on('leaveAllRooms', () => {
+      // 참여 중인 모든 방에서 나가기
+      for (let roomName of socket.rooms) {
+        socket.leave(roomName);
+              console.log(`Client left the room: ${roomName}`);
+      }
+  });
+
   socket.on('deletechat', async(arg)=>{
     const {messageId} =arg
     await db.msg.destroy({where:{id: messageId}})
