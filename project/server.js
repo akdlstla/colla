@@ -13,7 +13,8 @@ const io = socketIo(server);
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
-app.use(express.json());
+app.use(express.json({limit: '100mb'}));
+app.use(express.urlencoded({limit: '100mb', extended: false}));
 app.use(express.static('public'));
 
 //aws 설정

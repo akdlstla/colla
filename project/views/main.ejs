@@ -30,9 +30,9 @@
     }
 
     /* header */
-    header {
-      background-color: #0f4c81;
-      border: 1px solid #ababab;
+    header{
+      background-color:#ffffff;
+      border: 1px solid #D6DADB;
     }
 
     header {
@@ -43,7 +43,10 @@
     }
 
     header #logoLink {
-      font-size: 24px;
+      /* color: #0f4c81; */
+      color: #0f4c81;
+      font-family: 'Noto Sans KR';
+      font-size:24px;
       font-weight: bold;
     }
 
@@ -56,8 +59,17 @@
     #searchBox1 {
       margin-left: 5px;
       padding: 5px;
-      border: 1px solid black;
+      /* border: 1px solid black; */
       border-radius: 10px;
+      
+    }
+    #mainSearch{
+      margin-left: 3px;
+      border-radius: 10px;
+      width: 160px;
+      height: 16px;
+      padding: 2px;
+      border: 1px solid #ababab;
     }
 
     /* header - 톱니바퀴 옵션토글 */
@@ -102,12 +114,14 @@
     }
 
     #sideBar {
-      border: 1px solid #ababab;
+      background-color: #ffffff;
+      border: 1px solid #D6DADB;
       border-top: none;
-      width: 250px;
+      width: 300px;
       /* padding: 5px; */
       display: flex;
       flex-direction: column;
+      height: 93vh;
       /* gap: 10px; */
     }
 
@@ -115,12 +129,13 @@
     #myProfile {
       display: flex;
       flex-direction: row;
-      /* align-items: center; */
+      align-items: center;
       padding: 10px;
       justify-content: space-between;
       /* border: 1px solid black; */
       /* border-radius: 10px; */
       cursor: pointer;
+      border-bottom: 1px solid #D6DADB;
     }
 
     #myProfile .profileBox {
@@ -132,13 +147,27 @@
     .sideCategory {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      /* align-items: center; */
       /* padding: 10px; */
       /* border: 1px solid black; */
       border-radius: 10px;
       cursor: pointer;
     }
-
+    .sideCategory span{
+      margin-top: 10px;
+      margin-left: 14px;
+      /* align-items:start; */
+      font-size: 14px;
+  
+    }
+    .sideCategory .fa-list{
+      margin-right: 5px;
+      font-size: 14px;
+    }
+    .sideCategory .fa-arrow-down-wide-short{
+      margin-right: 5px;
+      font-size: 14px;
+    }
     #gearIcon2 {
       display: none;
     }
@@ -149,9 +178,13 @@
 
     #myProfile .fa-user {
       font-size: 24px;
+      margin-left: 5px;
+      margin-right: 5px;
+      color: grey;
     }
-
+  
     .sideCategory ul {
+      border: 1px solid #D6DADB;
       width: 100%;
       max-height: 0;
       opacity: 0;
@@ -180,7 +213,7 @@
     }
 
     .sideCategory.expanded ul::-webkit-scrollbar-thumb {
-      background-color: grey;
+      background-color: #dedede;
       border-radius: 20px;
 
     }
@@ -191,14 +224,19 @@
     }
 
     .sideCategory ul li {
-      width: 100%;
+      width: 88%;
       padding: 10px;
-      background-color: #fafbfc;
+      background-color: #ffffff;
       /* border: 1px solid black; */
       /* border-radius: 10px; */
       margin: 5px 0;
+      margin-left: 5px;
+      margin-right: 5px;
     }
-
+    .sideCategory ul li:hover{
+      background-color: #EDEFF1;
+      border-radius: 10px;
+    }
     #content {
       flex: 1;
       background-color: aliceblue;
@@ -282,17 +320,17 @@
     }
 
 
-    #chatContainer {
-      flex: 1;
-      /* 채팅 창이 가능한 많은 공간을 차지 */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 15px;
-      background-color: #e0f0ff;
-      border-radius: 10px;
-      width: 100vh;
-    }
+      #chatContainer {
+        flex: 1; /* 채팅 창이 가능한 많은 공간을 차지 */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #e0f0ff;
+        border-radius: 10px;
+        width: 100vh;
+        height: 89vh;
+      }
 
 
     #user-container {
@@ -301,21 +339,23 @@
     }
 
     #wrapper {
-      flex: 1;
-      overflow-y: auto;
+      flex: 1;  
+      /* overflow-y: auto; */
     }
 
 
-    .msg-container {
-      display: block;
-      flex-direction: column;
-      overflow-y: scroll;
-      width: 100%;
-      height: 100%;
-      justify-content: center;
-    }
-
-
+      .msg-container {
+        display: block;
+        flex-direction: column;
+        overflow-y: scroll;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+        height: 75vh;
+      }
+    
+   
 
     /* .talk.received {
         align-self: flex-start;
@@ -504,118 +544,43 @@
       cursor: pointer;
     }
 
-    @media (max-width: 768px) {
-
-      /* 반응형 헤더 */
-      header {
-        justify-content: space-between;
-        border-bottom: none;
-      }
-
-      header .fa-bars {
-        display: block !important;
-        cursor: pointer;
-      }
-
-      #search1 {
-        display: none !important;
-      }
-
-      #search2 {
-        height: 10vh;
-        display: flex !important;
-        flex-direction: row;
-        align-items: center;
-        background-color: #e0f0ff;
-        justify-content: center;
-        border: 1px solid black;
-        border-top: none;
-      }
-
-      #searchBox2 {
-        width: 50vw;
-        margin-left: 5px;
-        padding: 7px;
-        border: 1px solid black;
-        border-radius: 10px;
-      }
-
-      /* 반응형 사이드 바 */
-      #sideBar {
-        width: 250px;
-        padding: 5px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        position: absolute;
-        left: -500px;
-        /* 사이드바를 화면 밖으로 위치시킴 */
-        height: 100vh;
-        transition: transform 0.5s ease-in-out;
-        /* 트랜지션 설정 */
-      }
-
-      #sideBar.show {
-        transform: translateX(500px);
-        /* 100vw만큼 오른쪽으로 이동 */
-      }
-
-      #gearIcon2 {
-        display: inline-block !important;
-      }
-
-      #myProfile {
-        display: flex;
-        /* flex-direction: column; */
-        /* align-items: center; */
-        padding: 10px;
-        border: 1px solid black;
-        border-radius: 10px;
-        cursor: pointer;
-      }
-
-      #myProfile .fa-user {
-        font-size: 24px;
-      }
-
-      /* #profileBox {
-          width: 100% !important;
+      @media (max-width: 768px) {
+        /* 반응형 헤더 */
+        header {
+          justify-content: center;
+          /* border-bottom: none; */
+          position: relative;
+        }
+        header .fa-bars {
+          display: block !important;
+          cursor: pointer;
+        }
+        #search1 {
+         position: relative;
+        
+        }
+        
+        /* 반응형 사이드 바 */
+        #sideBar {
+          width: 300px;
+          padding: 5px;
           display: flex;
-        } */
-      #myProfile ul {
-        display: block !important;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        list-style: none;
-        padding: 0;
-        margin-top: 10px;
-        width: 100%;
-        background-color: #e0f0ff;
-        /* border: 1px solid black; */
-        border-radius: 10px;
-        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-      }
-
-      #myProfile.expanded ul {
-        max-height: 200px;
-        opacity: 1;
-      }
-
-      #myProfile ul li {
-        padding: 5px;
-        background-color: #c1e2ff;
-        border: 1px solid black;
-        border-radius: 10px;
-        margin: 2px 0;
-      }
-
-      #resultContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-      }
+          flex-direction: column;
+          gap: 10px;
+          position: absolute;
+          left: -500px; /* 사이드바를 화면 밖으로 위치시킴 */
+          height: 93vh;
+          transition: transform 0.5s ease-in-out; /* 트랜지션 설정 */
+        }
+        #sideBar.show {
+          transform: translateX(500px); /* 100vw만큼 오른쪽으로 이동 */
+        }
+        #resultContainer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+        }
 
       #userBox,
       #msgBox {
@@ -644,21 +609,20 @@
   </style>
 </head>
 
-<body>
-  <header>
-    <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
-    <a href="#" id="logoLink" onclick="location.reload(); return false;" style="color: white;">colla</a>
-
-    <div id="search1">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <div id="mainSearchBox">
-        <input type="text" id="mainSearch" placeholder="검색">
-        <div id="searchBox"></div>
-        <!-- 아래 수정. 위치 이동 -->
-        <!-- <div id="userBox"></div> -->
-        <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
+  <body>
+ <header>
+      <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
+      <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
+      <div id="search1">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <div id="mainSearchBox">
+          <input type="text" id="mainSearch" placeholder="검색">
+          <div id="searchBox"></div>
+          <!-- 아래 수정. 위치 이동 -->
+          <!-- <div id="userBox"></div> -->
+          <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
+        </div>
       </div>
-    </div>
 
     <i class="fa-solid fa-gear" id="gearIcon1"></i>
     <div class="options" id="optionsMenu">
@@ -683,25 +647,18 @@
     </div>
   </div>
 
-
+<!-- 
   <div id="search2" style="display: none">
     <i class="fa-solid fa-magnifying-glass"></i>
     <div id="mainSearchBox">
       <input type="text" id="mainSearch" placeholder="검색">
-      <div id="searchBox"></div>
+      <div id="searchBox"></div> -->
       <!-- 아래 수정. 위치 이동 -->
       <!-- <div id="userBox"></div> -->
       <!-- <div id="msgBox" style="display: flex; flex-direction: column;"></div> -->
     </div>
   </div>
 
-
-
-
-  <div id="search2" style="display: none">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" id="searchBox2" placeholder="전체에서 검색" />
-  </div>
 
 
   <main>
@@ -720,16 +677,16 @@
         </ul>
       </div>
       <div class="sideCategory" onclick="toggleSubCategory(this)">
-        <span style="justify-content: space-between;">채널 <i class="fa-solid fa-angles-down"></i></span>
+        <span style="justify-content: space-between;"><i class="fa-solid fa-list"></i>채널</span>
         <ul>
-          <li><a href="/notice">공지사항</a></li>
-          <li>게시판</li>
-          <li></li>
+            <li><a href="/notice">공지사항</a></li>
+            <li>게시판</li>
+            
         </ul>
 
-      </div>
-      <div class="sideCategory" onclick="toggleSubCategory(this)">
-        <span style="justify-content: space-between">채팅방 <i class="fa-solid fa-angles-down"></i></span>
+    </div>
+    <div class="sideCategory" onclick="toggleSubCategory(this)">
+        <span style="justify-content: space-between"><i class="fa-solid fa-arrow-down-wide-short"></i></i>채팅방</span>
         <ul id="allChattingRoom">
           <!-- <li onclick="joinRoom('이름: 홍길동')">이름: 홍길동</li> -->
           <!-- <li>채수빈</li> -->
@@ -740,7 +697,7 @@
 
 
     <div id="main_page">
-      <img src=/images/mellong.png style="width: 300px; height: 300px;">
+      <img src=/images/logocolla.png style="width: 300px; height: 300px;">
       <p id="description">프로젝트별 특정 주제의 그룹 대화는 "채널"</p>
       <p id="description">1:1 채팅은 "검색"을 이용해 보세요.</p>
     </div>
@@ -762,11 +719,15 @@
           <p id="nickname">채팅방 이름 또는 상대방 이름</p>
         </div>
         <div id="wrapper">
-          <div id="display-container">
+          <!-- <div id="display-container"> -->
             <div class="msg-container" id="msgwrapper">
               <!-- 채팅 메시지가 여기에 동적으로 추가됩니다 -->
+               <div class="talk">aaa</div>
+               <div class="talk">bbb</div>
+               <div class="talk">ccc</div>
+               <div class="talk">ddd</div>
             </div>
-          </div>
+          <!-- </div> -->
           <div id="send">
             <input type="text" id="chatting-input" placeholder="메시지를 입력하세요..." />
             <button id="send-button">전송</button>
@@ -1111,7 +1072,7 @@
             }
             p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
             talk.appendChild(p);
-            msgContainer.appendChild(talk);
+            // msgContainer.appendChild(talk);
           })
         }
       })
@@ -1211,8 +1172,7 @@
 
       let joinRoom = ""
       axios({
-        method: 'post',
-        url: '/api/colla/createchat',
+        method: 'post',        url: '/api/colla/createchat',
         data: {
           chatName,
           myId,
@@ -1253,7 +1213,6 @@
             p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
             talk.appendChild(p);
             msgContainer.appendChild(talk);
-
           })
         }
       })
@@ -1353,36 +1312,36 @@
     //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
     //   return scollBottom;
     // })();
-    //   // 스크롤 이벤트 임시 주석 처리 시작부분
-    // let scrollHeight = document.querySelector('.msg-container').scrollHeight;
-    // let clientHeight = document.querySelector('.msg-container').clientHeight;
-    // function addBoxes() {
-    //   const wrap = document.querySelector('.msg-container');
-    //   const numberOfNewBoxes = 10;
-    //   const currentBoxCount = wrap.getElementsByClassName("talk").length;
+      // 스크롤 이벤트 임시 주석 처리 시작부분
+    let scrollHeight = document.querySelector('.msg-container').scrollHeight;
+    let clientHeight = document.querySelector('.msg-container').clientHeight;
+    function addBoxes() {
+      const wrap = document.querySelector('.msg-container');
+      const numberOfNewBoxes = 5;
+      const currentBoxCount = wrap.getElementsByClassName("talk").length;
 
-    //   for (let i = 1; i <= numberOfNewBoxes; i++) {
-    //     const newBox = document.createElement("div");
-    //     newBox.className = "talk";
-    //     newBox.textContent = currentBoxCount + i;
-    //     wrap.prepend(newBox);
-    //   }
-    // }
+      for (let i = 1; i <= numberOfNewBoxes; i++) {
+        const newBox = document.createElement("div");
+        newBox.className = "talk";
+        newBox.textContent = currentBoxCount + i;
+        wrap.prepend(newBox);
+      }
+    }
 
 
-    //   // 이벤트 리스너 추가
-    //   document.querySelector('.msg-container').addEventListener("scroll", () => {
-    //     // console.log("클라이언트 높이", clientHeight);
-    //     // console.log("스크롤 탑", document.querySelector('.msg-container').scrollTop);
-    //     // console.log("스크롤 높이", scrollHeight);
-    //     const wrap = document.querySelector('.msg-container');
-    //     if (wrap.scrollTop === 0) {
-    //       addBoxes();
-    //       // 새 박스를 추가한 후 스크롤 위치를 유지
-    //       wrap.scrollTop = 30;
-    //     }
-    //   });
-    // 스크롤 이벤트 임시 주석 처리 끝나는 부분
+      // 이벤트 리스너 추가
+      document.querySelector('.msg-container').addEventListener("scroll", () => {
+        // console.log("클라이언트 높이", clientHeight);
+        // console.log("스크롤 탑", document.querySelector('.msg-container').scrollTop);
+        // console.log("스크롤 높이", scrollHeight);
+        const wrap = document.querySelector('.msg-container');
+        if (wrap.scrollTop === 0) {
+          addBoxes();
+          // 새 박스를 추가한 후 스크롤 위치를 유지
+          wrap.scrollTop = 100;
+        }
+      });
+      // 스크롤 이벤트 임시 주석 처리 끝나는 부분
 
 
     // 팝업 이벤트 함수

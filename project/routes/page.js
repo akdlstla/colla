@@ -1,5 +1,5 @@
 const express = require("express");
-const { index, main, signup, terms, personal, login, notice, siteinfo, noticewrite, editnotice } = require("../controller/page");
+const { index, main, signup, terms, personal, login, notice, siteinfo, noticewrite, editnotice, board, boardwrite, editboard } = require("../controller/page");
 
 const router = express.Router();
 
@@ -16,5 +16,9 @@ router.get('/siteinfo', siteinfo)
 router.get('/noticewrite',noticewrite)
 router.get('/editnotice/:id',editnotice)
 router.get('/', index);
+router.get('/board',board)
+router.get('/boardwrite',boardwrite)
+router.get('/editboard/:id',editboard)
+
 
 module.exports = router;

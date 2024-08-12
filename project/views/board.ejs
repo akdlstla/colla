@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항</title>
+  <title>게시판</title>
   <script src="https://kit.fontawesome.com/d44f71ab07.js" crossorigin="anonymous"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -16,16 +16,9 @@
 
   <style>
     body {
+      font-family: Arial, sans-serif;
       background-color: #f4f6f9;
       padding: 20px;
-      padding-top: 5px;
-  }
-
-  #homehome {
-    text-decoration: none;
-  }
-  #gohome {
-    color: #638cc7;
   }
 
     h3 {
@@ -52,7 +45,6 @@
         background-color: #ffffff;
         border-radius: 10px;
         overflow: hidden;
-        table-layout: fixed; /* 이 부분을 추가하여 테이블 레이아웃을 고정 */
     }
 
     table, th, td {
@@ -80,34 +72,32 @@
         background-color: #f8faff;
     }
 
-    .noticetitle {
+    .boardtitle {
         font-weight: bold;
         cursor: pointer;
         transition: color 0.2s;
     }
 
-    .noticetitle:hover {
+    .boardtitle:hover {
         color: #0056b3;
     }
 
-    .noticecontent {
+    .boardcontent {
         font-size: 14px;
-        color: black;
+        color: #333;
         display: none;
         padding-top: 10px;
+        text-align: left;
         line-height: 1.5;
-        padding: 20px; 
-        white-space: normal; 
-        word-break: break-all; 
-        width: 115vh;
     }
 
-    .notice-item-buttons {
+    .board-item-buttons {
+        display: flex;
         justify-content: center;
         gap: 10px;
     }
 
-    .notice-item-buttons button {
+    .board-item-buttons button {
         padding: 6px 12px;
         background-color: #638cc7;
         color: white;
@@ -117,11 +107,11 @@
         transition: background-color 0.2s;
     }
 
-    .notice-item-buttons button:last-child {
+    .board-item-buttons button:last-child {
         background-color: rgb(243, 71, 71);
     }
 
-    .notice-item-buttons button:hover {
+    .board-item-buttons button:hover {
         opacity: 0.9;
     }
 
@@ -148,41 +138,18 @@
 
     /* 반응형 */
     @media (max-width: 768px) {
-      table, th, td {
-        padding: 8px;
-        font-size: 10px;
-      }
-
-      th:nth-child(4),
-      td:nth-child(4) {
-        display: none; /*등록일 숨기기 */
-      }
-
-      th:nth-child(2), td:nth-child(2) {
-        text-align: left;
-      }
-
-      th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3), th:nth-child(5), td:nth-child(5) {
-        text-align: center; 
-      }
-
-      .noticecontent {
-        font-size: 14px;
-        padding: 10px;
-        text-align: center;
+      h3{
+        font-size: 10;
       }
     }
-
-    
 
   </style>
 
 </head>
 
 <body>
-  <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
-  <h3 id="boardname" >공지사항</h3>
-  <div id="notice" hidden>notice</div>
+  <h3 id="boardname" >게시판</h3>
+  <div id="board" hidden>board</div>
   <div id="content_king">
     <table>
       <thead>
@@ -199,15 +166,14 @@
       </tbody>
     </table>
     <div class="button-container">
-      <a href="/noticewrite"><i class="fas fa-pencil-alt"></i> 작성하기</a>
+      <a href="/boardwrite"><i class="fas fa-pencil-alt"></i> 작성하기</a>
     </div>
   </div>
-
-
+ 
 
   <script>
     const title = document.querySelector('#content_title')
-    const boardname = document.querySelector('#notice').textContent;
+    const boardname = document.querySelector('#board').textContent;
 
      // JWT 토큰을 가져와서 디코딩
      const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
@@ -224,12 +190,12 @@
       console.log(res);
       res.data.contents.forEach(item => {
         let html = `
-          <tr class='notice-item'>
+          <tr class='board-item'>
             <td>${item.id}</td>
-            <td class='noticetitle' onclick='titleclick(this)'>${item.title}</td>
+            <td class='boardtitle' onclick='titleclick(this)'>${item.title}</td>
             <td>${item.user.username}</td>
             <td>${formatDate(item.createdAt)}</td>
-            <td class="notice-item-buttons">`;
+            <td class="board-item-buttons">`;
 
         if (item.userId === id) {
           html += `
@@ -240,8 +206,8 @@
         html += `
         </td>
       </tr>
-      <tr class='noticecontent' style="display: none;">
-        <td colspan="5" style="padding: 20px; text-align: left;">${item.contents}</td>
+      <tr class='boardcontent' style="display: none;">
+        <td colspan="5">${item.contents}</td>
       </tr>
     `;
 
@@ -251,21 +217,21 @@
     })();
 
     function titleclick(element) {
-      const noticecontent = element.parentElement.nextElementSibling;
-      if (noticecontent.style.display === 'none') {
-        noticecontent.style.display = 'block';
+      const boardcontent = element.parentElement.nextElementSibling;
+      if (boardcontent.style.display === 'none') {
+        boardcontent.style.display = 'block';
 
        
       } else {
-        noticecontent.style.display = 'none';
+        boardcontent.style.display = 'none';
       }
     }
 
 
     function editFunc(id){
-      window.location.href=`/editnotice/${id}`
+      window.location.href=`/editboard/${id}`
     }
-
+    
 
 
      // 게시판(공지사항) 삭제완료 버튼
@@ -273,7 +239,7 @@
       const pathname = id
       console.log(pathname,'패쓰네임');
       
-            if (!confirm('삭제하시겠습니까?')) {
+            if (!confirm('정성스레 작성한 글을 삭제할려?')) {
                     return;
                 }
                 const data = {
@@ -283,6 +249,9 @@
                     method: 'delete',
                     url: '/api/board/deletebord',
                     data,
+                    // headers: {
+                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    // },
                 });
                 alert('바로 삭제');
                 document.location.reload();
