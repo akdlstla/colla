@@ -339,5 +339,5 @@ const noticeall = async(req,res) =>{
     console.log('노티스올 리절트',contents);
     res.json({result: true, contents })
 }
-module.exports = { signup, login, search, searchUser, searchChat, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, index, noticeall }
+module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, index, noticeall }
 
