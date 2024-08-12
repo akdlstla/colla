@@ -1,0 +1,24 @@
+[33m[nodemon] 3.1.4[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server.js`[39m
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'users' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `users` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'chats' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `chats` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'userchats' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `userchats` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'groups' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `groups` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'groupusers' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `groupusers` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'msgs' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `msgs` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'comments' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `comments` FROM `colla`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'bords' AND TABLE_SCHEMA = 'colla'
+Executing (default): SHOW INDEX FROM `bords` FROM `colla`
+http://localhost:8000
+a user connected
+a user connected
