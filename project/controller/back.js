@@ -107,49 +107,6 @@ const search = async (req, res) => {
     }
 }
 
-//사용자 한명 찾기 : 사용자 이메일로. get
-const searchUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = await user.findOne({ where: { id } });
-        res.json({ result: true, result });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '서버오류' });
-    }
-}
-//chat 한개 찾기 : chat으로. get
-// const searchUserchat_msg = async (req, res) => {
-//     try {
-//         //console.log(req.params);
-//         const { chatId } = req.params;
-//         //chatId로 채팅방 참여중인 userId를 찾는다.
-//         //respose.userId
-//         const userId = [];
-//         const userInfo = [];
-//         const result = await userchat.findAll({where: { chatId }});
-//         result.forEach(value => {
-//             userId.push(value.userId);
-//         });
-//         let userTemp = await user.findOne({where : {id:userId[0]}, attributes:["id", "username"]});
-//         user.push(userTemp);
-//         userTemp = await user.findOne({where : {id:userId[1]}});
-//         user.push(userTemp);
-
-       
-
-//         // const flag = 1
-        
-//         //msgs.
-//         const msgs = await msg.findAll({where: { chatId }});
-
-//         res.json({ result: true, response:result, msgs, userId, user });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ result: false, message: '서버오류' });
-//     }
-// }
-
 //채팅방 목록 생성 : post
 const createChat = async (req, res) => {
     try {
@@ -194,32 +151,6 @@ const createChat = async (req, res) => {
     }
 }
 
-//사용자_채팅방목록 생성 : post
-const createUserChat = async (req, res) => {
-    try {
-        console.log("createUserChat", req.body)
-        const { userId, chatId } = req.body;
-        const result = await userchat.create({ userId, chatId });
-        console.log('result: ', result);
-        res.json({ result: true, result });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '서버오류' });
-    }
-}
-
-//채팅내용 생성 : post
-const createMsg = async (req, res) => {
-    try {
-        const { userId, chatId, talk } = req.body;
-        const result = await msg.create({ userId, chatId, talk });
-        // console.log('result: ', result);
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '서버오류' });
-    }
-}
 const connectUserFind = async (req, res) => {
     try {
         console.log("userInfo", req.userInfo)
@@ -258,16 +189,6 @@ const connectUserFind = async (req, res) => {
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
-const deleteChat = async(req,res) =>{
-    try {
-        console.log('id확인',req.body.id);
-        
-        const result = await msg.destroy({where:{id:req.body.id}})
-        
-    } catch (error) {
-        res.status(500).json({result: false, message:'메세지를 삭제할 수 없습니다'})
-    }
-}
 
 
 const writeFunc = async(req,res) =>{
@@ -303,5 +224,5 @@ const noticeall = async(req,res) =>{
     console.log('노티스올 리절트',contents);
     res.json({result: true, contents })
 }
-module.exports = { signup, login, search, searchUser, createChat, createUserChat, createMsg, connectUserFind, deleteChat, writeFunc, index, noticeall }
+module.exports = { signup, login, search, createChat, connectUserFind, writeFunc, index, noticeall }
 
