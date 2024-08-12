@@ -219,13 +219,8 @@ const connectUserFind = async (req, res) => {
   }
 };
 
-module.exports = {
-  signup,
-  login,
-  search,
-  createChat,
-  createUserChat,
-  createMsg,
-  connectUserFind,
-  index,
-};
+module.exports = { signup, login, search, createChat, createUserChat, createMsg, connectUserFind, index,  }
+
+
+
+

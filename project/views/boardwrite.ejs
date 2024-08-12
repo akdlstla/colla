@@ -20,30 +20,12 @@
             height: 100vh;
         }
 
-
-
         h2 {
-            margin-top: 10px;
-            margin-bottom: 40px;
-            color: #638cc7;
+            margin-top: 40px;
+            margin-bottom: 50px;
+            color: #0f4c81;
             text-align: center;
             font-size: 25px;
-        }
-
-        #homehome {
-            text-decoration: none;
-            align-self: flex-start; 
-            margin-left: 30px;
-            margin-top: 20px;
-        }
-
-        #gohome {
-            color: #638cc7;
-        }
-
-        #noticego {
-            text-decoration-line: none;
-            margin-top: 0px; 
         }
 
         form {
@@ -169,13 +151,12 @@
 </head>
 
 <body>
-    <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
-    <a href="/notice" id="noticego"><h2 style="text-align: center;">공지사항</h2> </a>
+    <h2 style="text-align: center;">게시판 글 써줘!</h2> 
     <form>
         <div class="radio-container">
-            <input type="radio" id="notice" checked disabled value="notice">
+            <input type="radio" id="board" checked disabled value="board">
             <span class="custom-radio"></span>
-            <label for="notice">공지사항</label>
+            <label for="board">게시판</label>
         </div>
         <input type="text" id="title" placeholder="제목">
 
@@ -196,12 +177,11 @@
             height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
             initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
             initialValue: '',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
-            previewStyle: 'vertical',                // 마크다운 프리뷰 스타일 (tab || vertical)
-    //        x
+            previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
         });
 
         function writeFunc() {
-            const type = document.querySelector('#notice').value;
+            const type = document.querySelector('#board').value;
             const title = document.querySelector('#title').value;
             const contents = editor.getHTML();
             if(title !== ''){axios({
@@ -216,20 +196,19 @@
                     contents,
                 }
             }).then(() => {
-                alert('작성이 완료되었습니다.');
-                window.location.href = '/notice';
+                alert('작성이 완료되었슴둥!');
+                window.location.href = '/board';
             }).catch(error => {
                 console.error('작성 중 오류 발생:', error);
                 alert('작성 중 오류가 발생했습니다.');
-            });} else{
-                alert('제목을 입력해주세요')
-            }
+            });}
+            else{alert('제목을 입력해주세요')}
             
         }
 
         function cancle() {
-            if (confirm('취소하시겠습니까?') === true) {
-                window.location.href = '/notice';
+            if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
+                window.location.href = '/board';
             } else {
                 return;
             }

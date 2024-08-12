@@ -34,7 +34,9 @@ const noticeall = async(req,res) =>{
                 model: user,
                 attributes: ['username'],
             },
-        ], where: { type: data }
+        ], 
+        where: { type: data },
+        order: [['id','desc']],
     })
     console.log('노티스올 리절트',contents);
     res.json({result: true, contents })
