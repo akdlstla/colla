@@ -1115,6 +1115,8 @@
 
       socket.on('new chat message', (arg) => {
         const { myName, myId: userId, value: talks } = arg;
+        console.log("브로드캐스트 후 받아온 new chat message : ", arg);
+        
         const talk = document.createElement('div');
         talk.classList.add('talk');
         const msgContainer = document.querySelector('.msg-container')
