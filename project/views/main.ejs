@@ -136,7 +136,8 @@
       /* align-items: center; */
       /* padding: 10px; */
       /* border: 1px solid black; */
-      border-radius: 10px;
+      /* border-radius: 10px; */
+      border-bottom:1px solid #D6DADB ;
       cursor: pointer;
     }
     .sideCategory span{
@@ -170,7 +171,7 @@
     }
   
     .sideCategory ul {
-      border: 1px solid #D6DADB;
+      border-top: 1px solid #D6DADB;
       width: 100%;
       max-height: 0;
       opacity: 0;
@@ -514,6 +515,7 @@
           display: block !important;
           cursor: pointer;
         }
+  
         #search1 {
          position: relative;
         
@@ -570,7 +572,7 @@
       <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
       <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
       <div id="search1">
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <i class="fa-solid fa-magnifying-glass" ></i>
         <div id="mainSearchBox">
           <input type="text" id="mainSearch" placeholder="검색">
           <div id="searchBox"></div>
@@ -677,10 +679,6 @@
           <!-- <div id="display-container"> -->
             <div class="msg-container" id="msgwrapper">
               <!-- 채팅 메시지가 여기에 동적으로 추가됩니다 -->
-               <div class="talk">aaa</div>
-               <div class="talk">bbb</div>
-               <div class="talk">ccc</div>
-               <div class="talk">ddd</div>
             </div>
           <!-- </div> -->
           <div id="send">
@@ -744,7 +742,7 @@
       const rooms = res.data.rooms
       myId = id;
       myName = username;
-
+ 
       //너의 아이디
 
       const chatlist = document.querySelector("#allChattingRoom")
@@ -930,13 +928,15 @@
       return result;
     }
     //내 아이디 : myId. 상대방 아이디 : yourId
-
+    let cutNumber=0;
+    let msgData = [];
     let chatId = "";
     let chatName = "";
+    let  otherName ='';
     // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
     function clickFindByUsername(yourName, yourId, yourDepartment, yourEmail) {
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
-
+  otherName=yourName;
       //console.log("이벤트핸들러 후 ", res1, res2, res3);
 
       //yourName, yourId, yourDepartment, yourEmail : 상대방 정보
@@ -997,28 +997,49 @@
 
         console.log(msgContainer);
         
+
+        
+
+
+
         //이전채팅 불러오기
         if (flag === 1) {
-          const msg = res.data.response.msgs
+          const msg = res.data.response.msgs;
+          msgData=msg;
+
           const msgContainer = document.querySelector('.msg-container');
-          msg.forEach(value => {
+          cutNumber =msgData.length-12;
+          console.log(msgData.length)
+          console.log(cutNumber)
+       
+          const msgSlice = msgData.slice(cutNumber,msgData.length)
+          msgSlice.forEach(value => {
             const { id, talk: talks, userId } = value;
+            console.log('채팅 객체 확인',value)
             const talk = document.createElement('div');
             talk.classList.add('talk');
             const p = document.createElement('p')
 
-            if (userId === myId) {
+            if (userId === myId) {  
               p.classList.add('myMsg')
-              console.log('내이름: ', myName)
+              // console.log('내이름: ', myName)
             } else {
               p.classList.add('eachMsg')
             }
             p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
             talk.appendChild(p);
-            // msgContainer.appendChild(talk);
+            msgContainer.appendChild(talk);
           })
+         
         }
-      })
+    //     (function () {
+    //   const scollBottom = document
+    //     .querySelector(".msg-container")
+    //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
+    //   return scollBottom;
+    // })();
+        })
+        
 
       // socket.on('invited', function(chat) {
       //   alert(`You were invited to room: ${room}`);
@@ -1100,7 +1121,8 @@
 
       let joinRoom = ""
       axios({
-        method: 'post',        url: '/api/colla/createchat',
+        method: 'post',
+        url: '/api/colla/createchat',
         data: {
           chatName,
           myId,
@@ -1126,6 +1148,8 @@
         //이전채팅 불러오기
         if (flag === 1) {
           const msg = res.data.response.msgs
+
+
           msg.forEach(value => {
             const { id, talk: talks, userId } = value;
             const talk = document.createElement('div');
@@ -1223,26 +1247,59 @@
       });
 
 
-    //   (function () {
-    //   const scollBottom = document
-    //     .querySelector(".msg-container")
-    //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
-    //   return scollBottom;
-    // })();
-      // 스크롤 이벤트 임시 주석 처리 시작부분
-    let scrollHeight = document.querySelector('.msg-container').scrollHeight;
-    let clientHeight = document.querySelector('.msg-container').clientHeight;
-    function addBoxes() {
-      const wrap = document.querySelector('.msg-container');
-      const numberOfNewBoxes = 5;
-      const currentBoxCount = wrap.getElementsByClassName("talk").length;
 
-      for (let i = 1; i <= numberOfNewBoxes; i++) {
-        const newBox = document.createElement("div");
-        newBox.className = "talk";
-        newBox.textContent = currentBoxCount + i;
-        wrap.prepend(newBox);
+    console.log(msgData.length)
+    console.log(cutNumber)
+
+    function addBoxes() {
+
+      if(cutNumber-12 >0){
+        cutNumber=cutNumber-12;
+      const msgSlice = msgData.slice(cutNumber,msgData.length)
+      const msgContainer = document.querySelector('.msg-container')
+      msgSlice.forEach(value => {
+            const { id, talk: talks, userId } = value;
+            console.log('채팅 객체 확인',value)
+            const talk = document.createElement('div');
+            talk.classList.add('talk');
+            const p = document.createElement('p')
+
+            if (userId === myId) {
+              p.classList.add('myMsg')
+              // console.log('내이름: ', myName)
+            } else {
+              p.classList.add('eachMsg')
+            }
+            
+            p.textContent = userId === myId ? `${myName}: ${talks}` : `${otherName}: ${talks}`;
+            talk.appendChild(p);
+            msgContainer.appendChild(talk);
+          })
+      }else if(cutNumber>0){
+        const msgSlice = msgData.slice(cutNumber,msgData.length)
+      const msgContainer = document.querySelector('.msg-container')
+      msgSlice.forEach(value => {
+            const { id, talk: talks, userId } = value;
+            console.log('채팅 객체 확인',value)
+            const talk = document.createElement('div');
+            talk.classList.add('talk');
+            const p = document.createElement('p')
+
+            if (userId === myId) {
+              p.classList.add('myMsg')
+              // console.log('내이름: ', myName)
+            } else {
+              p.classList.add('eachMsg')
+            }
+            
+            p.textContent = userId === myId ? `${myName}: ${talks}` : `${otherName}: ${talks}`;
+            talk.appendChild(p);
+            msgContainer.appendChild(talk);
+          })
+      }else{
+        console.log('추가 로드 없음')
       }
+      
     }
 
 
@@ -1258,6 +1315,10 @@
           wrap.scrollTop = 100;
         }
       });
+ 
+      // 스크롤 이벤트 임시 주석 처리 시작부분
+    let scrollHeight = document.querySelector('.msg-container').scrollHeight;
+    let clientHeight = document.querySelector('.msg-container').clientHeight;
       // 스크롤 이벤트 임시 주석 처리 끝나는 부분
 
 
