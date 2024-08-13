@@ -81,25 +81,25 @@ io.on('connection', (socket) => {
   });
 
   //   /** 4. 룸 내 메세지 브로드캐스트*/
-
   socket.on('chat message', async (arg) => {
     const { myName, myId, value, chatId, joinRoom } = arg;
     console.log("브로드캐스트 테스트", arg);
 
     await db.msg.create({ userId: myId, chatId, talk: value });
+    console.log("조인룸 브로드캐스트 : ", joinRoom);
     io.to(joinRoom).emit('new chat message', { myName,myId, value});
     // console.log("q브로드캐스트 후");
 
   });
 
     // 모든 방에서 나가기
-    socket.on('leaveAllRooms', () => {
-      // 참여 중인 모든 방에서 나가기
-      for (let roomName of socket.rooms) {
-        socket.leave(roomName);
-              console.log(`Client left the room: ${roomName}`);
-      }
-  });
+  //   socket.on('leaveAllRooms', (socket) => {
+  //     // 참여 중인 모든 방에서 나가기
+  //     for (let chatName of socket.rooms) {
+  //       socket.leave(chatName);
+  //             console.log(`Client left the room: ${chatName}`);
+  //     }
+  // });
 
   socket.on('deletechat', async(arg)=>{
     const {messageId} =arg
@@ -107,7 +107,11 @@ io.on('connection', (socket) => {
   })
 
 
-
+// socket.on('find socket room', (arg) => {
+//   // const id = io.sockets.sockets.get(arg);
+//   console.log("io.sockets.rooms : ", socket.rooms);
+  
+// })
 
 
   //   /** 5. 로그아웃 : 소켓 연결 해제 */
