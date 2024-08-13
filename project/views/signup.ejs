@@ -388,8 +388,7 @@
                 department: document.querySelector('#departmentName').value
                 
                 }
-                alert('회원가입이 완료되었습니다')
-                document.location.href = '/login';
+
                 const res  = await axios({
                     method: 'post',
 
@@ -397,7 +396,12 @@
 
                     data,
                 }).then((res) => {
-                    if (res.data.result) { document.location.href = '/login2' } else {
+                    console.log(res.data.result);
+                    
+                    if (res.data.result) {
+                        alert('회원가입이 완료되었습니다')
+                        document.location.href = '/login' } 
+                    else {
                         alert('이메일을 확인해주세용!(자네 이미 가입한게 아닌가?)')
                     }
                 })
