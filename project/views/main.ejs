@@ -564,14 +564,16 @@
         /* border-bottom: none; */
         position: relative;
       }
-      
+
       header .fa-bars {
         display: block !important;
         cursor: pointer;
       }
+
       header #logoLink {
           margin: 0 0 5px 10px;
         };
+
       #search1 {
         position: relative;
 
@@ -604,20 +606,24 @@
         width: 100%;
       }
 
+
       #userBox{
           display: none;
         };
+
       #msgBox {
         width: 80%;
         /* 모바일에서는 너비를 더 크게 설정 */
         margin: 0 auto;
         /* 중앙 정렬 */
       }
+
       #chatContainer{
       width: 92%;
       height: 100%;
     }
     
+
       #userBox>div {
         flex: 0 0 90%;
         /* 모바일에서 가로로 한 줄에 하나씩 배치 */
@@ -1168,8 +1174,8 @@
     // }
 
     let checkRoom = null
-    let status = false
     function joinRoom(chatName, chatId, yourId, yourName, yourEmail) {
+
      status =false;
       const sideBar = document.getElementById("sideBar").classList.remove('show');
 
@@ -1329,18 +1335,13 @@
         myProfile.classList.toggle("expanded");
 
       });
+
       document
+
       .getElementById("barsIcon")
       .addEventListener("click", function () {
         const sideBar = document.getElementById("sideBar");
-        status = !status;
-        if(status){
-          console.log('실행')
-          sideBar.classList.add("show");
-        }else{
-          console.log('숨김')
-          sideBar.classList.remove("show");
-        }
+        sideBar.classList.toggle("show");
       });
 
 
