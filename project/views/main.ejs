@@ -920,9 +920,10 @@
 
     // 검색 입력 이벤트 핸들러
     search.addEventListener("keyup", () => {
-      main_chat.hidden = true;
-      userBox.style.display = "flex";
-      if (search.value.length >= 2) {
+      
+      if (search.value.length >= 2 && window.event.keyCode == 13) {
+        main_chat.hidden = true;
+         userBox.style.display = "flex";
         const searchTerm = search.value;
         axios({
           method: "get",
@@ -970,7 +971,7 @@
           }
         });
       } else {
-        userBox.innerText = "검색어는 두 글자 이상 입력해주세요";
+        //userBox.innerText = "검색어는 두 글자 이상 입력해주세요";
         // resultContainer.hidden = false;
         // msgBox.hidden = true; // 검색어가 두 글자 미만일 때 msgBox를 숨기기
       }
@@ -981,21 +982,26 @@
 
 
     //난수 발생 함수
-    function generateRandomString(length) {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      const charactersLength = characters.length;
-      for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      return result;
-    }
+    // function generateRandomString(length) {
+    //   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    //   let result = '';
+    //   const charactersLength = characters.length;
+    //   for (let i = 0; i < length; i++) {
+    //     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    //   }
+    //   return result;
+    // }
     //내 아이디 : myId. 상대방 아이디 : yourId
     let chatId = "";
     let chatName = "";
     // 클릭 이벤트 핸들러 (새로운 채팅방 생성, 상대방 초대)
     function clickFindByUsername(yourName, yourId, yourDepartment, yourEmail) {
       saveState(); // 상태를 저장합니다. -> 검색페이지 history 저장 위함.
+
+      console.log("소켓 정보 : ",socket);
+      console.log("내 아이디 : ",socket.id);
+      // console.log("내 아이디 : ",);
+      // socket.emit('find socket room', socket.id);
 
       const sendInput = document.querySelector("#send input")
       const sendButton = document.querySelector("#send button")
@@ -1008,7 +1014,9 @@
             <button id="send-button">전송</button>
       `
       send.insertAdjacentHTML('beforeend', html)
-
+      // socket.emit('leaveAllRooms', socket.id)
+      console.log("소켓");
+      
       clearMessages();
       //console.log("이벤트핸들러 후 ", res1, res2, res3);
 
