@@ -24,7 +24,9 @@ const signup = async (req, res) => {
         department,
       });
       console.log("signup", result);
+      res.json({ result: true, data: result});
     }
+    
   } catch (error) {
     console.log(error);
     res.status(500).json({ result: false, message: "서버오류" });
