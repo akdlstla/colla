@@ -325,7 +325,10 @@
       background-color: #c1e2ff;
       font-weight: bold;
     }
-
+    #main_chat{
+      width: 98%;
+      height: 95%;
+    }
 
     #chatContainer {
       flex: 1;
@@ -336,8 +339,8 @@
       padding: 15px;
       background-color: #e0f0ff;
       border-radius: 10px;
-      width: 100vh;
-      height: 89vh;
+      width: 97%;
+      height: 100%;
     }
 
 
@@ -567,6 +570,10 @@
         cursor: pointer;
       }
 
+      header #logoLink {
+          margin: 0 0 5px 10px;
+        };
+
       #search1 {
         position: relative;
 
@@ -599,13 +606,23 @@
         width: 100%;
       }
 
-      #userBox,
+
+      #userBox{
+          display: none;
+        };
+
       #msgBox {
         width: 80%;
         /* 모바일에서는 너비를 더 크게 설정 */
         margin: 0 auto;
         /* 중앙 정렬 */
       }
+
+      #chatContainer{
+      width: 92%;
+      height: 100%;
+    }
+    
 
       #userBox>div {
         flex: 0 0 90%;
@@ -628,7 +645,7 @@
 
 <body>
   <header>
-    <i class="fa-solid fa-bars" id="barsIcon" style="display: none"></i>
+    <i class="fa-solid fa-bars" id="barsIcon" style="display: none; color: whitesmoke;"></i>
     <a href="#" id="logoLink" onclick="location.reload(); return false;">colla</a>
     <div id="search1">
       <i class="fa-solid fa-magnifying-glass" style="color: whitesmoke;"></i>
@@ -1159,6 +1176,9 @@
     let checkRoom = null
     function joinRoom(chatName, chatId, yourId, yourName, yourEmail) {
 
+     status =false;
+      const sideBar = document.getElementById("sideBar").classList.remove('show');
+
       // if( input) {
       //   input.remove()
       // } 
@@ -1315,7 +1335,9 @@
         myProfile.classList.toggle("expanded");
 
       });
-    document
+
+      document
+
       .getElementById("barsIcon")
       .addEventListener("click", function () {
         const sideBar = document.getElementById("sideBar");
