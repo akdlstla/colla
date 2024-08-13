@@ -3,64 +3,222 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TOAST UI Editor 적용하기</title>
+    <title>게시판 수정하기</title>
 
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+       body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            margin-top: 10px;
+            margin-bottom: 40px;
+            color:  #0f4c81;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        #homehome {
+            text-decoration: none;
+            align-self: flex-start; 
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+
+        #gohome {
+            color: #0f4c81;
+        }
+
+        #boardgo {
+            text-decoration-line: none;
+            margin-top: 0px; 
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 85%;
+            height: 70vh; /* 전체 화면 높이의 70% */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .custom-radio {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #0f4c81;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .custom-radio::after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            flex-shrink: 0; /* 크기가 줄어들지 않도록 */
+        }
+
+        #content {
+            flex-grow: 1; /* 남은 공간을 모두 사용 */
+            margin-bottom: 20px;
+            height: auto;
+        }
+
+        .button-container {
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+            flex-shrink: 0; /* 크기가 줄어들지 않도록 */
+        }
+
+        button {
+            background-color:  #0f4c81;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            min-width: 100px;
+        }
+
+        button:hover {
+            background-color: #0f4c81;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            h2 {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                font-size: 20px;
+            }
+
+            form {
+                width: 90%; /* 작은 화면에서는 너비를 90%로 설정 */
+                height: 70vh; /* 화면 높이의 70% */
+                padding: 15px;
+            }
+
+            input[type="text"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            #content {
+                height: auto;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h2 style="text-align: center;">게시판 글 써줘!</h2>
+    <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
+    <a href="/board" id="boardgo"><h2 style="text-align: center;">게시판 수정하기</h2> </a>
     <form>
-        <input type="radio" id="board" checked disabled value="board">게시판<br>
-        <input type="text" id="title" placeholder="제목">
-
-        <!-- 에디터를 적용할 요소 (컨테이너) -->
-        <div id="content">
-
+        <div class="radio-container">
+            <input type="radio" id="board" checked disabled value="board">
+            <span class="custom-radio"></span>
+            <label for="board">게시판</label>
         </div>
-        <button type="button" id="GH">HTML보기</button>
-        <button type="button" onclick="editFunc()">수정</button>
-        <button type="button" onclick="cancle()">취소</button>
+        <input type="text" id="title" placeholder="제목">
+        <!-- 에디터를 적용할 요소 (컨테이너) -->
+        <div id="content"></div>
+
+        <div class="button-container">
+            <button type="button" onclick="editFunc()">수정</button>
+            <button type="button" onclick="cancle()">취소</button>
+        </div>
     </form>
     <!-- TUI 에디터 JS CDN -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
         const editor = new toastui.Editor({
-            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
-            height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
-            initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-            initialValue: '  ',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
-            previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
+            el: document.querySelector('#content'),
+            height: '100%',
+            initialEditType: 'wysiwyg',
+            initialValue: '',
+            previewStyle: 'vertical'
         });
-        console.log(editor.getHTML())
-        document.getElementById('GH').addEventListener('click', () => {
-            console.log(editor.getHTML());
 
-        })
-        const [_,pathname] = document.location.pathname.split('/editboard/');
-        console.log(pathname);
-        
+        const [_, pathname] = document.location.pathname.split('/editboard/');
+
         (async function () {
-            const res = await axios({
-                method: 'get',
-                url: `/api/board/editnotice/${pathname}`,
-
-            })
-            console.log(res);
-             const {title, contents} = res.data.data;
+            const res = await axios.get(`/api/board/editnotice/${pathname}`);
+            const { title, contents } = res.data.data;
             document.querySelector('#title').value = title;
-            editor.setHTML(contents)
-        })()
+            editor.setHTML(contents);
+        })();
 
+        async function editFunc() {
+            const data = {
+                pathname,
+                title: document.querySelector('#title').value,
+                contents: editor.getHTML()
+            };
+            await axios.patch('/api/board/updatebord', data);
+            alert('작성된 글이 수정되었습니다');
+            window.location.href = '/board';
+        }
 
 // 게시판(공지사항) 수정완료 버튼
       async function editFunc() {
-        const titlevalue = document.querySelector('#title').value
-        if(titlevalue !==''){                const data = {
+                const titlevalue = document.querySelector('#title').value
+                if(titlevalue !== ''){const data = {
                     pathname,
-                    title : document.querySelector('#title').value,
+                    title : titlevalue,
                     contents : editor.getHTML()
                 };
                 const res = axios({
@@ -71,19 +229,18 @@
                     //     Authorization: `Bearer ${localStorage.getItem('token')}`,
                     // },
                 });
-                alert('작성된 글이 수정되었지요');
+                alert('작성된 글이 수정되었습니다');
                 window.location.href = '/board'}
                 else{alert('제목을 입력해 주세요')}
-
           };
         
         function cancle() {
-            if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
-                window.location.href = '/board'
-
+            if (confirm('정말로 취소하시겠습니까?') === true) {
+                window.location.href = '/board';
             } else {
                 return
             }
+
 
         }
     </script>

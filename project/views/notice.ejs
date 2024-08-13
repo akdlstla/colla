@@ -19,110 +19,123 @@
       background-color: #f4f6f9;
       padding: 20px;
       padding-top: 5px;
-  }
+    }
 
-  #homehome {
-    text-decoration: none;
-  }
-  #gohome {
-    color: #638cc7;
-  }
+    #homehome {
+      text-decoration: none;
+    }
+
+    #gohome {
+      color:  #0f4c81;
+    }
 
     h3 {
-        text-align: center;
-        color: #638cc7;
-        margin-bottom: 20px;
-        font-size: 25px;
-        font-weight: bold;
+      text-align: center;
+      color:  #0f4c81;
+      margin-bottom: 20px;
+      font-size: 25px;
+      font-weight: bold;
     }
 
     #content_king {
-        width: 90%;
-        margin: 0 auto;
-        background-color: #ffffff;
-        padding: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        border-radius: 10px;
+      width: 90%;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
     }
 
     table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        overflow: hidden;
-        table-layout: fixed; /* 이 부분을 추가하여 테이블 레이아웃을 고정 */
+      width: 100%; 
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      table-layout: auto; 
     }
 
-    table, th, td {
-        border: none;
+    table,
+    th,
+    td {
+      border: none;
     }
 
-    th, td {
-        text-align: center;
-        padding: 15px 10px;
-        vertical-align: middle;
-        border-bottom: 1px solid #e9ecef;
+    th,
+    td {
+      text-align: center;
+      padding: 15px 10px;
+      vertical-align: middle;
+      border-bottom: 1px solid #e9ecef;
     }
 
     th {
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     tr:hover {
-        background-color: #f1f5f9;
+      background-color: #f1f5f9;
     }
 
     tr:nth-child(even) {
-        background-color: #f8faff;
+      background-color: #f8faff;
     }
 
     .noticetitle {
-        font-weight: bold;
-        cursor: pointer;
-        transition: color 0.2s;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s;
     }
 
     .noticetitle:hover {
-        color: #0056b3;
+      color: #0056b3;
     }
 
     .noticecontent {
-        font-size: 14px;
-        color: black;
-        display: none;
-        padding-top: 10px;
-        line-height: 1.5;
-        padding: 20px; 
-        white-space: normal; 
-        word-break: break-all; 
-        width: 115vh;
+      font-size: 14px;
+      color: black;
+      display: none;
+      line-height: 1.5;
+      padding: 10px 20px;
+      white-space: normal;
+      word-break: break-word;
+      text-align: left;
+      width: 100%; /* 테이블 전체 너비 사용 */
+      box-sizing: border-box;
+    }
+
+    .noticecontent img {
+      max-width: 100%; /* 이미지가 너비 지정 */
+      height: auto; /* 이미지의 높이를 자동 조절해서 비율 맞추기 */
+      display: block; /* 이미지 주위에 불필요한 공백이 생기지 않도록 하기 */
+      margin: 0 auto; 
+      object-fit: contain; /* 이미지가 잘리지 않도록 */
     }
 
     .notice-item-buttons {
-        justify-content: center;
-        gap: 10px;
+      justify-content: center;
+      gap: 10px;
     }
 
     .notice-item-buttons button {
-        padding: 6px 12px;
-        background-color: #638cc7;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s;
+      padding: 6px 12px;
+      background-color:  #0f4c81;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
     }
 
     .notice-item-buttons button:last-child {
-        background-color: rgb(243, 71, 71);
+      background-color: rgb(243, 71, 71);
     }
 
     .notice-item-buttons button:hover {
-        opacity: 0.9;
+      opacity: 0.9;
     }
 
     .button-container {
@@ -130,11 +143,11 @@
       margin-top: 25px;
     }
 
-  .button-container a {
+    .button-container a {
       display: inline-block;
       text-align: center;
       padding: 10px 20px;
-      background-color: #638cc7;
+      background-color:  #0f4c81;
       color: white;
       text-decoration: none;
       border-radius: 5px;
@@ -142,46 +155,64 @@
       transition: background-color 0.2s;
     }
 
-  .button-container a:hover {
+    .button-container a:hover {
       background-color: #0f4c81;
     }
 
     /* 반응형 */
     @media (max-width: 768px) {
-      table, th, td {
-        padding: 8px;
-        font-size: 10px;
-      }
+      .noticecontent img {
+        max-width: 100%; /* 반응형에서도 부모 요소의 너비를 넘지 않도록 설정 */
+        height: auto; /* 이미지 높이 자동 조정 */
+    }
 
+      th:nth-child(3),
+      td:nth-child(3),
       th:nth-child(4),
       td:nth-child(4) {
-        display: none; /*등록일 숨기기 */
+        display: none;
+        /* 작성자, 등록일 숨기기 */
       }
 
-      th:nth-child(2), td:nth-child(2) {
+      th,
+      td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
         text-align: left;
       }
 
-      th:nth-child(1), td:nth-child(1), th:nth-child(3), td:nth-child(3), th:nth-child(5), td:nth-child(5) {
-        text-align: center; 
+      .notice-item-buttons button {
+        padding: 4px 8px;
+        font-size: 10px;
       }
 
       .noticecontent {
-        font-size: 14px;
+        font-size: 12px;
         padding: 10px;
-        text-align: center;
+        text-align: left;
+        white-space: normal;
+        word-break: break-word;
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .button-container a {
+        padding: 6px 12px;
+        font-size: 12px;
       }
     }
-
-    
-
   </style>
-
 </head>
 
 <body>
-  <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
-  <h3 id="boardname" >공지사항</h3>
+  <a href="/main" id="homehome">
+    <h2 id="gohome">Colla</h2>
+  </a>
+  <h3 id="boardname">공지사항</h3>
   <div id="notice" hidden>notice</div>
   <div id="content_king">
     <table>
@@ -203,17 +234,15 @@
     </div>
   </div>
 
-
-
   <script>
     const title = document.querySelector('#content_title')
     const boardname = document.querySelector('#notice').textContent;
 
-     // JWT 토큰을 가져와서 디코딩
-     const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
+    // JWT 토큰을 가져와서 디코딩
+    const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
     const decodedToken = jwt_decode(token); // 토큰 디코딩
     const id = decodedToken.id; // 디코딩한 토큰에서 id 추출
-    
+
     (async function () {
       const res = await axios({
         method: 'post',
@@ -252,42 +281,51 @@
 
     function titleclick(element) {
       const noticecontent = element.parentElement.nextElementSibling;
-      if (noticecontent.style.display === 'none') {
-        noticecontent.style.display = 'block';
+      const allContents = document.querySelectorAll('.noticecontent');
 
-       
+      // 모든 내용 요소를 닫기
+      allContents.forEach(content => {
+        if (content !== noticecontent) {
+          content.style.display = 'none';
+        }
+      });
+
+      // 현재 클릭한 요소만 토글
+      if (noticecontent.style.display === 'none' || noticecontent.style.display === '') {
+        noticecontent.style.display = 'table-row'; // 내용 열기를 table-row로 변경
       } else {
-        noticecontent.style.display = 'none';
+        noticecontent.style.display = 'none'; // 내용 닫기
       }
+
+      // 부모 테이블의 너비를 조정
+      const parentTable = noticecontent.closest('table');
+      parentTable.style.tableLayout = 'auto';
+      parentTable.style.width = '100%';
     }
 
-
-    function editFunc(id){
-      window.location.href=`/editnotice/${id}`
+    function editFunc(id) {
+      window.location.href = `/editnotice/${id}`
     }
 
-
-
-     // 게시판(공지사항) 삭제완료 버튼
-     async function deleteItem(id) {
+    // 게시판(공지사항) 삭제완료 버튼
+    async function deleteItem(id) {
       const pathname = id
-      console.log(pathname,'패쓰네임');
-      
-            if (!confirm('삭제하시겠습니까?')) {
-                    return;
-                }
-                const data = {
-                    pathname,
-                };
-                const res = axios({
-                    method: 'delete',
-                    url: '/api/board/deletebord',
-                    data,
-                });
-                alert('바로 삭제');
-                document.location.reload();
-          };
+      console.log(pathname, '패쓰네임');
 
+      if (!confirm('삭제하시겠습니까?')) {
+        return;
+      }
+      const data = {
+        pathname,
+      };
+      const res = axios({
+        method: 'delete',
+        url: '/api/board/deletebord',
+        data,
+      });
+      alert('삭제되었습니다');
+      document.location.reload();
+    };
 
     function formatDate(dateString) {
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
