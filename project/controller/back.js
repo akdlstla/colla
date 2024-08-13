@@ -91,12 +91,12 @@ const login = async (req, res) => {
 };
 const search = async (req, res) => {
   try {
-    // console.log(req.params);
     const { search } = req.params;
-    // console.log('서치워드', search);
     const data = await user.findAll({
       where: { username: { [Op.like]: `%${search}%` } },
     });
+
+    
     const msgResult = await msg.findAll({
       include: [
         {
