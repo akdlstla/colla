@@ -21,11 +21,27 @@
         }
 
         h2 {
-            margin-top: 40px;
-            margin-bottom: 50px;
-            color: #0f4c81;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            color:  #0f4c81;
             text-align: center;
             font-size: 25px;
+        }
+
+        #homehome {
+            text-decoration: none;
+            align-self: flex-start; 
+            margin-left: 30px;
+            margin-top: 20px;
+        }
+
+        #gohome {
+            color: #0f4c81;
+        }
+
+        #noticego {
+            text-decoration-line: none;
+            margin-top: 0px; 
         }
 
         form {
@@ -53,7 +69,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background-color: #638cc7;
+            background-color: #0f4c81;
             margin-right: 10px;
             position: relative;
         }
@@ -98,7 +114,7 @@
         }
 
         button {
-            background-color: #638cc7;
+            background-color: #0f4c81;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -151,7 +167,8 @@
 </head>
 
 <body>
-    <h2 style="text-align: center;">게시판 글 써줘!</h2> 
+    <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
+    <a href="/notice" id="noticego"><h2 style="text-align: center;">게시판</h2> </a>
     <form>
         <div class="radio-container">
             <input type="radio" id="board" checked disabled value="board">
@@ -196,7 +213,7 @@
                     contents,
                 }
             }).then(() => {
-                alert('작성이 완료되었슴둥!');
+                alert('작성이 완료되었습니다.');
                 window.location.href = '/board';
             }).catch(error => {
                 console.error('작성 중 오류 발생:', error);
@@ -207,7 +224,7 @@
         }
 
         function cancle() {
-            if (confirm('진짜 취소할끄야? 내용 다 날라가는데??') === true) {
+            if (confirm('정말로 취소하시겠습니까?') === true) {
                 window.location.href = '/board';
             } else {
                 return;
