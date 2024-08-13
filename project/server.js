@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 
     //join : 방 없으면 생성, 있으면 입장
     const { joinRoom, myId, chatId, flag } = arg;
-    socket.leave(joinRoom);
+    //socket.leave(joinRoom);
 
   //   if (socket.rooms.has(joinRoom)) {
   //     console.log(`Client is already in the room: ${joinRoom}`);
