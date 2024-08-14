@@ -1245,12 +1245,15 @@
         if (window.event.keyCode == 13) {
           socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
           input.value = "";
+          
         }
+       scrollBottom() 
       })
 
       socket.removeAllListeners('new chat message')
 
       socket.on('new chat message', (arg) => {
+        
         const { myName, myId: userId, value: talks } = arg;
         console.log("브로드캐스트 후 받아온 new chat message : ", arg);
         
@@ -1268,7 +1271,9 @@
         p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
         talk.appendChild(p);
         msgContainer.appendChild(talk);
-      });
+      }
+      
+    );
 
     }
 
