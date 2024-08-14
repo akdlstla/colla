@@ -52,14 +52,18 @@ app.use('/api/board', boardRouter)
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  //   /** 1. 내 소켓 아이디 저장.*/
-  // socket.on('login', );
   //   /** 2. 방 입장 */
   socket.on('join chat', async (arg) => {
     console.log("join chat server : ", arg);
 
     //join : 방 없으면 생성, 있으면 입장
     const { joinRoom, myId, chatId, flag } = arg;
+    //socket.leave(joinRoom);
+
+  //   if (socket.rooms.has(joinRoom)) {
+  //     console.log(`Client is already in the room: ${joinRoom}`);
+  //     return;
+  // }
     socket.join(joinRoom);
     // socket.chat = chat;
     console.log(`User joined room: ${joinRoom}`, flag);
@@ -77,23 +81,37 @@ io.on('connection', (socket) => {
   });
 
   //   /** 4. 룸 내 메세지 브로드캐스트*/
-
   socket.on('chat message', async (arg) => {
     const { myName, myId, value, chatId, joinRoom } = arg;
     console.log("브로드캐스트 테스트", arg);
 
     await db.msg.create({ userId: myId, chatId, talk: value });
+    console.log("조인룸 브로드캐스트 : ", joinRoom);
     io.to(joinRoom).emit('new chat message', { myName,myId, value});
     // console.log("q브로드캐스트 후");
 
   });
+
+    // 모든 방에서 나가기
+  //   socket.on('leaveAllRooms', (socket) => {
+  //     // 참여 중인 모든 방에서 나가기
+  //     for (let chatName of socket.rooms) {
+  //       socket.leave(chatName);
+  //             console.log(`Client left the room: ${chatName}`);
+  //     }
+  // });
+
   socket.on('deletechat', async(arg)=>{
     const {messageId} =arg
     await db.msg.destroy({where:{id: messageId}})
   })
 
 
-
+// socket.on('find socket room', (arg) => {
+//   // const id = io.sockets.sockets.get(arg);
+//   console.log("io.sockets.rooms : ", socket.rooms);
+  
+// })
 
 
   //   /** 5. 로그아웃 : 소켓 연결 해제 */

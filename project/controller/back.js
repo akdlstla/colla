@@ -8,10 +8,10 @@ const salt = Number(process.env.SECRET);
 
 //회원가입
 const signup = async (req, res) => {
-  try {
-    const { username, email, password, department } = req.body;
-    const find = await user.findOne({ where: { email } });
-    console.log("find", find);
+    try {
+        const { username, email, password, department } = req.body;
+        const find = await user.findOne({ where: { email } });
+        console.log('파인드!', find);
 
     if (find) {
       res.json({ result: false, message: "이미 가입한 회원임" });
@@ -24,7 +24,9 @@ const signup = async (req, res) => {
         department,
       });
       console.log("signup", result);
+      res.json({ result: true, data: result});
     }
+    
   } catch (error) {
     console.log(error);
     res.status(500).json({ result: false, message: "서버오류" });
@@ -89,12 +91,12 @@ const login = async (req, res) => {
 };
 const search = async (req, res) => {
   try {
-    // console.log(req.params);
     const { search } = req.params;
-    // console.log('서치워드', search);
     const data = await user.findAll({
       where: { username: { [Op.like]: `%${search}%` } },
     });
+
+    
     const msgResult = await msg.findAll({
       include: [
         {
