@@ -1138,12 +1138,12 @@
           })
 
         }
-        function scrollBottom() {
-          const scollBottom = document
-            .querySelector(".msg-container")
-            .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
-          return scollBottom;
-        };
+        // function scrollBottom() {
+        //   const scollBottom = document
+        //     .querySelector(".msg-container")
+        //     .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
+        //   return scollBottom;
+        // };
         scrollBottom();
       })
 
@@ -1299,6 +1299,7 @@
             msgContainer.appendChild(talk);
           })
         }
+        scrollBottom();
       })
       button.addEventListener('click', function () {
         console.log(chatId)
@@ -1456,12 +1457,8 @@
 
     // 이벤트 리스너 추가
     document.querySelector('.msg-container').addEventListener("scroll", () => {
-      console.log("클라이언트 높이", clientHeight);
-      console.log("스크롤 탑", document.querySelector('.msg-container').scrollTop);
-      console.log("스크롤 높이", scrollHeight);
       const wrap = document.querySelector('.msg-container');
       if (wrap.scrollTop === 0) {
-
         const a = addBoxes();
         // 새 박스를 추가한 후 스크롤 위치를 유지
         if (a === 1) {
@@ -1478,8 +1475,7 @@
     let clientHeight = document.querySelector('.msg-container').clientHeight;
     // 스크롤 이벤트 임시 주석 처리 끝나는 부분
     function scrollBottom() {
-      const scollBottom = document
-        .querySelector(".msg-container")
+      const scollBottom = document.querySelector(".msg-container")
         .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
       return scollBottom;
     };
