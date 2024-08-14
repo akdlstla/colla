@@ -122,9 +122,11 @@
       /* padding: 5px; */
       display: flex;
       flex-direction: column;
-      height: 93vh;
+      height: 100vh;
       /* gap: 10px; */
     }
+
+    
 
 
     #myProfile {
@@ -547,6 +549,60 @@
       text-align: center;
     }
 
+
+    #chatContainer.dark-mode {
+        background-color: black; /* 배경을 흰색으로 */
+        color: white; /* 텍스트를 검은색으로 */
+    }
+
+    #chatContainer.dark-mode .msg-container {
+        background-color: black; /* 메시지 배경 흰색 */
+    }
+
+    #chatContainer.dark-mode .myMsg {
+        background-color: white; /* 내 메시지 배경 검은색 */
+        color: black; /* 내 메시지 텍스트 흰색 */
+    }
+
+    #chatContainer.dark-mode .eachMsg {
+        background-color: #ddd; /* 상대 메시지 배경 밝은 회색 */
+        color: black; /* 상대 메시지 텍스트 검은색 */
+    }
+
+    #chatContainer.dark-mode #send {
+        background-color: black; /* 입력창 배경 검은색 */
+    }
+
+    #chatContainer.dark-mode #chatting-input {
+        background-color: #ddd; /* 입력창 내부 흰색 */
+        color: black; /* 입력창 텍스트 검은색 */
+        border-color: #333; /* 테두리 색상 검은색 */
+    }
+
+    #chatContainer.dark-mode #send-button {
+        background-color: #333; /* 전송 버튼 배경 검은색 */
+        color: white; /* 전송 버튼 텍스트 흰색 */
+    }
+    
+    #toggle-dark-mode {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000; /* 버튼이 다른 요소 위에 표시되도록 */
+}
+
+    #chatContainer {
+        position: relative; /* 버튼을 채팅창 내에서 위치시키기 위해 relative로 설정 */
+    }
+
+
     .btn_close {
       margin-top: 20px;
       padding: 10px 20px;
@@ -595,6 +651,16 @@
         /* 트랜지션 설정 */
       }
 
+      #bg.show{
+        
+        position: fixed; 
+        top: 0px; 
+        left: 0px; 
+        width: 100%; 
+        height: 100%; 
+        opacity: 0.5; 
+        background-color: rgb(0, 0, 0);
+      }
       #sideBar.show {
         transform: translateX(500px);
         /* 100vw만큼 오른쪽으로 이동 */
@@ -607,7 +673,7 @@
         width: 100%;
       }
 
-
+  
       #userBox{
           display: none;
         };
@@ -697,6 +763,7 @@
 
 
   <main>
+    <div id="bg"></div>
     <div id="sideBar">
       <div id="myProfile">
         <div class="profileBox">
@@ -730,6 +797,7 @@
     </div>
 
 
+
     <div id="main_page">
       <img src=/images/logocolla.png style="width: 300px; height: 300px;">
       <p id="description">프로젝트별 특정 주제의 그룹 대화는 "채널"</p>
@@ -749,6 +817,10 @@
     <!-- 채팅방 -->
     <div id="main_chat" hidden>
       <div id="chatContainer">
+        <button id="toggle-dark-mode" 
+        style="margin-bottom: 10px; background-color: #444; color: white; border: none; padding: 3px 3px; cursor: pointer;">
+          다크 모드 전환
+      </button>
         <button type="button" onclick="scrollHigh()"
           style="width: 70px; height: 20px; padding: 1px; border-radius: 30px; border: none;"><i
             class="fa-solid fa-chevron-up"></i></button>
@@ -1116,6 +1188,7 @@
           console.log(cutNumber)
 
           const msgSlice = msgData.slice(cutNumber, msgData.length)
+
           // console.log("msgContainer : ", msgContainer);
           msgSlice.forEach(value => {
             const { id, talk: talks, userId } = value;
@@ -1223,6 +1296,7 @@
 
      status =false;
       const sideBar = document.getElementById("sideBar").classList.remove('show');
+      const bg = document.getElementById('bg').classList.remove('show')
 
       // if( input) {
       //   input.remove()
@@ -1244,7 +1318,7 @@
             <button id="send-button">전송</button>
       `
       send.insertAdjacentHTML('beforeend', html)
-
+      
 
       clearMessages();
 
@@ -1279,15 +1353,24 @@
         console.log("chatName: ", joinRoom)
         //이전채팅 불러오기
         if (flag === 1) {
-          const msg = res.data.response.msgs
+          const msg = res.data.response.msgs;
+          msgData = msg;
 
+          // const msgContainer = document.querySelector('.msg-container');
+          cutNumber = msgData.length - 12;
+          console.log(msgData.length)
+          console.log(cutNumber)
 
-          msg.forEach(value => {
+          const msgSlice = msgData.slice(cutNumber, msgData.length)
+          // console.log("msgContainer : ", msgContainer);
+          msgSlice.forEach(value => {
             const { id, talk: talks, userId } = value;
+            console.log('채팅 객체 확인', value)
             const talk = document.createElement('div');
             talk.classList.add('talk');
-            const msgContainer = document.querySelector('.msg-container')
+            const msgContainer = document.querySelector('.msg-container');
             const p = document.createElement('p')
+
             if (userId === myId) {
               p.classList.add('myMsg')
               // console.log('내이름: ', myName)
@@ -1297,7 +1380,9 @@
             p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
             talk.appendChild(p);
             msgContainer.appendChild(talk);
+            msgContainer.appendChild(talk);
           })
+
         }
         scrollBottom();
       })
@@ -1390,10 +1475,18 @@
       .getElementById("barsIcon")
       .addEventListener("click", function () {
         const sideBar = document.getElementById("sideBar");
+        const bg = document.getElementById("bg")
         sideBar.classList.toggle("show");
+        bg.classList.add("show")
       });
-
-
+      const bg =document.getElementById("bg")
+      bg.addEventListener('click',function(){
+        const sideBar = document.getElementById("sideBar");
+        const optionsMenu = document.getElementById("optionsMenu");
+        bg.classList.remove('show')
+        sideBar.classList.remove("show");
+        optionsMenu.classList.remove('show')
+      })
 
     console.log(msgData.length)
     console.log(cutNumber)
@@ -1497,6 +1590,13 @@
     document.querySelector('.btn_close').addEventListener('click', function () {
       document.querySelector('#pop_info').style.display = 'none';
     });
+
+    
+    document.getElementById('toggle-dark-mode').addEventListener('click', function() {
+        const chatContainer = document.getElementById('chatContainer');
+        chatContainer.classList.toggle('dark-mode');
+    });
+    
 
   </script>
 </body>
