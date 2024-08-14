@@ -8,9 +8,10 @@
     body {
       background-color: #fff;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
     }
 
@@ -21,6 +22,7 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       text-align: center;
       width: 400px;
+      margin-top: 10vh;
     }
 
     .loginbox h1 {
@@ -68,7 +70,7 @@
     }
 
     .form-options a {
-      color: lightslategray;
+      color:  #0f4c81;
       text-decoration: none;
       font-size: 0.9em;
     }
@@ -78,7 +80,7 @@
     }
 
     .btn {
-      background-color: #8ac7da;
+      background-color:  #0f4c81;
       color: #fff;
       border: none;
       padding: 15px;
@@ -90,7 +92,7 @@
     }
 
     .btn:hover {
-      background-color: #8ac7da;
+      background-color: #0f4c81;
     }
 
     .signup {
@@ -99,7 +101,7 @@
     }
 
     .signup a {
-      color: lightslategray;
+      color:  #0f4c81;
       text-decoration: none;
     }
 
@@ -107,52 +109,76 @@
       text-decoration: underline;
     }
 
+    footer {
+      background-color: #4a4843;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      width: 100%;
+      margin-top: auto; /* 자동으로 나머지 공간을 차지하여 footer를 하단에 배치 */
+    }
 
-    /* 반응형이다 */
+    footer a {
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 반응형 */
     @media screen and (max-width: 768px) {
       .login-container {
-        width: 90%; /* 모바일 너비 */
-        padding: 20px; 
+        width: 90%;
+        padding: 20px;
+        box-shadow: none;
       }
 
       .loginbox h1 {
-        font-size: 1.8em; 
-        padding: 8px; 
+        font-size: 1.8em;
+        padding: 8px;
       }
 
       .form-group input {
         padding: 12px;
-        font-size: 0.9em; 
+        font-size: 0.9em;
       }
 
       .form-options {
-        flex-direction: column; 
-        align-items: flex-start; 
-        margin-bottom: 10px; 
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 10px;
       }
 
       .form-options div {
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
       }
 
-      .login-container {
-      box-shadow: none;
-
       .form-options a {
-        font-size: 0.8em; 
+        font-size: 0.8em;
       }
 
       .btn {
-        padding: 12px; 
+        padding: 12px;
         font-size: 1em;
       }
 
       .signup {
         font-size: 0.8em;
       }
-    }
-  }
 
+      
+      footer .footer-info {
+                text-align: center;
+            }
+
+            footer p {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+    }
 
   </style>
   <title>COLLA 로그인</title>
@@ -175,11 +201,7 @@
       <div class="form-options">
         <div>
           <input type="checkbox" id="remember-email" onchange="emailRemember()" defaltChecked={true} />
-          <label for="remember-email" >이메일 기억하기</label>
-        </div>
-        <div>
-          <input type="checkbox" id="keep-logged-in" />
-          <label for="keep-logged-in">로그인 상태유지</label>
+          <label for="remember-email">이메일 기억하기</label>
         </div>
         <a href="#">비밀번호 찾기</a>
       </div>
@@ -189,10 +211,14 @@
       <span>콜라가 처음이신가요? <a href="/signup">회원가입</a></span>
     </div>
   </div>
+  <footer>
+    <p>TEST 계정 1   
+      ID :1234@naver.com | PW:1q! | 이름: 죠아용  <br>
+      TEST 계정 2     
+      ID :123@naver.com | PW:1q! | 이름: 마자용</p>
+  </footer>
 
   <script>
-
-
     // 로그인 상태에서 로그인 페이지로 강제 이동시 main.으로 바로 이동
     function loginCheck () {
        const token = localStorage.getItem('token')
@@ -201,16 +227,12 @@
             if(token){
               return  document.location.href = '/main';
             }
-             
       }
       loginCheck();
 
       const keepEmail = localStorage.getItem('keepEmail');
       const checkEmail = localStorage.getItem('checkEmail');
   
-      
-
-
       if(keepEmail){
         console.log('이메일들어옴');
         document.querySelector('#email').value = keepEmail;
@@ -219,26 +241,19 @@
         console.log('이메일 체크 들어옴', checkEmail);
         document.querySelector('#remember-email').checked = checkEmail;
       };
-      
-    
 
       function emailRemember (){
-
         const keepEmail = document.querySelector('#email').value;
         const checkEmail = document.querySelector('#remember-email').checked;
-
         localStorage.setItem('checkEmail',checkEmail);
 
         if(keepEmail && checkEmail){
           localStorage.setItem('keepEmail', keepEmail);
-          
         }
         if(!checkEmail){
           localStorage.removeItem('keepEmail');
         }
-       
       }
-
 
     //아이디 칸에서 엔터키 입력시 다음칸 이동
     async function emailenterkey() {
@@ -249,112 +264,53 @@
     }
     //비밀번호 칸에서 엔터키 입력시 유효성 체크
     async function enterkey() {
-  if (window.event.keyCode === 13) {
-    const password = document.querySelector('#password')
+      if (window.event.keyCode === 13) {
+        const password = document.querySelector('#password')
 
-    if(password.value === ''){
-      alert('비밀번호를 입력해주세요')
-      return;
-    } 
-    const res = await axios({
-              method: 'post',
-              url: '/api/colla/login',
-              data: {
-                  email: document.querySelector('#email').value,
-                  password: document.querySelector('#password').value,
-                  keepEmail: document.querySelector('#remember-email').checked,
-                  keepLogin: document.querySelector('#keep-logged-in').checked,
-              },
-
-
-          }).then(
-            res =>{
-              if (res.data.result) {
-              alert('환영합니다');
-              localStorage.setItem('token', res.data.response.token);
-              document.location.href = '/main';
+        if(password.value === ''){
+          alert('비밀번호를 입력해주세요')
+          return;
+        } 
+        const res = await axios({
+          method: 'post',
+          url: '/api/colla/login',
+          data: {
+            email: document.querySelector('#email').value,
+            password: document.querySelector('#password').value,
+            keepEmail: document.querySelector('#remember-email').checked,
+          },
+        }).then(res => {
+          if (res.data.result) {
+            alert('환영합니다');
+            localStorage.setItem('token', res.data.response.token);
+            document.location.href = '/main';
           } else {
             alert(res.data.message)
-          };
+          }
+        });
+      }
+    }
 
-            }
-          );
-  }
-}
-//로그인 버튼 클릭시 유효성 체크
-      async function loginFunc() {
-          const res = await axios({
-              method: 'post',
-              url: '/api/colla/login',
-              data: {
-                  email: document.querySelector('#email').value,
-                  password: document.querySelector('#password').value,
-                  keepEmail: document.querySelector('#remember-email').checked,
-                  keepLogin: document.querySelector('#keep-logged-in').checked,
-              },
-              
-              
-          }).then(
-            res =>{
-              if (res.data.result) {
-              alert('환영합니다');
-              localStorage.setItem('token', res.data.response.token);
-              document.location.href = '/main';
-          } else {
-            alert(res.data.message)
-          };
-
-            }
-          );
-      };
-
-
-    // document.getElementById('loginForm').addEventListener('submit', function(event) {
-    //   event.preventDefault(); 
-      
-    //   const email = document.getElementById('email').value;
-    //   const password = document.getElementById('password').value;
-    //   const rememberMe = document.getElementById('keep-logged-in').checked;
-
-    //   fetch('/api/colla/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ email, password, rememberMe }),
-    //   })
-    //   .then(response => {
-    //     console.log(response);
-   
-    //     return response.json();
-    //   })
-    //   .then(data => {
-    //     console.log(data);
-    //     if (!data.result) {
-    //       throw new Error('로그인 실패');
-    //     }
-    //     alert('환영합니다'); 
-    //   })
-    //   .catch(error => {
-    //     alert('아이디나 비밀번호를 확인해주세요!'); 
-    //   });
-    // });
-
-    // window.onload = function() {
-    //   const cookies = document.cookie.split(';');
-    //   console.log('받아온쿠키들이 어떻게 보이는지 보자', cookies);
-    //   for (let cookie of cookies) {
-    //     const [key, value] = cookie.trim().split('=');
-    //     if (key === 'email') {
-    //       document.getElementById('email').value = value; 
-    //       break;
-    //     }
-    //   }
-    // };
-
-
-
+    //로그인 버튼 클릭시 유효성 체크
+    async function loginFunc() {
+      const res = await axios({
+        method: 'post',
+        url: '/api/colla/login',
+        data: {
+          email: document.querySelector('#email').value,
+          password: document.querySelector('#password').value,
+          keepEmail: document.querySelector('#remember-email').checked,
+        },
+      }).then(res => {
+        if (res.data.result) {
+          alert('환영합니다');
+          localStorage.setItem('token', res.data.response.token);
+          document.location.href = '/main';
+        } else {
+          alert(res.data.message)
+        }
+      });
+    }
   </script>
-  
 </body>
 </html>

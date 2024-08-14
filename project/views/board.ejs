@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항</title>
+  <title>게시판</title>
   <script src="https://kit.fontawesome.com/d44f71ab07.js" crossorigin="anonymous"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -19,82 +19,78 @@
       background-color: #f4f6f9;
       padding: 20px;
       padding-top: 5px;
-    }
+  }
 
-    #homehome {
-      text-decoration: none;
-    }
-
-    #gohome {
-      color:  #0f4c81;
-    }
+  #homehome {
+    text-decoration: none;
+  }
+  #gohome {
+    color:  #0f4c81;
+  }
 
     h3 {
-      text-align: center;
-      color:  #0f4c81;
-      margin-bottom: 20px;
-      font-size: 25px;
-      font-weight: bold;
+        text-align: center;
+        color: #0f4c81;
+        margin-bottom: 20px;
+        font-size: 25px;
+        font-weight: bold;
     }
 
     #content_king {
-      width: 90%;
-      margin: 0 auto;
-      background-color: #ffffff;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      border-radius: 10px;
+        width: 90%;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
     }
 
     table {
-      width: 100%; 
-      border-collapse: collapse;
-      margin-bottom: 20px;
-      background-color: #ffffff;
-      border-radius: 10px;
-      overflow: hidden;
-      table-layout: auto; 
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        table-layout: auto; 
     }
 
-    table,
-    th,
-    td {
-      border: none;
+    table, th, td {
+        border: none;
     }
 
-    th,
-    td {
-      text-align: center;
-      padding: 15px 10px;
-      vertical-align: middle;
-      border-bottom: 1px solid #e9ecef;
+    th, td {
+        text-align: center;
+        padding: 15px 10px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e9ecef;
     }
 
     th {
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
     tr:hover {
-      background-color: #f1f5f9;
+        background-color: #f1f5f9;
     }
 
     tr:nth-child(even) {
-      background-color: #f8faff;
+        background-color: #f8faff;
     }
 
-    .noticetitle {
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.2s;
+    .boardtitle {
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.2s;
     }
 
-    .noticetitle:hover {
-      color: #0056b3;
+    .boardtitle:hover {
+        color: #0056b3;
     }
 
-    .noticecontent {
+    .boardcontent {
       font-size: 14px;
       color: black;
       display: none;
@@ -103,11 +99,11 @@
       white-space: normal;
       word-break: break-word;
       text-align: left;
-      width: 100%; /* 테이블 전체 너비 사용 */
+      width: 100%; 
       box-sizing: border-box;
     }
 
-    .noticecontent img {
+    .boardcontent img {
       max-width: 100%; /* 이미지가 너비 지정 */
       height: auto; /* 이미지의 높이를 자동 조절해서 비율 맞추기 */
       display: block; /* 이미지 주위에 불필요한 공백이 생기지 않도록 하기 */
@@ -115,27 +111,27 @@
       object-fit: contain; /* 이미지가 잘리지 않도록 */
     }
 
-    .notice-item-buttons {
-      justify-content: center;
-      gap: 10px;
+    .board-item-buttons {
+        justify-content: center;
+        gap: 10px;
     }
 
-    .notice-item-buttons button {
-      padding: 6px 12px;
-      background-color:  #0f4c81;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+    .board-item-buttons button {
+        padding: 6px 12px;
+        background-color:  #0f4c81;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
-    .notice-item-buttons button:last-child {
-      background-color: rgb(243, 71, 71);
+    .board-item-buttons button:last-child {
+        background-color: rgb(243, 71, 71);
     }
 
-    .notice-item-buttons button:hover {
-      opacity: 0.9;
+    .board-item-buttons button:hover {
+        opacity: 0.9;
     }
 
     .button-container {
@@ -143,7 +139,7 @@
       margin-top: 25px;
     }
 
-    .button-container a {
+  .button-container a {
       display: inline-block;
       text-align: center;
       padding: 10px 20px;
@@ -155,27 +151,25 @@
       transition: background-color 0.2s;
     }
 
-    .button-container a:hover {
+  .button-container a:hover {
       background-color: #0f4c81;
     }
 
     /* 반응형 */
     @media (max-width: 768px) {
-      .noticecontent img {
+      .boardcontent img {
         max-width: 100%; /* 반응형에서도 부모 요소의 너비를 넘지 않도록 설정 */
         height: auto; /* 이미지 높이 자동 조정 */
     }
 
-      th:nth-child(3),
-      td:nth-child(3),
-      th:nth-child(4),
-      td:nth-child(4) {
-        display: none;
-        /* 작성자, 등록일 숨기기 */
+    th:nth-child(3),
+    td:nth-child(3),
+    th:nth-child(4),
+    td:nth-child(4) {
+      display: none;
       }
 
-      th,
-      td {
+      th, td {
         font-size: 12px;
         padding: 8px;
       }
@@ -184,13 +178,13 @@
       td:nth-child(2) {
         text-align: left;
       }
-
-      .notice-item-buttons button {
+      
+      .board-item-buttons button {
         padding: 4px 8px;
         font-size: 10px;
       }
 
-      .noticecontent {
+      .boardcontent {
         font-size: 12px;
         padding: 10px;
         text-align: left;
@@ -204,16 +198,17 @@
         padding: 6px 12px;
         font-size: 12px;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
-  <a href="/main" id="homehome">
-    <h2 id="gohome">Colla</h2>
-  </a>
-  <h3 id="boardname">공지사항</h3>
-  <div id="notice" hidden>notice</div>
+  <a href="/main" id="homehome"><h2 id="gohome">Colla</h2></a>
+  <h3 id="boardname" >게시판</h3>
+  <div id="board" hidden>board</div>
   <div id="content_king">
     <table>
       <thead>
@@ -230,19 +225,20 @@
       </tbody>
     </table>
     <div class="button-container">
-      <a href="/noticewrite"><i class="fas fa-pencil-alt"></i> 작성하기</a>
+      <a href="/boardwrite"><i class="fas fa-pencil-alt"></i> 작성하기</a>
     </div>
   </div>
+ 
 
   <script>
     const title = document.querySelector('#content_title')
-    const boardname = document.querySelector('#notice').textContent;
+    const boardname = document.querySelector('#board').textContent;
 
-    // JWT 토큰을 가져와서 디코딩
-    const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
+     // JWT 토큰을 가져와서 디코딩
+     const token = localStorage.getItem('token'); // JWT 토큰이 localStorage에 저장된 경우
     const decodedToken = jwt_decode(token); // 토큰 디코딩
     const id = decodedToken.id; // 디코딩한 토큰에서 id 추출
-
+    
     (async function () {
       const res = await axios({
         method: 'post',
@@ -253,12 +249,12 @@
       console.log(res);
       res.data.contents.forEach(item => {
         let html = `
-          <tr class='notice-item'>
+          <tr class='board-item'>
             <td>${item.id}</td>
-            <td class='noticetitle' onclick='titleclick(this)'>${item.title}</td>
+            <td class='boardtitle' onclick='titleclick(this)'>${item.title}</td>
             <td>${item.user.username}</td>
             <td>${formatDate(item.createdAt)}</td>
-            <td class="notice-item-buttons">`;
+            <td class="board-item-buttons">`;
 
         if (item.userId === id) {
           html += `
@@ -269,8 +265,8 @@
         html += `
         </td>
       </tr>
-      <tr class='noticecontent' style="display: none;">
-        <td colspan="5" style="padding: 20px; text-align: left;">${item.contents}</td>
+      <tr class='boardcontent' style="display: none;">
+       <td colspan="5" style="padding: 20px; text-align: left;">${item.contents}</td>
       </tr>
     `;
 
@@ -280,52 +276,57 @@
     })();
 
     function titleclick(element) {
-      const noticecontent = element.parentElement.nextElementSibling;
-      const allContents = document.querySelectorAll('.noticecontent');
+      const boardcontent = element.parentElement.nextElementSibling;
+      const allContents = document.querySelectorAll('.boardcontent');
 
-      // 모든 내용 요소를 닫기
-      allContents.forEach(content => {
-        if (content !== noticecontent) {
+       // 모든 내용 요소를 닫기
+       allContents.forEach(content => {
+        if (content !== boardcontent) {
           content.style.display = 'none';
         }
       });
 
       // 현재 클릭한 요소만 토글
-      if (noticecontent.style.display === 'none' || noticecontent.style.display === '') {
-        noticecontent.style.display = 'table-row'; // 내용 열기를 table-row로 변경
+      if (boardcontent.style.display === 'none' || boardcontent.style.display === '') {
+        boardcontent.style.display = 'table-row'; // 내용 열기를 table-row로 변경
       } else {
-        noticecontent.style.display = 'none'; // 내용 닫기
+        boardcontent.style.display = 'none'; // 내용 닫기
       }
 
       // 부모 테이블의 너비를 조정
-      const parentTable = noticecontent.closest('table');
+      const parentTable = boardcontent.closest('table');
       parentTable.style.tableLayout = 'auto';
       parentTable.style.width = '100%';
     }
-
-    function editFunc(id) {
-      window.location.href = `/editnotice/${id}`
+    function editFunc(id){
+      window.location.href=`/editboard/${id}`
     }
+    
 
-    // 게시판(공지사항) 삭제완료 버튼
-    async function deleteItem(id) {
+
+     // 게시판(공지사항) 삭제완료 버튼
+     async function deleteItem(id) {
       const pathname = id
-      console.log(pathname, '패쓰네임');
+      console.log(pathname,'패쓰네임');
+      
+            if (!confirm('삭제하시겠습니까?')) {
+                    return;
+                }
+                const data = {
+                    pathname,
+                };
+                const res = axios({
+                    method: 'delete',
+                    url: '/api/board/deletebord',
+                    data,
+                    // headers: {
+                    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    // },
+                });
+                alert('삭제되었습니다');
+                document.location.reload();
+          };
 
-      if (!confirm('삭제하시겠습니까?')) {
-        return;
-      }
-      const data = {
-        pathname,
-      };
-      const res = axios({
-        method: 'delete',
-        url: '/api/board/deletebord',
-        data,
-      });
-      alert('삭제되었습니다');
-      document.location.reload();
-    };
 
     function formatDate(dateString) {
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };

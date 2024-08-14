@@ -1,5 +1,5 @@
 const express = require("express");
-const { index, main, signup, terms, personal, login, notice, siteinfo } = require("../controller/page");
+const { index, main, signup, terms, personal, login, notice, siteinfo, noticewrite, editnotice, board, boardwrite, editboard } = require("../controller/page");
 
 const router = express.Router();
 
@@ -10,9 +10,15 @@ router.get('/login', login);
 router.get("/main", main);
 //약관동의, 개인정보처리방침
 router.get('/terms',terms)
-router.get('/personal',personal);
-router.get('/notice',notice);
-router.get('/siteinfo', siteinfo);
+router.get('/personal',personal)
+router.get('/notice',notice)
+router.get('/siteinfo', siteinfo)
+router.get('/noticewrite',noticewrite)
+router.get('/editnotice/:id',editnotice)
 router.get('/', index);
+router.get('/board',board)
+router.get('/boardwrite',boardwrite)
+router.get('/editboard/:id',editboard)
+
 
 module.exports = router;

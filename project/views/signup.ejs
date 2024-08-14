@@ -54,7 +54,7 @@
         button#next {
             width: 100%;
             padding: 10px;
-            background-color: #8ac7da;
+            background-color:  #0f4c81;
             color: white;
             border: none;
             border-radius: 5px;
@@ -63,7 +63,7 @@
         }
 
         button#next:hover {
-            background-color: #007bff;
+            background-color: #0f4c81;;
         }
 
         #formcheck {
@@ -108,7 +108,7 @@
         }
 
         .success-message{
-            color: #007bff;
+            color:  #0f4c81;
         }
 
         .hide {
@@ -251,10 +251,8 @@
 
         // 2-2. 이메일(아이디) : 이메일 형식영어 또는 숫자만 가능
         // const textSpace = /\s/g;        
-          function onlyEmailAddress(str) {
-            
+          function onlyEmailAddress(str) {     
             return /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/.test(str);
-
         };
         // 이메일 - /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i 
         // return /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/.test(str);
@@ -388,8 +386,7 @@
                 department: document.querySelector('#departmentName').value
                 
                 }
-                alert('회원가입이 완료되었습니다')
-                document.location.href = '/login';
+
                 const res  = await axios({
                     method: 'post',
 
@@ -397,7 +394,12 @@
 
                     data,
                 }).then((res) => {
-                    if (res.data.result) { document.location.href = '/login2' } else {
+                    console.log(res.data.result);
+                    
+                    if (res.data.result) {
+                        alert('회원가입이 완료되었습니다')
+                        document.location.href = '/login' } 
+                    else {
                         alert('이메일을 확인해주세용!(자네 이미 가입한게 아닌가?)')
                     }
                 })
@@ -406,12 +408,13 @@
                 };
                 }
         };
+
         function terms() {
-            document.location.href = './terms'
+            window.open('./terms', '이용약관', 'width=600,height=400,scrollbars=yes');
         };
 
         function personal() {
-            document.location.href = './personal'
+            window.open('./personal', '개인정보 수집 및 이용에 관한 동의', 'width=600,height=400,scrollbars=yes');
         };
 
             

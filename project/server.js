@@ -13,8 +13,9 @@ const io = socketIo(server);
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
-app.use(express.json());
-
+app.use(express.json({limit: '100mb'}));
+app.use(express.urlencoded({limit: '100mb', extended: false}));
+app.use(express.static('public'));
 
 //aws 설정
 // aws.config.update({
@@ -41,9 +42,11 @@ app.use(express.json());
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 //api 라우터
-const backRouter = require('./routes/back')
+const backRouter = require('./routes/back');
+const boardRouter = require('./routes/board')
+const { truncate } = require('fs/promises');
 app.use('/api/colla', backRouter)
-
+app.use('/api/board', boardRouter)
 
 /** 1. 소켓 연결 */
 io.on('connection', (socket) => {
@@ -56,10 +59,10 @@ io.on('connection', (socket) => {
     console.log("join chat server : ", arg);
 
     //join : 방 없으면 생성, 있으면 입장
-    const { chatName, myId, chatId, flag } = arg;
-    socket.join(chatName);
+    const { joinRoom, myId, chatId, flag } = arg;
+    socket.join(joinRoom);
     // socket.chat = chat;
-    console.log(`User joined room: ${chatName}`, flag);
+    console.log(`User joined room: ${joinRoom}`, flag);
     if( flag === 0) {
       await db.userchat.create({ userId: myId, chatId });
     }
@@ -71,19 +74,16 @@ io.on('connection', (socket) => {
     if( flag === 0) {
       await db.userchat.create({ userId: yourId, chatId });
     }
-    
-
   });
 
   //   /** 4. 룸 내 메세지 브로드캐스트*/
 
   socket.on('chat message', async (arg) => {
-    const { myName, myId, value, chatId, chatName } = arg;
+    const { myName, myId, value, chatId, joinRoom } = arg;
     console.log("브로드캐스트 테스트", arg);
-    const msgUserName =myName
-    const msgUserId =myId
-    const message = await db.msg.create({ userId: myId, chatId, talk: value });
-    io.to(chatName).emit('new chat message', { msgUserName,msgUserId, value});
+
+    await db.msg.create({ userId: myId, chatId, talk: value });
+    io.to(joinRoom).emit('new chat message', { myName,myId, value});
     // console.log("q브로드캐스트 후");
 
   });
