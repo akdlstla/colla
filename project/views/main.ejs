@@ -1185,7 +1185,7 @@
           msgData = msg;
 
           // const msgContainer = document.querySelector('.msg-container');
-          cutNumber = msgData.length - 12;
+          cutNumber = msgData.length - 17;
           console.log(msgData.length)
           console.log(cutNumber)
 
@@ -1245,12 +1245,15 @@
         if (window.event.keyCode == 13) {
           socket.emit('chat message', { myName, myId, value: input.value, chatId, joinRoom });
           input.value = "";
+          
         }
+       scrollBottom() 
       })
 
       socket.removeAllListeners('new chat message')
 
       socket.on('new chat message', (arg) => {
+        
         const { myName, myId: userId, value: talks } = arg;
         console.log("브로드캐스트 후 받아온 new chat message : ", arg);
         
@@ -1268,7 +1271,9 @@
         p.textContent = userId === myId ? `${myName}: ${talks}` : `${yourName}: ${talks}`;
         talk.appendChild(p);
         msgContainer.appendChild(talk);
-      });
+      }
+      
+    );
 
     }
 
@@ -1359,7 +1364,7 @@
           msgData = msg;
 
           // const msgContainer = document.querySelector('.msg-container');
-          cutNumber = msgData.length - 12;
+          cutNumber = msgData.length - 17;
           console.log(msgData.length)
           console.log(cutNumber)
 
@@ -1495,8 +1500,8 @@
 
     function addBoxes() {
 
-      if (cutNumber > 12) {
-        cutNumber = cutNumber - 12;
+      if (cutNumber > 17) {
+        cutNumber = cutNumber - 17;
         const msgSlice = msgData.slice(cutNumber, msgData.length)
         const msgContainer = document.querySelector('.msg-container')
 
@@ -1520,8 +1525,8 @@
           msgContainer.appendChild(talk);
         })
         return 1
-      } else if (cutNumber = 12) {
-        cutNumber = cutNumber - 12;
+      } else if (cutNumber = 17) {
+        cutNumber = cutNumber - 17;
         const msgSlice = msgData.slice(cutNumber, msgData.length)
         const msgContainer = document.querySelector('.msg-container')
         msgContainer.replaceChildren();
@@ -1570,8 +1575,7 @@
     let clientHeight = document.querySelector('.msg-container').clientHeight;
     // 스크롤 이벤트 임시 주석 처리 끝나는 부분
     function scrollBottom() {
-      const scollBottom = document
-        .querySelector(".msg-container")
+      const scollBottom = document.querySelector(".msg-container")
         .scrollTo(0, document.querySelector(".msg-container").scrollHeight);
       return scollBottom;
     };
