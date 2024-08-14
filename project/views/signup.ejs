@@ -251,10 +251,8 @@
 
         // 2-2. 이메일(아이디) : 이메일 형식영어 또는 숫자만 가능
         // const textSpace = /\s/g;        
-          function onlyEmailAddress(str) {
-            
+          function onlyEmailAddress(str) {     
             return /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/.test(str);
-
         };
         // 이메일 - /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i 
         // return /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/.test(str);
